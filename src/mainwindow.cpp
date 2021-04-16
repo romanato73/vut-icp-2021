@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    auto *scene = new QGraphicsScene(ui->graphicsView);
-    ui->graphicsView->setScene(scene);
+    auto *scene = new QGraphicsScene(ui->editor);
+    ui->editor->setScene(scene);
 
     auto line = scene->addLine(150,150,50,30);
     line->setPen(QPen({Qt::red}, 3));
@@ -23,9 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto text = scene->addText("Ahoj svet");
     text->setTextInteractionFlags(Qt::TextEditorInteraction);
-
-
-
 }
 
 MainWindow::~MainWindow()
