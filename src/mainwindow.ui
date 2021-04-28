@@ -254,7 +254,6 @@ color: #ffffff;</string>
 	color: #000;
 	background-color: transparent;
 	border: none;
-	cursor: pointer;
 }</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">

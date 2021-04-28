@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-    auto *scene = new QGraphicsScene(ui->editor);
+    // Initialize graphics scene
+    QGraphicsScene *scene = new QGraphicsScene(ui->editor);
     ui->editor->setScene(scene);
 
     auto line = scene->addLine(150,150,50,30);
