@@ -2,17 +2,20 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1000</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>1000</width>
     <height>600</height>
    </size>
   </property>
@@ -25,7 +28,19 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QScrollArea {
+	border: none;
+}
+
+ QScrollBar {
+    background-color: #F8F8F8;
+    width: 10px;
+	border: none;
+ }
+
+QScrollBar::handle {
+	background-color: #DBDBDB;
+}</string>
   </property>
   <widget class="QWidget" name="Container">
    <property name="font">
@@ -52,24 +67,6 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="0" column="2">
-     <widget class="QGraphicsView" name="editor">
-      <property name="minimumSize">
-       <size>
-        <width>550</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Open Sans</family>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: none;</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QWidget" name="Sidebar" native="true">
       <property name="sizePolicy">
@@ -80,13 +77,13 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>250</width>
+        <width>300</width>
         <height>600</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>250</width>
+        <width>300</width>
         <height>16777215</height>
        </size>
       </property>
@@ -96,10 +93,25 @@
         <height>0</height>
        </size>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: #F8F8F8;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
        <item>
         <widget class="QLabel" name="ModeLabel">
          <property name="font">
@@ -124,6 +136,12 @@ margin-left: 15px;</string>
        </item>
        <item>
         <widget class="QWidget" name="ModeButtons" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Open Sans</family>
@@ -243,468 +261,521 @@ color: #ffffff;</string>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="Categories" native="true">
-         <property name="font">
-          <font>
-           <family>Open Sans</family>
-          </font>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>16777215</height>
+          </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton {
+          <string notr="true"/>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="Categories">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>300</width>
+            <height>251</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
 	color: #000;
 	background-color: transparent;
 	border: none;
 }</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QWidget" name="CategoriesTitle" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="font">
-                <font>
-                 <family>Open Sans</family>
-                 <pointsize>13</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: #000;</string>
-               </property>
-               <property name="text">
-                <string>Categories</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="addCategory">
-               <property name="maximumSize">
-                <size>
-                 <width>20</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Font Awesome 5 Free Solid</family>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>Add new category</string>
-               </property>
-               <property name="text">
-                <string>plus</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="DefaultCategory" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QWidget" name="DefaultCategoryTitle" native="true">
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <property name="spacing">
-                 <number>6</number>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="QWidget" name="CategoriesTitle" native="true">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="CategoriesLabel">
+                <property name="font">
+                 <font>
+                  <family>Open Sans</family>
+                  <pointsize>13</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="styleSheet">
+                 <string notr="true">color: #000;</string>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
+                <property name="text">
+                 <string>Categories</string>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="addCategory">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="bottomMargin">
-                 <number>0</number>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <item>
-                 <widget class="QLabel" name="label_2">
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #000;</string>
-                  </property>
-                  <property name="text">
-                   <string>Default</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="categoryDefaultAdd">
-                  <property name="maximumSize">
-                   <size>
-                    <width>20</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Font Awesome 5 Free Solid</family>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Add selected block</string>
-                  </property>
-                  <property name="text">
-                   <string>plus</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="DefaultCategoryItems" native="true">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_2">
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="maximumSize">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
+                <property name="font">
+                 <font>
+                  <family>Font Awesome 5 Free Solid</family>
+                 </font>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+                <property name="toolTip">
+                 <string>Add new category</string>
                 </property>
-                <property name="bottomMargin">
-                 <number>0</number>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
                 </property>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="Block_2">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>T</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="Block_4">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>B</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="Block_3">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>L</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="DefaultCategory_2" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QWidget" name="DefaultCategoryTitle_2" native="true">
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <property name="spacing">
-                 <number>6</number>
+                <property name="styleSheet">
+                 <string notr="true"/>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="text">
+                 <string>plus</string>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="DefaultCategory" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QWidget" name="DefaultCategoryTitle" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <property name="spacing">
+                  <number>6</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="DeafaultCategoryLabel">
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                     <pointsize>10</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #000;</string>
+                   </property>
+                   <property name="text">
+                    <string>Default</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="DefaultCategoryItems" native="true">
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="Text">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>T</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="Square">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>B</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="Line">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>L</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="LogicalCategory" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QWidget" name="LogicalCategoryTitle" native="true">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
-                <property name="bottomMargin">
-                 <number>0</number>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <property name="spacing">
+                  <number>6</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="LogicalCategoryLabel">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                     <pointsize>10</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: #000;</string>
+                   </property>
+                   <property name="text">
+                    <string>Logical blocks</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="LogicalCategoryItems" native="true">
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
                 </property>
-                <item>
-                 <widget class="QLabel" name="label_3">
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                    <pointsize>10</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: #000;</string>
-                  </property>
-                  <property name="text">
-                   <string>Logical blocks</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="categoryDefaultAdd_2">
-                  <property name="maximumSize">
-                   <size>
-                    <width>20</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Font Awesome 5 Free Solid</family>
-                   </font>
-                  </property>
-                  <property name="toolTip">
-                   <string>Add selected block</string>
-                  </property>
-                  <property name="text">
-                   <string>plus</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="DefaultCategoryItems_2" native="true">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="QPushButton" name="Block_7">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>NOT</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QPushButton" name="Block_5">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>OR</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QPushButton" name="Block_9">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>NOR</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QPushButton" name="Block_6">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>AND</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QPushButton" name="Block_8">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>XOR</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QPushButton" name="Block_10">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Open Sans</family>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>NXOR</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="NOT">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>NOT</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="OR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>OR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="NOR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>NOR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="AND">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>AND</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="XOR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>XOR</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QPushButton" name="NXOR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>NXOR</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGraphicsView" name="editor">
+      <property name="minimumSize">
+       <size>
+        <width>550</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Open Sans</family>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: none;</string>
+      </property>
      </widget>
     </item>
    </layout>

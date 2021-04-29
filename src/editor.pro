@@ -9,13 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Dialogs/createblockdialog.cpp \
+    Dialogs/createcategorydialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    Dialogs/createblockdialog.h \
+    Dialogs/createcategorydialog.h \
     mainwindow.h
 
 FORMS += \
+    Dialogs/createblockdialog.ui \
+    Dialogs/createcategorydialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
