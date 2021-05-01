@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "storage.h"
+
+#include <QDir>
 #include <QGraphicsScene>
 #include <QMainWindow>
 #include <QPushButton>
@@ -25,6 +28,9 @@ public:
 private slots:
     void on_addCategory_clicked();
 
+    /**
+     * Modes
+     */
     void on_selectMode_clicked();
     void on_createMode_clicked();
     void on_editMode_clicked();
@@ -45,6 +51,11 @@ private:
      * @brief mode Sets the current application mode
      */
     QString mode;
+
+    /**
+     * @brief storagePath Path to the storage
+     */
+    Storage *storage = new Storage();
 
     /**
      * @brief getCategories Gets all created categories

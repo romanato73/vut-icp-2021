@@ -6,6 +6,10 @@
 #include "Dialogs/createcategorydialog.h"
 #include "Dialogs/createblockdialog.h"
 
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -36,14 +40,23 @@ void MainWindow::Initialize()
     // Add graphics scene
     scene = new QGraphicsScene(ui->editor);
     ui->editor->setScene(scene);
+
+    // Build categories from storage
+    auto categories = storage->getCategories();
+
+    for (const QString &category : categories.keys()) {
+        auto items = categories.value(category);
+        this->createNewCategory(category);
+    }
 }
 
 void MainWindow::on_addCategory_clicked()
 {
     CreateCategoryDialog dialog;
     dialog.setModal(true);
-    dialog.setCategories(this->getCategories());
+    dialog.setCategories(this->getCategories(true));
     if (dialog.exec() == QDialog::Accepted) {
+        this->storage->addCategory(dialog.categoryName);
         this->createNewCategory(dialog.categoryName);
     }
 }

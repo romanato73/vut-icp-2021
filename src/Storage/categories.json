@@ -1,0 +1,36 @@
+{
+    "test": {
+        "block-1": {
+            "code": "printf(\"test\")",
+            "inputs": [
+                "A",
+                "B"
+            ],
+            "outputs": [
+                "Y"
+            ]
+        },
+        "block-2": {
+            "code": "printf(\"test\")",
+            "inputs": [
+                "C",
+                "D"
+            ],
+            "outputs": [
+                "Z"
+            ]
+        }
+    },
+    "test-2": {
+        "block-1": {
+            "code": "printf(\"test\")",
+            "inputs": [
+                "A",
+                "B"
+            ],
+            "outputs": [
+                "Y"
+            ]
+        }
+    }
+}

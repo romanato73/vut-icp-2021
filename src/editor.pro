@@ -11,13 +11,17 @@ CONFIG += c++11
 SOURCES += \
     Dialogs/createblockdialog.cpp \
     Dialogs/createcategorydialog.cpp \
+    block.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    storage.cpp
 
 HEADERS += \
     Dialogs/createblockdialog.h \
     Dialogs/createcategorydialog.h \
-    mainwindow.h
+    block.h \
+    mainwindow.h \
+    storage.h
 
 FORMS += \
     Dialogs/createblockdialog.ui \
