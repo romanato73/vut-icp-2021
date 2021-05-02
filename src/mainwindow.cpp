@@ -9,6 +9,7 @@
 
 #include <QChar>
 #include <QFile>
+#include <QFontDatabase>
 #include <QJsonDocument>
 #include <QJsonObject>
 
