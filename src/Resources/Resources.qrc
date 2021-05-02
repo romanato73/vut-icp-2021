@@ -3,6 +3,6 @@
         <file>drop-arrow.png</file>
     </qresource>
     <qresource prefix="/fonts">
-        <file>fa-solid-900.ttf</file>
+        <file>FontAwesome5.otf</file>
     </qresource>
 </RCC>
