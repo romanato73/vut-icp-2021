@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFontDatabase::addApplicationFont("Font Awesome 5 Free Solid");
+    QFontDatabase::addApplicationFont(":/fonts/FontAwesome5.otf");
 
     // Initialize graphics scene
     Initialize();
