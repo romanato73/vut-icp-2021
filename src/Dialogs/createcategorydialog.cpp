@@ -26,10 +26,6 @@ void CreateCategoryDialog::on_categoryAdd_clicked()
 
     this->categoryName = ui->categoryName->displayText();
 
-    for (const auto &cat : this->categories) {
-        qDebug() << cat;
-    }
-
     if (this->categories.contains(this->categoryName + "Category")) {
         msg.critical(nullptr, "Error", "This category already exists.");
     } else if (this->categoryName.isEmpty()) {

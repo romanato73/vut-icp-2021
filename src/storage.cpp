@@ -6,13 +6,10 @@
 #include <QJsonObject>
 #include <QJsonObject>
 
-Storage::Storage()
-{
-
-}
-
 QString Storage::getFileContent(QString name)
 {
+    QString path = QDir::currentPath() + "/../src/Storage/";
+
     QFile file(path + name);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -29,6 +26,8 @@ QString Storage::getFileContent(QString name)
 
 void Storage::updateFileContent(QString name, QString content)
 {
+    QString path = QDir::currentPath() + "/../src/Storage/";
+
     QFile file(path + name);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -41,7 +40,7 @@ void Storage::updateFileContent(QString name, QString content)
 
 QJsonObject Storage::getCategories()
 {
-    auto content = getFileContent("categories.json");
+    auto content = Storage::getFileContent("categories.json");
 
     QJsonDocument json = QJsonDocument::fromJson(content.toUtf8());
     QJsonObject categories = json.object();
@@ -49,12 +48,18 @@ QJsonObject Storage::getCategories()
     return categories;
 }
 
+QStringList Storage::getCategoriesList()
+{
+    auto object = Storage::getCategories();
+
+    QStringList list = object.keys();
+
+    return list;
+}
+
 void Storage::addCategory(QString name)
 {
-    auto content = getFileContent("categories.json");
-
-    QJsonDocument json = QJsonDocument::fromJson(content.toUtf8());
-    QJsonObject object = json.object();
+    auto object = Storage::getCategories();
 
     object.insert(name, QJsonObject());
 
@@ -65,7 +70,35 @@ void Storage::addCategory(QString name)
     updateFileContent("categories.json", jsonString);
 }
 
+void Storage::updateCategory(QString name, QString newName)
+{
+    auto object = Storage::getCategories();
+
+    auto categoryValue = object.take(name);
+
+    object.insert(newName, categoryValue);
+
+    QJsonDocument doc(object);
+    /** @todo: Change to ::Compact for better size */
+    QString jsonString = doc.toJson(QJsonDocument::Indented);
+
+    updateFileContent("categories.json", jsonString);
+}
+
+void Storage::removeCategory(QString name)
+{
+    auto object = Storage::getCategories();
+
+    object.remove(name);
+
+    QJsonDocument doc(object);
+    /** @todo: Change to ::Compact for better size */
+    QString jsonString = doc.toJson(QJsonDocument::Indented);
+
+    updateFileContent("categories.json", jsonString);
+}
+
 void Storage::addBlock(Block block, QString category)
 {
-
+    auto content = getFileContent("categories.json");
 }

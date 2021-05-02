@@ -15,7 +15,13 @@ public:
     explicit CreateBlockDialog(QWidget *parent = nullptr);
     ~CreateBlockDialog();
 
-    void loadCategories();
+    /**
+     * @brief loadCategories Loads the categories
+     */
+    void loadCategories(QStringList categories);
+
+private slots:
+    void on_createBlock_clicked();
 
 private:
     Ui::CreateBlockDialog *ui;

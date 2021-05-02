@@ -5,7 +5,9 @@
 #include "QGraphicsTextItem"
 #include "Dialogs/createcategorydialog.h"
 #include "Dialogs/createblockdialog.h"
+#include <Dialogs/editcategorydialog.h>
 
+#include <QChar>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -38,11 +40,10 @@ MainWindow::~MainWindow()
 void MainWindow::Initialize()
 {
     // Add graphics scene
-    scene = new QGraphicsScene(ui->editor);
     ui->editor->setScene(scene);
 
     // Build categories from storage
-    auto categories = storage->getCategories();
+    auto categories = Storage::getCategories();
 
     for (const QString &category : categories.keys()) {
         auto items = categories.value(category);
@@ -56,7 +57,7 @@ void MainWindow::on_addCategory_clicked()
     dialog.setModal(true);
     dialog.setCategories(this->getCategories(true));
     if (dialog.exec() == QDialog::Accepted) {
-        this->storage->addCategory(dialog.categoryName);
+        Storage::addCategory(dialog.categoryName);
         this->createNewCategory(dialog.categoryName);
     }
 }
@@ -64,31 +65,69 @@ void MainWindow::on_addCategory_clicked()
 void MainWindow::on_selectMode_clicked()
 {
     this->mode = "select";
+    this->scene->setMode(this->mode);
     this->setButtonActive(this->mode);
 }
 
 void MainWindow::on_createMode_clicked()
 {
     this->mode = "create";
+    this->scene->setMode(this->mode);
     this->setButtonActive(this->mode);
 
-    CreateBlockDialog dialog;
-    dialog.setModal(true);
-    if (dialog.exec() == QDialog::Accepted) {
+//    CreateBlockDialog dialog;
+//    dialog.setModal(true);
+//    if (dialog.exec() == QDialog::Accepted) {
 
-    }
+//    }
 }
 
 void MainWindow::on_editMode_clicked()
 {
     this->mode = "edit";
+    this->scene->setMode(this->mode);
     this->setButtonActive(this->mode);
 }
 
 void MainWindow::on_deleteMode_clicked()
 {
     this->mode = "delete";
+    this->scene->setMode(this->mode);
     this->setButtonActive(this->mode);
+}
+
+void MainWindow::categoryEditBtnClick()
+{
+    auto btn = sender();
+    int editPos = btn->objectName().lastIndexOf(QChar('E'));
+    auto categoryFullName = btn->objectName().left(editPos);
+    int categoryPos = categoryFullName.lastIndexOf(QChar('C'));
+    auto categoryName = categoryFullName.left(categoryPos);
+
+    EditCategoryDialog dialog;
+    dialog.setModal(true);
+    dialog.setCategories(this->getCategories(true));
+    dialog.setCategoryName(categoryName);
+    if (dialog.exec() == QDialog::Accepted) {
+        // Update category in storage
+        Storage::updateCategory(categoryName, dialog.categoryName);
+        // Update category in UI
+        this->updateCategoryName(categoryFullName, dialog.categoryName);
+    }
+}
+
+void MainWindow::categoryDeleteBtnClick()
+{
+    auto btn = sender();
+    int deletePos = btn->objectName().lastIndexOf(QChar('D'));
+    auto categoryFullName = btn->objectName().left(deletePos);
+    int categoryPos = categoryFullName.lastIndexOf(QChar('C'));
+    auto categoryName = categoryFullName.left(categoryPos);
+
+    // Remove category from storage
+    Storage::removeCategory(categoryName);
+    // Remove category from UI
+    this->removeCategory(categoryFullName);
 }
 
 QStringList MainWindow::getCategories(bool base)
@@ -96,9 +135,9 @@ QStringList MainWindow::getCategories(bool base)
     QStringList defaultCategories;
 
     if (base) {
-        defaultCategories = {"CategoriesTitle", "verticalLayout_9"};
+        defaultCategories = QStringList{"CategoriesTitle", "verticalLayout_9"};
     } else {
-        defaultCategories = {"DefaultCategory", "LogicalCategory", "CategoriesTitle", "verticalLayout_9"};
+        defaultCategories = QStringList{"DefaultCategory", "LogicalCategory", "CategoriesTitle", "verticalLayout_9"};
     }
 
     QStringList categories{};
@@ -146,6 +185,8 @@ void MainWindow::createNewCategory(QString name)
     editBtn->setMinimumSize(20, 20);
     editBtn->setMaximumSize(20, 20);
     header->layout()->addWidget(editBtn);
+    // Connect button
+    connect(editBtn, &QPushButton::clicked, this, &MainWindow::categoryEditBtnClick);
 
     // Set delete button
     auto deleteBtn = new QPushButton();
@@ -155,12 +196,44 @@ void MainWindow::createNewCategory(QString name)
     deleteBtn->setMinimumSize(20, 20);
     deleteBtn->setMaximumSize(20, 20);
     header->layout()->addWidget(deleteBtn);
+    connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::categoryDeleteBtnClick);
 
     // Create category items
     auto items = new QWidget();
     items->setLayout(new QGridLayout);
 
     ui->Categories->layout()->addWidget(category);
+}
+
+void MainWindow::removeCategory(QString name)
+{
+    for (auto item : ui->Categories->children()) {
+        if (item->objectName() == name) {
+            delete item;
+        }
+    }
+}
+
+void MainWindow::updateCategoryName(QString name, QString newName)
+{
+    for (auto item : ui->Categories->children()) {
+        if (item->objectName() == name) {
+            // Update label
+            auto label = item->findChild<QLabel *>(name + "Label");
+            label->setObjectName(newName + "CategoryLabel");
+            label->setText(newName);
+
+            // Update buttons
+            auto editBtn = item->findChild<QPushButton *>(name + "Edit");
+            editBtn->setObjectName(newName + "CategoryEdit");
+            auto deleteBtn = item->findChild<QPushButton *>(name + "Delete");
+            deleteBtn->setObjectName(newName + "CategoryDelete");
+
+            // Update item object
+            item->setObjectName(newName + "Category");
+            break;
+        }
+    }
 }
 
 void MainWindow::setButtonActive(QString mode)

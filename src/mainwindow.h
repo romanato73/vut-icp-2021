@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "storage.h"
+#include "scene.h"
 
 #include <QDir>
 #include <QGraphicsScene>
@@ -36,6 +37,16 @@ private slots:
     void on_editMode_clicked();
     void on_deleteMode_clicked();
 
+    /**
+     * @brief categoryEditBtn Handles the category edit buttons
+     */
+    void categoryEditBtnClick();
+
+    /**
+     * @brief categoryDeleteBtnClick Handles the category delete button
+     */
+    void categoryDeleteBtnClick();
+
 private:
     /**
      * @brief ui The main UI
@@ -45,17 +56,12 @@ private:
     /**
      * @brief scene The main scene for render
      */
-    QGraphicsScene *scene;
+    Scene *scene = new Scene();
 
     /**
      * @brief mode Sets the current application mode
      */
     QString mode;
-
-    /**
-     * @brief storagePath Path to the storage
-     */
-    Storage *storage = new Storage();
 
     /**
      * @brief getCategories Gets all created categories
@@ -69,6 +75,19 @@ private:
      * @param name Name of category
      */
     void createNewCategory(QString name);
+
+    /**
+     * @brief removecategory    Removes the category from the UI
+     * @param name              Name of the category
+     */
+    void removeCategory(QString name);
+
+    /**
+     * @brief updateCategoryName Updates the category name in UI
+     * @param name               Old name of the category
+     * @param newName            New name of the category
+     */
+    void updateCategoryName(QString name, QString newName);
 
     /**
      * @brief setButtonActive Sets the clicked button to active

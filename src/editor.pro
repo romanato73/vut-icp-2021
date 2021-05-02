@@ -11,24 +11,36 @@ CONFIG += c++11
 SOURCES += \
     Dialogs/createblockdialog.cpp \
     Dialogs/createcategorydialog.cpp \
+    Dialogs/editcategorydialog.cpp \
     block.cpp \
     main.cpp \
     mainwindow.cpp \
+    scene.cpp \
     storage.cpp
 
 HEADERS += \
     Dialogs/createblockdialog.h \
     Dialogs/createcategorydialog.h \
+    Dialogs/editcategorydialog.h \
     block.h \
     mainwindow.h \
+    scene.h \
     storage.h
 
 FORMS += \
     Dialogs/createblockdialog.ui \
     Dialogs/createcategorydialog.ui \
+    Dialogs/editcategorydialog.ui \
     mainwindow.ui
+
+OTHER_FILES += \
+    Storage/categories.json \
+    Storage/blocks.json
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resources/Resources.qrc \

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>drop-arrow.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>fa-solid-900.ttf</file>
+    </qresource>
+</RCC>
