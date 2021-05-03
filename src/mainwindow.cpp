@@ -49,8 +49,8 @@ void MainWindow::Initialize()
     // Add graphics scene
     ui->editor->setScene(scene);
 
-    auto test = new CustomBlock();
-    scene->addItem(test);
+//    auto test = new CustomBlock();
+//    scene->addItem(test);
 
     // Build categories from storage
     auto categories = Storage::getCategories();

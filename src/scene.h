@@ -62,11 +62,15 @@ protected:
      */
     void drawBackground(QPainter *painter, const QRectF &rect);
 
-    void mousePressEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+//    void mousePressEvent(QMouseEvent *event);
 
 //    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+    QGraphicsItem *block{nullptr};
     const int gridSize;
 
     bool dragging = false;

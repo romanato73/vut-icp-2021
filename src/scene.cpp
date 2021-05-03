@@ -4,6 +4,7 @@
 #include "storage.h"
 
 #include <Dialogs/createblockdialog.h>
+#include <QGraphicsSceneMouseEvent>
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent), gridSize(20)
 {
@@ -32,17 +33,59 @@ void Scene::drawBackground(QPainter *painter, const QRectF &rect)
     painter->drawPoints(points.data(), points.size());
 }
 
-void Scene::mousePressEvent(QMouseEvent *event)
+void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (event->button() == Qt::LeftButton) {
-        dragging = true;
-        auto x = event->position().x();
-        auto y = event->position().y();
-        event->accept();
-        qDebug() << "pressed";
-        return;
+    if (this->mode == "create") {
+        CreateBlockDialog dialog;
+        dialog.loadCategories(Storage::getCategoriesList());
+
+        if (dialog.exec() == QDialog::Accepted) {
+
+
+            qDebug() << "block created";
+        }
+        block = new Block();
+
+        bool even = true;
+        // if even then pos.y = centre of square in grid
+        auto x = floor(mouseEvent->scenePos().x() / 20) * 20 + 10;
+        auto y = floor(mouseEvent->scenePos().y() / 20) * 20 + 10;
+        // else pos.y = side of square in grid
+        if(!even){
+            y += 10;
+        }
+
+        auto pos = QPointF(x, y);
+        qDebug() << pos;
+
+        block->setPos(pos);
+        addItem(block);
     }
 }
+
+void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+//    auto x = round(mouseEvent->scenePos().x() / 20) * 20;
+//    auto y = round(mouseEvent->scenePos().y() / 20) * 20;
+
+//    auto pos = QPointF(x, y);
+
+//    qDebug() << pos;
+
+//    block->setPos(pos);
+}
+
+//void Scene::mousePressEvent(QMouseEvent *event)
+//{
+//    if (event->button() == Qt::LeftButton) {
+//        dragging = true;
+//        auto x = event->position().x();
+//        auto y = event->position().y();
+//        event->accept();
+//        qDebug() << "pressed";
+//        return;
+//    }
+//}
 
 //void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //{
