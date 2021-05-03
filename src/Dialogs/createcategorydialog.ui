@@ -60,8 +60,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #EAEAEA;
-border: none;
+         <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
         </property>
        </widget>

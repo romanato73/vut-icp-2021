@@ -13,6 +13,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include <Components/customblock.h>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -21,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QFontDatabase::addApplicationFont(":/fonts/FontAwesome5.otf");
 
-    // Initialize graphics scene
+    // Initialize application
     Initialize();
 
     auto line = this->scene->addLine(150,150,50,30);
@@ -33,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto text = scene->addText("Ahoj svet");
     text->setTextInteractionFlags(Qt::TextEditorInteraction);
+
+    this->scene->removeItem(text);
 }
 
 MainWindow::~MainWindow()
@@ -45,12 +49,17 @@ void MainWindow::Initialize()
     // Add graphics scene
     ui->editor->setScene(scene);
 
+    auto test = new CustomBlock();
+    scene->addItem(test);
+
     // Build categories from storage
     auto categories = Storage::getCategories();
 
     for (const QString &category : categories.keys()) {
         auto items = categories.value(category);
         this->createNewCategory(category);
+
+        // Build blocks
     }
 }
 
@@ -187,6 +196,7 @@ void MainWindow::createNewCategory(QString name)
     editBtn->setText("edit");
     editBtn->setMinimumSize(20, 20);
     editBtn->setMaximumSize(20, 20);
+    editBtn->setStyleSheet("background-color: none;");
     header->layout()->addWidget(editBtn);
     // Connect button
     connect(editBtn, &QPushButton::clicked, this, &MainWindow::categoryEditBtnClick);
@@ -198,6 +208,7 @@ void MainWindow::createNewCategory(QString name)
     deleteBtn->setText("trash");
     deleteBtn->setMinimumSize(20, 20);
     deleteBtn->setMaximumSize(20, 20);
+    deleteBtn->setStyleSheet("background-color: none;");
     header->layout()->addWidget(deleteBtn);
     connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::categoryDeleteBtnClick);
 

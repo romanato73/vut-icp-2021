@@ -39,8 +39,7 @@
    <item>
     <widget class="QLineEdit" name="blockName">
      <property name="styleSheet">
-      <string notr="true">background-color: #EAEAEA;
-border: none;
+      <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
      </property>
     </widget>
@@ -56,15 +55,12 @@ padding: 10px;</string>
     <widget class="QComboBox" name="blockCategory">
      <property name="styleSheet">
       <string notr="true">QComboBox {
-	background-color: #EAEAEA;
-	border: none;
+	border: 1px solid #DBDBDB;
 	padding: 10px;
 }
 
 QComboBox QAbstractItemView {
-	background-color: #EAEAEA;
-	selection-background-color: #6A6FFF;
-	border: none;
+	border: 1px solid #DBDBDB;
 }</string>
      </property>
      <property name="placeholderText">
@@ -118,8 +114,7 @@ QComboBox QAbstractItemView {
          <item>
           <widget class="QTextEdit" name="inputs">
            <property name="styleSheet">
-            <string notr="true">background-color: #EAEAEA;
-border: none;
+            <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
            </property>
           </widget>
@@ -158,8 +153,7 @@ padding: 10px;</string>
          <item>
           <widget class="QTextEdit" name="outputs">
            <property name="styleSheet">
-            <string notr="true">background-color: #EAEAEA;
-border: none;
+            <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
            </property>
           </widget>
@@ -192,8 +186,7 @@ padding: 10px;</string>
          <item>
           <widget class="QTextEdit" name="code">
            <property name="styleSheet">
-            <string notr="true">background-color: #EAEAEA;
-border: none;
+            <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
            </property>
           </widget>

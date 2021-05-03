@@ -298,7 +298,7 @@ color: #ffffff;</string>
             <x>0</x>
             <y>0</y>
             <width>300</width>
-            <height>251</height>
+            <height>215</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -322,7 +322,7 @@ color: #ffffff;</string>
           <property name="styleSheet">
            <string notr="true">QPushButton {
 	color: #000;
-	background-color: transparent;
+	background-color: #EAEAEA;
 	border: none;
 }</string>
           </property>
@@ -383,7 +383,7 @@ color: #ffffff;</string>
                  <enum>Qt::LeftToRight</enum>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true"/>
+                 <string notr="true">background-color: none;</string>
                 </property>
                 <property name="text">
                  <string>plus</string>
@@ -437,6 +437,12 @@ color: #ffffff;</string>
               </item>
               <item>
                <widget class="QWidget" name="DefaultCategoryItems" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="layoutDirection">
                  <enum>Qt::LeftToRight</enum>
                 </property>
@@ -587,6 +593,12 @@ color: #ffffff;</string>
               </item>
               <item>
                <widget class="QWidget" name="LogicalCategoryItems" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="layoutDirection">
                  <enum>Qt::LeftToRight</enum>
                 </property>
@@ -613,8 +625,8 @@ color: #ffffff;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
@@ -624,78 +636,6 @@ color: #ffffff;</string>
                    </property>
                    <property name="text">
                     <string>NOT</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QPushButton" name="OR">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>OR</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QPushButton" name="NOR">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>NOR</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="AND">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>AND</string>
                    </property>
                   </widget>
                  </item>
@@ -709,8 +649,8 @@ color: #ffffff;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
@@ -723,8 +663,8 @@ color: #ffffff;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QPushButton" name="NXOR">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="AND">
                    <property name="minimumSize">
                     <size>
                      <width>30</width>
@@ -733,8 +673,8 @@ color: #ffffff;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
@@ -743,7 +683,31 @@ color: #ffffff;</string>
                     </font>
                    </property>
                    <property name="text">
-                    <string>NXOR</string>
+                    <string>AND</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QPushButton" name="OR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>OR</string>
                    </property>
                   </widget>
                  </item>
@@ -755,6 +719,70 @@ color: #ffffff;</string>
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Font Awesome 5 Free Solid</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: #27ae60;
+	border: none;
+	color: #fff;
+	width: 60px;
+	height: 60px;
+}
+
+QPushButton:hover {
+	background-color: #2ecc71;
+}</string>
+            </property>
+            <property name="text">
+             <string>tools</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:#000;</string>
+            </property>
+            <property name="text">
+             <string>Build program</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -776,14 +804,23 @@ color: #ffffff;</string>
       <property name="styleSheet">
        <string notr="true">border: none;</string>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
+      <property name="dragMode">
+       <enum>QGraphicsView::NoDrag</enum>
+      </property>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>editor</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

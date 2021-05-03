@@ -17,7 +17,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Create category</string>
+   <string>Edit category</string>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #fff;</string>
@@ -60,8 +63,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #EAEAEA;
-border: none;
+         <string notr="true">border: 1px solid #DBDBDB;
 padding: 10px;</string>
         </property>
        </widget>
