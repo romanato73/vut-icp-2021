@@ -322,8 +322,12 @@ color: #ffffff;</string>
           <property name="styleSheet">
            <string notr="true">QPushButton {
 	color: #000;
-	background-color: #EAEAEA;
-	border: none;
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+}
+
+QPushButton:hover {
+	background-color: #f6f7f9;
 }</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -383,7 +387,8 @@ color: #ffffff;</string>
                  <enum>Qt::LeftToRight</enum>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: none;</string>
+                 <string notr="true">background-color: none!important;
+border: none!important;</string>
                 </property>
                 <property name="text">
                  <string>plus</string>
@@ -469,41 +474,17 @@ color: #ffffff;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Open Sans</family>
+                     <family>Font Awesome 5 Free Solid</family>
                     </font>
                    </property>
                    <property name="text">
-                    <string>T</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="Square">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>B</string>
+                    <string>font</string>
                    </property>
                   </widget>
                  </item>
@@ -517,17 +498,65 @@ color: #ffffff;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>30</width>
-                     <height>30</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Open Sans</family>
+                     <family>Font Awesome 5 Free Solid</family>
                     </font>
                    </property>
                    <property name="text">
-                    <string>L</string>
+                    <string>slash</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="Square">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Font Awesome 5 Free Solid</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>square</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="pushButton_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Font Awesome 5 Free Solid</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>pen-nib</string>
                    </property>
                   </widget>
                  </item>
