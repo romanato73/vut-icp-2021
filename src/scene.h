@@ -12,7 +12,7 @@
 #include <QObject>
 
 #include <QMouseEvent>
-#include <math.h>
+#include <QtMath>
 
 class Scene : public QGraphicsScene
 {
@@ -26,25 +26,25 @@ public:
      */
     QString mode = "select";
 
-    /**
-     * @brief rectangles List of rectangles in scene
-     */
-    QList<QGraphicsItem *> rectangles;
+//    /**
+//     * @brief rectangles List of rectangles in scene
+//     */
+//    QList<QGraphicsItem *> rectangles;
 
-    /**
-     * @brief lines List of lines in scene
-     */
-    QList<QGraphicsItem *> lines;
+//    /**
+//     * @brief lines List of lines in scene
+//     */
+//    QList<QGraphicsItem *> lines;
 
-    /**
-     * @brief texts List of texts in scene
-     */
-    QList<QGraphicsItem *> texts;
+//    /**
+//     * @brief texts List of texts in scene
+//     */
+//    QList<QGraphicsItem *> texts;
 
-    /**
-     * @brief blocks List of blocks in scene
-     */
-    QList<Block *> blocks;
+//    /**
+//     * @brief blocks List of blocks in scene
+//     */
+//    QList<Block *> blocks;
 
     /**
      * @brief setMode Sets current mode
@@ -73,6 +73,7 @@ protected:
 private:
     QGraphicsItem *block{nullptr};
     QGraphicsLineItem *line{nullptr};
+    QVector<QPointF> points;
     const int gridSize;
 
     bool dragging = false;
