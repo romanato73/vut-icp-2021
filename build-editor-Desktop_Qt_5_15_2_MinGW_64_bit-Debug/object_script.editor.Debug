@@ -1,0 +1,16 @@
+debug/customblock.o
+debug/createblockdialog.o
+debug/createcategorydialog.o
+debug/editcategorydialog.o
+debug/block.o
+debug/line.o
+debug/main.o
+debug/mainwindow.o
+debug/scene.o
+debug/storage.o
+debug/qrc_Resources.o
+debug/moc_createblockdialog.o
+debug/moc_createcategorydialog.o
+debug/moc_editcategorydialog.o
+debug/moc_mainwindow.o
+debug/moc_scene.o

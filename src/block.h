@@ -9,11 +9,15 @@
 #include <QDebug>
 #include <QPointF>
 #include <QFont>
+#include <QGraphicsSceneMouseEvent>
+#include <QApplication>
+#include <QtMath>
+#include <scene.h>
 
 class Block : public QGraphicsItem
 {
 public:
-    Block();
+    Block(QGraphicsItem  *parent = nullptr);
 
     /**
      * @brief build     Builds a block
@@ -25,15 +29,15 @@ public:
     void build(QString name, QStringList inputs, QStringList outputs, QString code);
 
     QRectF boundingRect() const;
+    QRectF boundRect();
     QLine boundBlockInLines( int i);
     QLine boundBlockOutLines( int i);
     int numOfPorts();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    bool Pressed;
 
 protected:
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
     QString name;
@@ -50,10 +54,13 @@ private:
 
     int gridSquare = 20;
     int pointsSize = 8;
+    int topText = 15;
+
+    QPointF offset;
+    QPointF computeTopLeftGridPoint(const QPointF &pointP);
 };
 
 #endif // BLOCK_H
-
 
 
 

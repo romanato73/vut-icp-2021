@@ -2,7 +2,7 @@
 
 #include "block.h"
 #include "storage.h"
-//#include "line.h"
+#include "line.h"
 
 #include <Dialogs/createblockdialog.h>
 #include <QGraphicsSceneMouseEvent>
@@ -37,7 +37,6 @@ void Scene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    qDebug() << "ffff";
     if (this->mode == "create") {
         CreateBlockDialog dialog;
         dialog.loadCategories(Storage::getCategoriesList());
@@ -45,113 +44,85 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         if (dialog.exec() == QDialog::Accepted) {
 
 
-            qDebug() << "block created";
         }
         block = new Block();
-
         // if even then pos.y = centre of square in grid
-        auto x = floor(mouseEvent->scenePos().x() / 20) * 20 + 10;
-        auto y = floor(mouseEvent->scenePos().y() / 20) * 20 + 10;
+        auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
+        auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
         // else pos.y = side of square in grid
 
         auto pos = QPointF(x, y);
-        qDebug() << pos;
 
         block->setPos(pos);
         addItem(block);
+        qDebug() << "block created";
     } else if (this->mode == "edit") {
-        // if even then pos.y = centre of square in grid
-        auto x = floor(mouseEvent->scenePos().x() / 20) * 20;
-        auto y = floor(mouseEvent->scenePos().y() / 20) * 20;
 
-        auto pos = QPointF(x, y);
-        qDebug() << pos;
+        if(mouseEvent->button() == Qt::RightButton){
+            line = new Line;
+            auto x = round(mouseEvent->scenePos().x() / 20) * 20;
+            auto y = round(mouseEvent->scenePos().y() / 20) * 20;
+            auto pos = QPointF(x, y);
 
-//        line = new Line;
-//        line->setLine(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
-//        addItem(line);
-
-        if(mouseEvent->button() == Qt::LeftButton){
-            line = addLine(QLineF(mouseEvent->scenePos(), pos));
+            line->setLine(QLineF(pos, pos));
+            points.append(QPointF(pos));
+            addItem(line);
+            qDebug() << "line created";
         }
-
-
-
-        QGraphicsScene::mousePressEvent(mouseEvent);
     } else if (this->mode == "delete") {
         for(auto* item : items(mouseEvent->scenePos())){
             if(auto line = dynamic_cast<QGraphicsLineItem*>(item); line != nullptr){
                 qDebug() << "Line";
             }else if(auto text = dynamic_cast<QGraphicsTextItem*>(item); text != nullptr){
                 qDebug() << "Text";
+            }else if(auto block = dynamic_cast<QGraphicsItem*>(item); block != nullptr){
+                qDebug() << "Block";
             }else{
                 qDebug() << "????";
             }
         }
     }
+    QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    //line
     if(line){
-        line->setLine(QLineF(line->line().p1(),mouseEvent->scenePos()));
+        auto p = mouseEvent->scenePos();
+        QPointF point;
+        auto tmpX = abs(p.x() - line->line().p1().x());
+        auto tmpY = abs(p.y() - line->line().p1().y());
+        auto pp1 = round(p.x() / 20) * 20;
+        auto pp2 = round(p.y() / 20) * 20;
+        if(tmpX >= tmpY){
+            point = QPoint(pp1, line->line().p1().y());
+        }else{
+            point = QPoint(line->line().p1().x(), pp2);
+        }
+        line->setLine(QLineF(line->line().p1(), point));
+        qDebug() << "line:screen mouse move";
     }
-
-
-    //block
-//    bool even = true;
-//    // if even then pos.y = centre of square in grid
-//    auto x = floor(mouseEvent->scenePos().x() / 20) * 20 + 10;
-//    auto y = floor(mouseEvent->scenePos().y() / 20) * 20 + 10;
-//    // else pos.y = side of square in grid
-//    if(!even){
-//        y -= 10;
-//    }
-
-//    auto pos = QPointF(x, y);
-//    qDebug() << pos;
-
-    //    block->setPos(pos);
+    QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    //line
     if(line){
-        line->setLine(QLineF(line->line().p1(),mouseEvent->scenePos()));
+        auto p = mouseEvent->scenePos();
+        QPointF point;
+        auto tmpX = abs(p.x() - line->line().p1().x());
+        auto tmpY = abs(p.y() - line->line().p1().y());
+        auto pp1 = round(p.x() / 20) * 20;
+        auto pp2 = round(p.y() / 20) * 20;
+        if(tmpX >= tmpY){
+            point = QPoint(pp1, line->line().p1().y());
+        }else{
+            point = QPoint(line->line().p1().x(), pp2);
+        }
+        line->setLine(QLineF(line->line().p1(), point));
+        points.append(point);
         line = nullptr;
+        qDebug() << "line:screen mouse release";
     }
+    QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
-
-
-
-
-
-
-
-//void Scene::mousePressEvent(QMouseEvent *event)
-//{
-//    if (event->button() == Qt::LeftButton) {
-//        dragging = true;
-//        auto x = event->position().x();
-//        auto y = event->position().y();
-//        event->accept();
-//        qDebug() << "pressed";
-//        return;
-//    }
-//}
-
-//void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
-//{
-//    if (this->mode == "create") {
-//        CreateBlockDialog dialog;
-//        dialog.loadCategories(Storage::getCategoriesList());
-
-//        if (dialog.exec() == QDialog::Accepted) {
-////            auto block = new Block();
-
-//            qDebug() << "block created";
-//        }
-//    }
-//}
