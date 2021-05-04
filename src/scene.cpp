@@ -2,9 +2,11 @@
 
 #include "block.h"
 #include "storage.h"
+//#include "line.h"
 
 #include <Dialogs/createblockdialog.h>
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent), gridSize(20)
 {
@@ -35,6 +37,7 @@ void Scene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    qDebug() << "ffff";
     if (this->mode == "create") {
         CreateBlockDialog dialog;
         dialog.loadCategories(Storage::getCategoriesList());
@@ -46,34 +49,86 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         block = new Block();
 
-        bool even = true;
         // if even then pos.y = centre of square in grid
         auto x = floor(mouseEvent->scenePos().x() / 20) * 20 + 10;
         auto y = floor(mouseEvent->scenePos().y() / 20) * 20 + 10;
         // else pos.y = side of square in grid
-        if(!even){
-            y += 10;
-        }
 
         auto pos = QPointF(x, y);
         qDebug() << pos;
 
         block->setPos(pos);
         addItem(block);
+    } else if (this->mode == "edit") {
+        // if even then pos.y = centre of square in grid
+        auto x = floor(mouseEvent->scenePos().x() / 20) * 20;
+        auto y = floor(mouseEvent->scenePos().y() / 20) * 20;
+
+        auto pos = QPointF(x, y);
+        qDebug() << pos;
+
+//        line = new Line;
+//        line->setLine(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
+//        addItem(line);
+
+        if(mouseEvent->button() == Qt::LeftButton){
+            line = addLine(QLineF(mouseEvent->scenePos(), pos));
+        }
+
+
+
+        QGraphicsScene::mousePressEvent(mouseEvent);
+    } else if (this->mode == "delete") {
+        for(auto* item : items(mouseEvent->scenePos())){
+            if(auto line = dynamic_cast<QGraphicsLineItem*>(item); line != nullptr){
+                qDebug() << "Line";
+            }else if(auto text = dynamic_cast<QGraphicsTextItem*>(item); text != nullptr){
+                qDebug() << "Text";
+            }else{
+                qDebug() << "????";
+            }
+        }
     }
 }
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-//    auto x = round(mouseEvent->scenePos().x() / 20) * 20;
-//    auto y = round(mouseEvent->scenePos().y() / 20) * 20;
+    //line
+    if(line){
+        line->setLine(QLineF(line->line().p1(),mouseEvent->scenePos()));
+    }
+
+
+    //block
+//    bool even = true;
+//    // if even then pos.y = centre of square in grid
+//    auto x = floor(mouseEvent->scenePos().x() / 20) * 20 + 10;
+//    auto y = floor(mouseEvent->scenePos().y() / 20) * 20 + 10;
+//    // else pos.y = side of square in grid
+//    if(!even){
+//        y -= 10;
+//    }
 
 //    auto pos = QPointF(x, y);
-
 //    qDebug() << pos;
 
-//    block->setPos(pos);
+    //    block->setPos(pos);
 }
+
+void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    //line
+    if(line){
+        line->setLine(QLineF(line->line().p1(),mouseEvent->scenePos()));
+        line = nullptr;
+    }
+}
+
+
+
+
+
+
 
 //void Scene::mousePressEvent(QMouseEvent *event)
 //{

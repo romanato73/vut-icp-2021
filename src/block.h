@@ -8,6 +8,7 @@
 #include <QGraphicsItem>
 #include <QDebug>
 #include <QPointF>
+#include <QFont>
 
 class Block : public QGraphicsItem
 {
@@ -26,6 +27,7 @@ public:
     QRectF boundingRect() const;
     QLine boundBlockInLines( int i);
     QLine boundBlockOutLines( int i);
+    int numOfPorts();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     bool Pressed;
 
@@ -42,11 +44,12 @@ private:
     QVector<QPointF> points;
 
     qreal penWidth = 4;
-    int blkWidth = 60;
+    int blkWidth = 100;
     int blkHeight = 40;
     int addBlkHeight = 20;
 
     int gridSquare = 20;
+    int pointsSize = 8;
 };
 
 #endif // BLOCK_H

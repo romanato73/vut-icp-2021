@@ -14,6 +14,7 @@ SOURCES += \
     Dialogs/createcategorydialog.cpp \
     Dialogs/editcategorydialog.cpp \
     block.cpp \
+    line.cpp \
     main.cpp \
     mainwindow.cpp \
     scene.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     Dialogs/createcategorydialog.h \
     Dialogs/editcategorydialog.h \
     block.h \
+    line.h \
     mainwindow.h \
     scene.h \
     storage.h

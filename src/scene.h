@@ -64,6 +64,7 @@ protected:
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 //    void mousePressEvent(QMouseEvent *event);
 
@@ -71,6 +72,7 @@ protected:
 
 private:
     QGraphicsItem *block{nullptr};
+    QGraphicsLineItem *line{nullptr};
     const int gridSize;
 
     bool dragging = false;
