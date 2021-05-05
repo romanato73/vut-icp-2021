@@ -142,6 +142,12 @@ margin-left: 15px;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Open Sans</family>
@@ -152,8 +158,6 @@ margin-left: 15px;</string>
 	background-color: #DBDBDB;
 	border: none;
 	color: #000;
-	width: 60px;
-	height: 60px;
 }
 
 QPushButton:hover {
@@ -171,7 +175,7 @@ QPushButton:hover {
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Font Awesome 5 Free</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -198,7 +202,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Font Awesome 5 Free</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -221,7 +225,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Font Awesome 5 Free</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -244,7 +248,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Font Awesome 5 Free</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -257,6 +261,35 @@ color: #ffffff;</string>
             </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="createModeButtons" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	color: #000;
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+}
+
+QPushButton:hover {
+	background-color: #EAEAEA;
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
          </layout>
         </widget>
        </item>
@@ -298,7 +331,7 @@ color: #ffffff;</string>
             <x>0</x>
             <y>0</y>
             <width>300</width>
-            <height>215</height>
+            <height>204</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -320,7 +353,11 @@ color: #ffffff;</string>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton {
+           <string notr="true">* {
+	color: #000;
+}
+
+QPushButton {
 	color: #000;
 	background-color: #fff;
 	border: 1px solid #DBDBDB;
@@ -377,7 +414,9 @@ QPushButton:hover {
                 </property>
                 <property name="font">
                  <font>
-                  <family>Font Awesome 5 Free Solid</family>
+                  <family>Font Awesome 5 Free</family>
+                  <weight>75</weight>
+                  <bold>true</bold>
                  </font>
                 </property>
                 <property name="toolTip">
@@ -402,7 +441,7 @@ border: none!important;</string>
             <widget class="QWidget" name="DefaultCategory" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="QWidget" name="DefaultCategoryTitle" native="true">
+               <widget class="QWidget" name="DefaultCategoryHeader" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <property name="spacing">
                   <number>6</number>
@@ -420,7 +459,7 @@ border: none!important;</string>
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="DeafaultCategoryLabel">
+                  <widget class="QLabel" name="DeafaultCategoryTitle">
                    <property name="font">
                     <font>
                      <family>Open Sans</family>
@@ -480,35 +519,13 @@ border: none!important;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Font Awesome 5 Free Solid</family>
+                     <family>Font Awesome 5 Free</family>
+                     <weight>75</weight>
+                     <bold>true</bold>
                     </font>
                    </property>
                    <property name="text">
                     <string>font</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="Line">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Font Awesome 5 Free Solid</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>slash</string>
                    </property>
                   </widget>
                  </item>
@@ -528,7 +545,7 @@ border: none!important;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Font Awesome 5 Free Solid</family>
+                     <family>Font Awesome 5 Free</family>
                     </font>
                    </property>
                    <property name="text">
@@ -536,8 +553,8 @@ border: none!important;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="3">
-                  <widget class="QPushButton" name="pushButton_2">
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="Line">
                    <property name="minimumSize">
                     <size>
                      <width>30</width>
@@ -552,11 +569,13 @@ border: none!important;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Font Awesome 5 Free Solid</family>
+                     <family>Font Awesome 5 Free</family>
+                     <weight>75</weight>
+                     <bold>true</bold>
                     </font>
                    </property>
                    <property name="text">
-                    <string>pen-nib</string>
+                    <string>slash</string>
                    </property>
                   </widget>
                  </item>
@@ -570,7 +589,7 @@ border: none!important;</string>
             <widget class="QWidget" name="LogicalCategory" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QWidget" name="LogicalCategoryTitle" native="true">
+               <widget class="QWidget" name="LogicalCategoryHeader" native="true">
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
@@ -594,7 +613,7 @@ border: none!important;</string>
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="LogicalCategoryLabel">
+                  <widget class="QLabel" name="LogicalCategoryTitle">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -668,54 +687,6 @@ border: none!important;</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="3">
-                  <widget class="QPushButton" name="XOR">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>XOR</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QPushButton" name="AND">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Open Sans</family>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>AND</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="0" column="2">
                   <widget class="QPushButton" name="OR">
                    <property name="minimumSize">
@@ -740,6 +711,60 @@ border: none!important;</string>
                    </property>
                   </widget>
                  </item>
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="AND">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>AND</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="XOR">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>Open Sans</family>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>XOR</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -759,8 +784,56 @@ border: none!important;</string>
           </sizepolicy>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="4">
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:#000;</string>
+            </property>
+            <property name="text">
+             <string>Build program</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="buildComposite">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Font Awesome 5 Free</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: #6A6FFF;
+	border: none;
+	color: #fff;
+	width: 60px;
+	height: 60px;
+}
+
+QPushButton:hover {
+	background-color: #7a7fff;
+}</string>
+            </property>
+            <property name="text">
+             <string>save</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="buildProgram">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -775,7 +848,9 @@ border: none!important;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Font Awesome 5 Free</family>
+              <weight>75</weight>
+              <bold>true</bold>
              </font>
             </property>
             <property name="styleSheet">
@@ -797,19 +872,27 @@ QPushButton:hover {
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <family>Open Sans</family>
-             </font>
-            </property>
+           <widget class="QLabel" name="label_2">
             <property name="styleSheet">
-             <string notr="true">color:#000;</string>
+             <string notr="true">color: #000;</string>
             </property>
             <property name="text">
-             <string>Build program</string>
+             <string>Save composite block</string>
             </property>
            </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

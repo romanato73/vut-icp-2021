@@ -18,17 +18,73 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
-    <height>400</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Create block</string>
+   <string>Create a block</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#fff;color:#000;</string>
+   <string notr="true">QDialog {
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+}
+
+QLabel {
+	color: #000;
+}
+
+QPushButton {
+	background-color: #6A6FFF;
+	color: #fff;
+	border: none;
+	padding: 10px;
+}
+
+QLineEdit, QTextEdit {
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+}
+
+QComboBox {
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+}
+
+QComboBox::drop-down { border: 0px; }
+QComboBox::down-arrow {
+	image: url(:images/drop-arrow.png);
+	width: 14px;
+	height: 14px;
+	margin-right: 10px;
+}
+
+QComboBox QAbstractItemView {
+	border: 1px solid #DBDBDB;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <family>Open Sans</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Create a block</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QLabel" name="blockNameLabel">
      <property name="text">
@@ -39,8 +95,7 @@
    <item>
     <widget class="QLineEdit" name="blockName">
      <property name="styleSheet">
-      <string notr="true">border: 1px solid #DBDBDB;
-padding: 10px;</string>
+      <string notr="true"/>
      </property>
     </widget>
    </item>
@@ -54,14 +109,7 @@ padding: 10px;</string>
    <item>
     <widget class="QComboBox" name="blockCategory">
      <property name="styleSheet">
-      <string notr="true">QComboBox {
-	border: 1px solid #DBDBDB;
-	padding: 10px;
-}
-
-QComboBox QAbstractItemView {
-	border: 1px solid #DBDBDB;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="placeholderText">
       <string>Choose category</string>
@@ -114,8 +162,7 @@ QComboBox QAbstractItemView {
          <item>
           <widget class="QTextEdit" name="inputs">
            <property name="styleSheet">
-            <string notr="true">border: 1px solid #DBDBDB;
-padding: 10px;</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -153,8 +200,7 @@ padding: 10px;</string>
          <item>
           <widget class="QTextEdit" name="outputs">
            <property name="styleSheet">
-            <string notr="true">border: 1px solid #DBDBDB;
-padding: 10px;</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -186,8 +232,7 @@ padding: 10px;</string>
          <item>
           <widget class="QTextEdit" name="code">
            <property name="styleSheet">
-            <string notr="true">border: 1px solid #DBDBDB;
-padding: 10px;</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -200,10 +245,7 @@ padding: 10px;</string>
    <item>
     <widget class="QPushButton" name="createBlock">
      <property name="styleSheet">
-      <string notr="true">background-color: #6A6FFF;
-color: #fff;
-border: none;
-padding: 10px;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Create block</string>

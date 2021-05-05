@@ -9,24 +9,22 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Components/customblock.cpp \
     Dialogs/createblockdialog.cpp \
     Dialogs/createcategorydialog.cpp \
     Dialogs/editcategorydialog.cpp \
-    block.cpp \
-    line.cpp \
+    Components/block.cpp \
+    Components/line.cpp \
     main.cpp \
     mainwindow.cpp \
     scene.cpp \
     storage.cpp
 
 HEADERS += \
-    Components/customblock.h \
     Dialogs/createblockdialog.h \
     Dialogs/createcategorydialog.h \
     Dialogs/editcategorydialog.h \
-    block.h \
-    line.h \
+    Components/block.h \
+    Components/line.h \
     mainwindow.h \
     scene.h \
     storage.h
@@ -48,3 +46,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Resources/Resources.qrc \
+    Storage/Storage.qrc

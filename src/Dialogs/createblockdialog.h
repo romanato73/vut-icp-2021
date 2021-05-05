@@ -15,6 +15,16 @@ public:
     explicit CreateBlockDialog(QWidget *parent = nullptr);
     ~CreateBlockDialog();
 
+    QString blockName;
+
+    QString blockCategory;
+
+    QStringList blockInputs;
+
+    QStringList blockOutputs;
+
+    QString blockCode;
+
     /**
      * @brief loadCategories Loads the categories
      */

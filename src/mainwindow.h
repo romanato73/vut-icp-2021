@@ -30,7 +30,7 @@ private slots:
     void on_addCategory_clicked();
 
     /**
-     * Modes
+     * Handles all the modes
      */
     void on_selectMode_clicked();
     void on_createMode_clicked();
@@ -47,6 +47,12 @@ private slots:
      */
     void categoryDeleteBtnClick();
 
+    void on_Square_clicked();
+
+    void on_Line_clicked();
+
+    void on_Text_clicked();
+
 private:
     /**
      * @brief ui The main UI
@@ -59,9 +65,20 @@ private:
     Scene *scene = new Scene();
 
     /**
+     * @brief storage Application storage
+     */
+    Storage *storage = new Storage();
+
+    /**
      * @brief mode Sets the current application mode
      */
     QString mode;
+
+    /**
+     * @brief setMode Sets the mode
+     * @param value   Sets the mode to value
+     */
+    void setMode(const QString &value);
 
     /**
      * @brief getCategories Gets all created categories
@@ -74,7 +91,7 @@ private:
      * @brief createNewCategory Creates a new category
      * @param name Name of category
      */
-    void createNewCategory(QString name);
+    void createCategory(QString name);
 
     /**
      * @brief removecategory    Removes the category from the UI
@@ -90,9 +107,37 @@ private:
     void updateCategoryName(QString name, QString newName);
 
     /**
+     * @brief createCategoryBlock   Creates button inside category
+     * @param name                  Name of the block
+     */
+    void createCategoryBlock(QString category, QString name);
+
+    /**
      * @brief setButtonActive Sets the clicked button to active
      * @param name Name of button
      */
     void setButtonActive(QString mode);
+
+    /**
+     * @brief createModeButtons Create mode buttons (block, line, input, output, const)
+     */
+    QVector<QPushButton *>createModeButtons;
+
+    /**
+     * @brief createModeButtons Draws mode buttons into UI
+     * @param set               If true sets the UI otherwise delete UI
+     */
+    void buildCreateModeButtons();
+
+    /**
+     * @brief setCreateModeButtons  Sets the visibility for create mode buttons (block, line, input, output, const)
+     * @param visible               If true buttons are visible otherwise false
+     */
+    void setCreateModeButtons(bool visible);
+
+    /**
+     * @brief createModeSwitch Switches the current create mode (block, line, input, output, const)
+     */
+    void switchCreateModeButtons();
 };
 #endif // MAINWINDOW_H

@@ -3,7 +3,6 @@
 
 #include <QGraphicsScene>
 #include <QDebug>
-#include <block.h>
 #include <QGraphicsItem>
 #include <QPointF>
 #include <QGraphicsSceneMouseEvent>
@@ -19,12 +18,27 @@ class Scene : public QGraphicsScene
     Q_OBJECT;
 public:
     explicit Scene(QObject *parent = 0);
+
+    /**
+     * @brief getGridSize   Gets the grid size.
+     * @return              Returns the grid size
+     */
     int getGridSize() const {return this->gridSize;}
 
     /**
      * @brief mode Determines the current mode
      */
     QString mode = "select";
+
+    /**
+     * @brief createMode Determines the current create mode (block, line, input, output, const)
+     */
+    QString createMode;
+
+    /**
+     * @brief lineDrawing Determines if we are currently drawing a line
+     */
+    bool lineDrawing = false;
 
 //    /**
 //     * @brief rectangles List of rectangles in scene
@@ -50,7 +64,13 @@ public:
      * @brief setMode Sets current mode
      * @param mode    The mode to be set
      */
-    void setMode(QString mode);
+    void setMode(QString value);
+
+    /**
+     * @brief setCreateMode Sets current create mode
+     * @param mode          The mode to be set
+     */
+    void setCreateMode(QString value);
 
 protected:
     /**
@@ -60,23 +80,25 @@ protected:
      *
      * @see https://www.walletfox.com/course/qgraphicsitemsnaptogrid.php
      */
-    void drawBackground(QPainter *painter, const QRectF &rect);
+    void drawBackground(QPainter *painter, const QRectF &rect) override;
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 //    void mousePressEvent(QMouseEvent *event);
 
 //    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    QGraphicsItem *block{nullptr};
+//    QGraphicsItem *block{nullptr};
     QGraphicsLineItem *line{nullptr};
     QVector<QPointF> points;
-    const int gridSize;
 
-    bool dragging = false;
+    /**
+     * @brief gridSize Determines the grid size
+     */
+    const int gridSize;
 
 };
 

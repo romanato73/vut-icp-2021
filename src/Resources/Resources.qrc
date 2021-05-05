@@ -4,5 +4,7 @@
     </qresource>
     <qresource prefix="/fonts">
         <file>FontAwesome5.otf</file>
+        <file>OpenSans-Bold.ttf</file>
+        <file>OpenSans-Regular.ttf</file>
     </qresource>
 </RCC>

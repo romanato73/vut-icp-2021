@@ -7,23 +7,43 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>135</height>
+    <height>165</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
     <width>300</width>
-    <height>135</height>
+    <height>165</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Edit category</string>
+   <string>Edit a category</string>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #fff;</string>
+   <string notr="true">QDialog {
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+}
+
+QLabel {
+	color: #000;
+}
+
+QPushButton {
+	background-color: #6A6FFF;
+	color: #fff;
+	border: none;
+	padding: 10px;
+}
+
+QLineEdit {
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+}</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -41,6 +61,24 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QLabel" name="label_2">
+        <property name="font">
+         <font>
+          <family>Open Sans</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Edit a category</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
@@ -48,7 +86,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: #000;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Name</string>
@@ -63,8 +101,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: 1px solid #DBDBDB;
-padding: 10px;</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
@@ -76,10 +113,7 @@ padding: 10px;</string>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #6A6FFF;
-color: #fff;
-border: none;
-padding: 10px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Update</string>

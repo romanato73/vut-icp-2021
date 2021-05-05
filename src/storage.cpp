@@ -8,9 +8,10 @@
 
 QString Storage::getFileContent(QString name)
 {
-    QString path = QDir::currentPath() + "/../src/Storage/";
+    //QString path = QDir::currentPath() + "/../src/Storage/";
+    QString fileName = ":/storage/" + name;
 
-    QFile file(path + name);
+    QFile file(fileName);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qWarning() << "Can not open file: " + file.fileName();
@@ -40,7 +41,7 @@ void Storage::updateFileContent(QString name, QString content)
 
 QJsonObject Storage::getCategories()
 {
-    auto content = Storage::getFileContent("categories.json");
+    auto content = getFileContent("categories.json");
 
     QJsonDocument json = QJsonDocument::fromJson(content.toUtf8());
     QJsonObject categories = json.object();
@@ -50,7 +51,7 @@ QJsonObject Storage::getCategories()
 
 QStringList Storage::getCategoriesList()
 {
-    auto object = Storage::getCategories();
+    auto object = getCategories();
 
     QStringList list = object.keys();
 
@@ -59,9 +60,9 @@ QStringList Storage::getCategoriesList()
 
 void Storage::addCategory(QString name)
 {
-    auto object = Storage::getCategories();
+    auto object = getCategories();
 
-    object.insert(name, QJsonObject());
+    object.insert(name, QJsonArray());
 
     QJsonDocument doc(object);
     /** @todo: Change to ::Compact for better size */
@@ -72,7 +73,7 @@ void Storage::addCategory(QString name)
 
 void Storage::updateCategory(QString name, QString newName)
 {
-    auto object = Storage::getCategories();
+    auto object = getCategories();
 
     auto categoryValue = object.take(name);
 
@@ -87,7 +88,7 @@ void Storage::updateCategory(QString name, QString newName)
 
 void Storage::removeCategory(QString name)
 {
-    auto object = Storage::getCategories();
+    auto object = getCategories();
 
     object.remove(name);
 
@@ -98,7 +99,7 @@ void Storage::removeCategory(QString name)
     updateFileContent("categories.json", jsonString);
 }
 
-void Storage::addBlock(Block block, QString category)
+void Storage::addBlock(QString category, Block block)
 {
     auto content = getFileContent("categories.json");
 }

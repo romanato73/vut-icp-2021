@@ -8,6 +8,9 @@ CreateBlockDialog::CreateBlockDialog(QWidget *parent) :
     ui(new Ui::CreateBlockDialog)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    this->setModal(true);
 }
 
 CreateBlockDialog::~CreateBlockDialog()
@@ -26,14 +29,20 @@ void CreateBlockDialog::on_createBlock_clicked()
 {
     QMessageBox msg;
 
-    auto blockName = ui->blockName->text();
-    auto blockCategory = ui->blockCategory->currentText();
-    auto inputs = ui->inputs->toPlainText();
-    auto outputs = ui->outputs->toPlainText();
-    auto code = ui->code->toPlainText();
+    // Sets the block data
+    blockName = ui->blockName->text();
+    blockCategory = ui->blockCategory->currentText();
+    blockCode = ui->code->toPlainText();
+
+    // Split inputs and outputs into string list
+    blockInputs = ui->inputs->toPlainText().split('\n');
+    blockOutputs = ui->outputs->toPlainText().split('\n');
 
     if (blockName.isEmpty() || blockCategory.isEmpty()) {
         msg.critical(nullptr, "Error", "Block name and category can not be empty!");
+    } else {
+        /** @todo: Check if block does not already exists in category */
+        accept();
     }
 
 //    if (this->categories.contains(this->categoryName + "Category")) {

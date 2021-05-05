@@ -8,6 +8,9 @@ EditCategoryDialog::EditCategoryDialog(QWidget *parent) :
     ui(new Ui::EditCategoryDialog)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    this->setModal(true);
 }
 
 EditCategoryDialog::~EditCategoryDialog()
