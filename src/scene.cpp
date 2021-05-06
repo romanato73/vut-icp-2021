@@ -57,8 +57,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 block->build(dialog.blockName, dialog.blockInputs, dialog.blockOutputs, dialog.blockCode);
 
-                auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
-                auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
+                auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize + 10;
+                auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize + 10;
 
                 block->setPos(QPointF(x, y));
                 addItem(block);
@@ -90,8 +90,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
 
                 line = new Line;
-                auto x = round(mouseEvent->scenePos().x() / 20) * 20;
-                auto y = round(mouseEvent->scenePos().y() / 20) * 20;
+                auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
+                auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
                 auto pos = QPointF(x, y);
 
                 line->setLine(QLineF(pos, pos));
@@ -114,16 +114,18 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     io->setFont(font);
 
-                    auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
-                    auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
-
-                    io->setPos(QPointF(x, y));
+                    auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
+                    auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
 
                     if (createMode == "input") {
                         io->setPlainText("IN: " + dialog.name);
+                        x -= gridSize/2;
                     } else {
                         io->setPlainText("OUT: " + dialog.name);
+                        x += gridSize/2;
                     }
+
+                    io->setPos(QPointF(x, y));
 
                     addItem(io);
                 }
@@ -165,8 +167,8 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QPointF point;
         auto tmpX = abs(p.x() - line->line().p1().x());
         auto tmpY = abs(p.y() - line->line().p1().y());
-        auto pp1 = round(p.x() / 20) * 20;
-        auto pp2 = round(p.y() / 20) * 20;
+        auto pp1 = round(p.x() / gridSize) * gridSize;
+        auto pp2 = round(p.y() / gridSize) * gridSize;
         if(tmpX >= tmpY){
             point = QPoint(pp1, line->line().p1().y());
         }else{
@@ -191,8 +193,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QPointF point;
         auto tmpX = abs(p.x() - line->line().p1().x());
         auto tmpY = abs(p.y() - line->line().p1().y());
-        auto pp1 = round(p.x() / 20) * 20;
-        auto pp2 = round(p.y() / 20) * 20;
+        auto pp1 = round(p.x() / gridSize) * gridSize;
+        auto pp2 = round(p.y() / gridSize) * gridSize;
         if(tmpX >= tmpY){
             point = QPoint(pp1, line->line().p1().y());
         }else{
