@@ -151,7 +151,7 @@ QStringList MainWindow::getCategories(bool base)
 void MainWindow::createCategory(QString name, QJsonArray blocks)
 {
     QFont fa, text;
-    fa.setFamily("Font Awesome 5 Free");
+    fa.setFamily("Font Awesome 5 Free Solid");
     fa.setBold(true);
     text.setFamily("Open Sans");
     text.setPointSize(10);
@@ -289,7 +289,7 @@ void MainWindow::setButtonActive(QString mode)
 void MainWindow::buildCreateModeButtons()
 {
     QFont fa, text;
-    fa.setFamily("Font Awesome 5 Free");
+    fa.setFamily("Font Awesome 5 Free Solid");
     fa.setBold(true);
     text.setFamily("Open Sans");
 
