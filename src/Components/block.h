@@ -23,7 +23,8 @@ public:
     QStringList outputs;
     QString code;
 
-    QVector<QPointF> points;
+    QVector<QPointF> inPoints;
+    QVector<QPointF> outPoints;
 
     /**
      * @brief build     Builds a block

@@ -66,10 +66,21 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 blocks.append(block);
             }
+//            QVector<QPointF> pomArray;
+//            for (Block *a : blocks) {
+////                qDebug() << a->inPoints;
+//                for (QPointF p : a->outPoints){
+//                    for (QGraphicsLineItem *l : lines){
+//                        if(p == l->line().p1()){
+//                            pomArray.append( l->line().p2());
+//                        } else if(p == l->line().p2()){
+//                            pomArray.append( l->line().p1());
+//                        } else {
 
-            for (Block *a : blocks) {
-                qDebug() << a->points;
-            }
+//                        }
+//                    }
+//                }
+//            }
         } else if (createMode == "connection") {
             // Creates a new connection line
             if (mouseEvent->button() == Qt::LeftButton) {
@@ -84,6 +95,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 auto pos = QPointF(x, y);
 
                 line->setLine(QLineF(pos, pos));
+
                 addItem(line);
             }
         } else if (createMode == "input" || createMode == "output") {
@@ -188,9 +200,11 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         line->setLine(QLineF(line->line().p1(), point));
 
-        // Delete line if its point
+        // Delete line if its point else save points
         if (point == line->line().p1()) {
             delete line;
+        } else {
+            lines.append(line);
         }
         line = nullptr;
 //        qDebug() << "line:screen mouse release";

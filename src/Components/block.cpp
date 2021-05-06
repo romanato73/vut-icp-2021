@@ -33,28 +33,24 @@ QRectF Block::boundRect()
 }
 QLine Block::boundBlockInLines(int i)
 {
-    if(numOfPorts() % 2 == 0){
-        int y = gridSquare * i - gridSquare/2 * (numOfPorts()-1);
-        points.append(QPointF( - width/2 - gridSquare, y));
-        return QLine( - width/2 - gridSquare, y, - width/2, y);
-    }else{
-        int y = gridSquare * i - gridSquare/2 * numOfPorts();
-        points.append(QPointF( - width/2 - gridSquare, y));
-        return QLine( - width/2 - gridSquare, y, - width/2, y);
+    int y = gridSquare * i - gridSquare/2 * (numOfPorts() - 1 + (numOfPorts() % 2));
+    if(outPoints.size() > i){
+        inPoints[i] = QPointF( - width/2 - gridSquare, y);
+    } else {
+        inPoints.append(QPointF( - width/2 - gridSquare, y));
     }
+    return QLine( - width/2 - gridSquare, y, - width/2, y);
 }
 
 QLine Block::boundBlockOutLines(int i)
 {
-    if(numOfPorts() % 2 == 0){
-        int y = gridSquare * i - gridSquare/2 * (numOfPorts()-1);
-        points.append(QPointF(  width/2 + gridSquare, y));
-        return QLine( width/2 + gridSquare, y, width/2, y);
-    }else{
-        int y = gridSquare * i - gridSquare/2 * numOfPorts();
-        points.append(QPointF(  width/2 + gridSquare, y));
-        return QLine( width/2 + gridSquare, y, width/2, y);
+    int y = gridSquare * i - gridSquare/2 * (numOfPorts() - 1 + (numOfPorts() % 2));
+    if(outPoints.size() > i){
+        outPoints[i] = QPointF(  width/2 + gridSquare, y);
+    } else {
+        outPoints.append(QPointF(  width/2 + gridSquare, y));
     }
+    return QLine( width/2 + gridSquare, y, width/2, y);
 }
 
 int Block::numOfPorts()
@@ -64,45 +60,40 @@ int Block::numOfPorts()
 
 void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    // box
     QRectF rec = boundRect();
     QBrush brush(Qt::white);
-
-//    if(Pressed){
-//        brush.setColor(Qt::red);
-//    }else{
-//        brush.setColor(Qt::green);
-//    }
     painter->fillRect(rec, brush);
     painter->setPen(QPen(Qt::black, penWidth));
     painter->drawRect(rec);
-
+    // input, output lines
     for(int i = 0; i < inputs.count(); i++){
         painter->drawLine(boundBlockInLines(i));
     }
     for(int i = 0; i < outputs.count(); i++){
         painter->drawLine(boundBlockOutLines(i));
     }
-
+    // input, output points
     painter->setPen(QPen(Qt::green, pointsSize));
-    painter->drawPoints(points.data(), points.size());
-
+    painter->drawPoints(inPoints.data(), inPoints.size());
+    painter->drawPoints(outPoints.data(), outPoints.size());
+    // name text and input, output text
     QFont font = QFont ("Courier");
     painter->setPen(QPen(Qt::green, 20));
-    painter->drawText(-width/2, -height/2-addHeight*(numOfPorts()-1)/2- topText, width, addHeight, Qt::AlignHCenter, name);
+    painter->drawText(-width/2,
+                      -height/2-addHeight*(numOfPorts() - 1 + (numOfPorts() % 2))/2 - topText,
+                      width, addHeight, Qt::AlignHCenter, name);
     font.setStyleHint (QFont::Monospace);
     painter->setPen("black");
     font.setBold(false);
     font.setPointSize (7);
     painter->setFont(font);
 
-    int ii = 0;
-    while( ii < inputs.count()){
-        painter->drawText( -width/2 + gridSquare/2, points.data()[ii].y(), inputs[ii]);
-        ii++;
+    for(int i = 0; i < inputs.count(); i++){
+        painter->drawText( -width/2 + gridSquare/2, inPoints.data()[i].y(), inputs[i]);
     }
-    while(ii-inputs.count() < outputs.count()){
-        painter->drawText( gridSquare/2, points.data()[ii].y(), outputs[ii-inputs.count()]);
-        ii++;
+    for(int i = 0; i < outputs.count(); i++){
+        painter->drawText( gridSquare/2, outPoints.data()[i].y(), outputs[i]);
     }
 }
 

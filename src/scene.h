@@ -14,6 +14,7 @@
 #include <QtMath>
 
 #include <Components/block.h>
+#include <Components/line.h>
 
 class Scene : public QGraphicsScene
 {
@@ -47,10 +48,10 @@ public:
 //     */
 //    QVector<QGraphicsItem *> rectangles;
 
-//    /**
-//     * @brief lines List of lines in scene
-//     */
-//    QVector<QGraphicsItem *> lines;
+    /**
+     * @brief lines List of lines in scene
+     */
+    QVector<QGraphicsLineItem *> lines;
 
 //    /**
 //     * @brief texts List of texts in scene
