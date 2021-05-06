@@ -331,7 +331,7 @@ QPushButton:hover {
             <x>0</x>
             <y>0</y>
             <width>300</width>
-            <height>204</height>
+            <height>215</height>
            </rect>
           </property>
           <property name="sizePolicy">

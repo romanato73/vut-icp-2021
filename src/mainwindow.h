@@ -5,9 +5,17 @@
 #include "scene.h"
 
 #include <QDir>
+#include <QFile>
 #include <QGraphicsScene>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QChar>
+#include <QFontDatabase>
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -91,7 +99,7 @@ private:
      * @brief createNewCategory Creates a new category
      * @param name Name of category
      */
-    void createCategory(QString name);
+    void createCategory(QString name, QJsonArray blocks = QJsonArray());
 
     /**
      * @brief removecategory    Removes the category from the UI

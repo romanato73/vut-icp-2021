@@ -8,7 +8,6 @@
 #include <QPainter>
 #include <QtMath>
 #include <QApplication>
-#include <scene.h>
 
 
 class Line : public QGraphicsLineItem

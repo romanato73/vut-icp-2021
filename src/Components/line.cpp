@@ -21,29 +21,27 @@ void Line::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     offset = pos() - computeTopLeftGridPoint(pos());
     QGraphicsLineItem::mousePressEvent(mouseEvent);
-    qDebug() << "line: object press";
 }
 
 QVariant Line::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemPositionChange && scene()) {
         QPointF newPos = value.toPointF();
-        if(QApplication::mouseButtons() == Qt::LeftButton &&
-            qobject_cast<Scene*> (scene())){
-                QPointF closestPoint = computeTopLeftGridPoint(newPos);
-                return  closestPoint+=offset;
-            }
-        else
+//        if(QApplication::mouseButtons() == Qt::LeftButton && qobject_cast<Scene*> (scene())){
+        if(QApplication::mouseButtons() == Qt::LeftButton) {
+            QPointF closestPoint = computeTopLeftGridPoint(newPos);
+            return  closestPoint+=offset;
+        } else {
             return newPos;
-    }
-    else
+        }
+    } else {
         return QGraphicsItem::itemChange(change, value);
+    }
 }
 
 QPointF Line::computeTopLeftGridPoint(const QPointF &pointP)
 {
-    Scene* customScene = qobject_cast<Scene*> (scene());
-    int gridSize = customScene->getGridSize();
+    int gridSize = 20;
     qreal xV = floor(pointP.x()/gridSize)*gridSize;
     qreal yV = floor(pointP.y()/gridSize)*gridSize;
     return QPointF(xV, yV);

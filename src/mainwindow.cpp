@@ -7,14 +7,6 @@
 #include "Dialogs/createblockdialog.h"
 #include "Dialogs/editcategorydialog.h"
 
-#include <QChar>
-#include <QFile>
-#include <QFontDatabase>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QJsonArray>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -47,19 +39,10 @@ void MainWindow::Initialize()
     auto categories = storage->getCategories();
 
     for (const QString &category : categories.keys()) {
-        auto items = categories.value(category).toArray();
+        auto blocks = categories.value(category).toArray();
 
         // Build category
-        createCategory(category);
-
-        // Build category blocks
-        for (auto item : items) {
-            auto block = item.toObject();
-
-            auto name = block.value("name").toString();
-
-            createCategoryBlock(category, name);
-        }
+        createCategory(category, blocks);
     }
 }
 
@@ -106,10 +89,16 @@ void MainWindow::categoryEditBtnClick()
     dialog.setCategories(getCategories(true));
     dialog.setCategoryName(category);
     if (dialog.exec() == QDialog::Accepted) {
+        auto blocks = storage->getCategories().value(category).toArray();
         // Update category in storage
         storage->updateCategory(category, dialog.categoryName);
-        // Update category in UI
-        updateCategoryName(category, dialog.categoryName);
+        // Remove category
+        removeCategory(category);
+        // Build new category
+
+        createCategory(dialog.categoryName, blocks);
+
+//        updateCategoryName(category, dialog.categoryName);
     }
 }
 
@@ -127,7 +116,7 @@ void MainWindow::categoryDeleteBtnClick()
 
 void MainWindow::setMode(const QString &value)
 {
-    if (mode != "create" && value == "create") {
+    if (value == "create") {
         setCreateModeButtons(true);
     } else {
         setCreateModeButtons(false);
@@ -159,7 +148,7 @@ QStringList MainWindow::getCategories(bool base)
     return categories;
 }
 
-void MainWindow::createCategory(QString name)
+void MainWindow::createCategory(QString name, QJsonArray blocks)
 {
     QFont fa, text;
     fa.setFamily("Font Awesome 5 Free");
@@ -217,6 +206,15 @@ void MainWindow::createCategory(QString name)
     category->layout()->addWidget(items);
 
     ui->Categories->layout()->addWidget(category);
+
+    // Build category blocks
+    for (auto block : blocks) {
+        auto object = block.toObject();
+
+        auto blockName = object.value("name").toString();
+
+        createCategoryBlock(name, blockName);
+    }
 }
 
 void MainWindow::removeCategory(QString name)
@@ -262,7 +260,11 @@ void MainWindow::createCategoryBlock(QString category, QString name)
 {
     auto categoryItems = ui->Categories->findChild<QWidget *>(category + "CategoryItems");
 
+    qDebug() << categoryItems->maximumSize();
+
     auto btn = new QPushButton(name);
+    btn->setMinimumSize(80, 30);
+    btn->setMaximumSize(80, 30);
 
     categoryItems->layout()->addWidget(btn);
 }
@@ -400,7 +402,7 @@ void MainWindow::on_Line_clicked()
 }
 
 void MainWindow::on_Text_clicked()
-{
+{    
     QGraphicsTextItem *text = scene->addText("Text");
     text->setPos(scene->width()/2, scene->height()/2);
     text->setFlags(QGraphicsItem::ItemIsMovable);

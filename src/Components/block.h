@@ -11,13 +11,19 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QApplication>
 #include <QtMath>
-#include <scene.h>
 
 
 class Block : public QGraphicsItem
 {
 public:
     Block(QGraphicsItem *parent = nullptr);
+
+    QString name;
+    QStringList inputs;
+    QStringList outputs;
+    QString code;
+
+    QVector<QPointF> points;
 
     /**
      * @brief build     Builds a block
@@ -40,13 +46,6 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
-    QString name;
-    QStringList inputs;
-    QStringList outputs;
-    QString code;
-
-    QVector<QPointF> points;
-
     qreal penWidth = 4;
     int width = 100;
     int height = 40;

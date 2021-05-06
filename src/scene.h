@@ -13,6 +13,8 @@
 #include <QMouseEvent>
 #include <QtMath>
 
+#include <Components/block.h>
+
 class Scene : public QGraphicsScene
 {
     Q_OBJECT;
@@ -43,22 +45,22 @@ public:
 //    /**
 //     * @brief rectangles List of rectangles in scene
 //     */
-//    QList<QGraphicsItem *> rectangles;
+//    QVector<QGraphicsItem *> rectangles;
 
 //    /**
 //     * @brief lines List of lines in scene
 //     */
-//    QList<QGraphicsItem *> lines;
+//    QVector<QGraphicsItem *> lines;
 
 //    /**
 //     * @brief texts List of texts in scene
 //     */
-//    QList<QGraphicsItem *> texts;
+//    QVector<QGraphicsItem *> texts;
 
-//    /**
-//     * @brief blocks List of blocks in scene
-//     */
-//    QList<Block *> blocks;
+    /**
+     * @brief blocks List of blocks in scene
+     */
+    QVector<Block *> blocks;
 
     /**
      * @brief setMode Sets current mode
@@ -82,18 +84,13 @@ protected:
      */
     void drawBackground(QPainter *painter, const QRectF &rect) override;
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-//    void mousePressEvent(QMouseEvent *event);
-
-//    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 
 private:
-//    QGraphicsItem *block{nullptr};
-    QGraphicsLineItem *line{nullptr};
-    QVector<QPointF> points;
+    QGraphicsLineItem *line = nullptr;
+    QPointF lineStartPoint;
 
     /**
      * @brief gridSize Determines the grid size

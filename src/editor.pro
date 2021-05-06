@@ -9,22 +9,28 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Components/io.cpp \
     Dialogs/createblockdialog.cpp \
     Dialogs/createcategorydialog.cpp \
+    Dialogs/createiodialog.cpp \
     Dialogs/editcategorydialog.cpp \
     Components/block.cpp \
     Components/line.cpp \
+    Dialogs/newdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     scene.cpp \
     storage.cpp
 
 HEADERS += \
+    Components/io.h \
     Dialogs/createblockdialog.h \
     Dialogs/createcategorydialog.h \
+    Dialogs/createiodialog.h \
     Dialogs/editcategorydialog.h \
     Components/block.h \
     Components/line.h \
+    Dialogs/newdialog.h \
     mainwindow.h \
     scene.h \
     storage.h
@@ -32,7 +38,9 @@ HEADERS += \
 FORMS += \
     Dialogs/createblockdialog.ui \
     Dialogs/createcategorydialog.ui \
+    Dialogs/createiodialog.ui \
     Dialogs/editcategorydialog.ui \
+    Dialogs/newdialog.ui \
     mainwindow.ui
 
 OTHER_FILES += \
