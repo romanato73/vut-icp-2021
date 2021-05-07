@@ -29,10 +29,6 @@ public:
      */
     int getGridSize() const {return this->gridSize;}
 
-    int x;
-
-    int y;
-
     /**
      * @brief storage Access to storage
      */
@@ -49,24 +45,9 @@ public:
     QString createMode;
 
     /**
-     * @brief lineDrawing Determines if we are currently drawing a line
-     */
-    bool lineDrawing = false;
-
-//    /**
-//     * @brief rectangles List of rectangles in scene
-//     */
-//    QVector<QGraphicsItem *> rectangles;
-
-    /**
      * @brief lines List of lines in scene
      */
-    QVector<QGraphicsLineItem *> lines;
-
-//    /**
-//     * @brief texts List of texts in scene
-//     */
-//    QVector<QGraphicsItem *> texts;
+    QVector<Line *> lines;
 
     /**
      * @brief blocks List of blocks in scene
@@ -85,9 +66,22 @@ public:
      */
     void setCreateMode(QString value);
 
-    int roundToGrid(int number);
+    /**
+     * @brief buildProgram Builds the code from program
+     */
+    void buildProgram();
+
+    /**
+     * @brief followLine Helper function for building program that follows lines from inputs
+     * @param point      Point that is used to find another lines
+     */
+    void followLine(QPointF point);
 
 signals:
+    /**
+     * @brief onBlockCreate Send signal on block create
+     * @param category      Category name of the block
+     */
     void onBlockCreate(QString category);
 
 protected:
@@ -105,7 +99,14 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 
 private:
-    QGraphicsLineItem *line = nullptr;
+    /**
+     * @brief line Line instance (for drawing)
+     */
+    Line *line = nullptr;
+
+    /**
+     * @brief lineStartPoint Line start point (for drawing)
+     */
     QPointF lineStartPoint;
 
     /**

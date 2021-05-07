@@ -27,6 +27,9 @@ public:
     void setType(QString type);
 
 private slots:
+    /**
+     * @brief on_create_clicked Creates the IO
+     */
     void on_create_clicked();
 
 private:

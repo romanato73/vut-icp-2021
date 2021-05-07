@@ -18,14 +18,40 @@ class Block : public QGraphicsItem
 public:
     Block(QGraphicsItem *parent = nullptr);
 
+    /**
+     * @brief name Name of the block
+     */
     QString name;
+
+    /**
+     * @brief category Block category
+     */
     QString category;
+
+    /**
+     * @brief inputs Names of the block inputs
+     */
     QStringList inputs;
+
+    /**
+     * @brief outputs Names of the block outputs
+     */
     QStringList outputs;
+
+    /**
+     * @brief code The code of the block
+     */
     QString code;
 
-    QVector<QPointF> inPoints;
-    QVector<QPointF> outPoints;
+    /**
+     * @brief inPoints Exact position of the input points
+     */
+    QVector<QPointF> inPoints{};
+
+    /**
+     * @brief Exact position of the output points
+     */
+    QVector<QPointF> outPoints{};
 
     /**
      * @brief build     Builds a block
@@ -48,7 +74,11 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
+    /**
+     * @brief penWidth Sets the width of the pen
+     */
     qreal penWidth = 4;
+
     int width = 100;
     int height = 40;
     int addHeight = 20;

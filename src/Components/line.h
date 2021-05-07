@@ -15,6 +15,11 @@ class Line : public QGraphicsLineItem
 public:
     Line(QGraphicsItem  *parent = nullptr);
 
+    /**
+     * @brief mapped Sets if the line has been mapped or not
+     */
+    bool mapped = false;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:

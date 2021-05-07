@@ -77,6 +77,8 @@ private slots:
 
     void on_XOR_clicked();
 
+    void on_buildProgram_clicked();
+
 private:
     /**
      * @brief ui The main UI
@@ -155,7 +157,7 @@ private:
     /**
      * @brief createModeButtons Create mode buttons (block, line, input, output, const)
      */
-    QVector<QPushButton *>createModeButtons;
+    QVector<QPushButton *> createModeButtons;
 
     /**
      * @brief createModeButtons Draws mode buttons into UI

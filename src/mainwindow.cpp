@@ -146,7 +146,12 @@ void MainWindow::categoryBlockClick()
 
         if (btn) {
             auto block = storage->getBlock(category, btn->text());
-            block->setPos(view->mapToScene(view->viewport()->rect().center()));
+
+            auto center = view->mapToScene(view->viewport()->rect().center());
+            auto x = round(center.x() / 20) * 20 + 10;
+            auto y = round(center.y() / 20) * 20 + 10;
+
+            block->setPos(x, y);
             scene->addItem(block);
         }
     }
@@ -433,6 +438,7 @@ void MainWindow::on_Text_clicked()
     font.setBold(true);
     font.setPointSize(12);
     QGraphicsTextItem *text = scene->addText("Text");
+    text->setDefaultTextColor(Qt::black);
     text->setFont(font);
     text->setPos(view->mapToScene(view->viewport()->rect().center()));
     text->setFlags(QGraphicsItem::ItemIsMovable);
@@ -452,6 +458,7 @@ void MainWindow::on_AND_clicked()
     block->setPos(QPointF(x, y));
 
     scene->addItem(block);
+    scene->blocks.append(block);
 }
 
 void MainWindow::on_NOT_clicked()
@@ -466,6 +473,7 @@ void MainWindow::on_NOT_clicked()
     block->setPos(QPointF(x, y));
 
     scene->addItem(block);
+    scene->blocks.append(block);
 }
 
 void MainWindow::on_OR_clicked()
@@ -480,6 +488,7 @@ void MainWindow::on_OR_clicked()
     block->setPos(QPointF(x, y));
 
     scene->addItem(block);
+    scene->blocks.append(block);
 }
 
 void MainWindow::on_XOR_clicked()
@@ -494,4 +503,11 @@ void MainWindow::on_XOR_clicked()
     block->setPos(QPointF(x, y));
 
     scene->addItem(block);
+    scene->blocks.append(block);
 }
+
+void MainWindow::on_buildProgram_clicked()
+{
+    scene->buildProgram();
+}
+

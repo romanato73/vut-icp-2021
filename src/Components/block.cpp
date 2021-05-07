@@ -34,7 +34,7 @@ QRectF Block::boundRect()
 QLine Block::boundBlockInLines(int i)
 {
     int y = gridSquare * i - gridSquare/2 * (numOfPorts() - 1 + (numOfPorts() % 2));
-    if(outPoints.size() > i){
+    if(inPoints.size() > i){
         inPoints[i] = QPointF( - width/2 - gridSquare, y);
     } else {
         inPoints.append(QPointF( - width/2 - gridSquare, y));
@@ -46,9 +46,9 @@ QLine Block::boundBlockOutLines(int i)
 {
     int y = gridSquare * i - gridSquare/2 * (numOfPorts() - 1 + (numOfPorts() % 2));
     if(outPoints.size() > i){
-        outPoints[i] = QPointF(  width/2 + gridSquare, y);
+        outPoints[i] = QPointF(width/2 + gridSquare, y);
     } else {
-        outPoints.append(QPointF(  width/2 + gridSquare, y));
+        outPoints.append(QPointF(width/2 + gridSquare, y));
     }
     return QLine( width/2 + gridSquare, y, width/2, y);
 }

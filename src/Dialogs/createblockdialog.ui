@@ -44,12 +44,14 @@ QPushButton {
 
 QLineEdit, QTextEdit {
 	background-color: #fff;
+	color: #000;
 	border: 1px solid #DBDBDB;
 	padding: 10px;
 }
 
 QComboBox {
 	background-color: #fff;
+	color: #000;
 	border: 1px solid #DBDBDB;
 	padding: 10px;
 }

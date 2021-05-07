@@ -17,6 +17,9 @@ public:
     explicit CreateBlockDialog(QWidget *parent = nullptr);
     ~CreateBlockDialog();
 
+    /**
+     * @brief block New Block instance
+     */
     Block *block = new Block();
 
     /**
@@ -25,6 +28,9 @@ public:
     void loadCategories(QStringList categories);
 
 private slots:
+    /**
+     * @brief on_createBlock_clicked Creates the block
+     */
     void on_createBlock_clicked();
 
 private:

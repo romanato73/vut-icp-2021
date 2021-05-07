@@ -1,98 +1,15 @@
 {
-    "Basic": [
-        {
-            "code": "",
-            "inputs": [
-                "A",
-                "B",
-                "C"
-            ],
-            "name": "block-1",
-            "outputs": [
-                "Y",
-                "Z"
-            ]
-        },
+    "Logical extended": [
         {
             "code": "",
             "inputs": [
                 "A",
                 "B"
             ],
-            "name": "block-2",
+            "name": "NAND",
             "outputs": [
                 "Y"
             ]
-        },
-        {
-            "blocks": [
-                {
-                    "code": "bool AND(bool A, bool B){ return A & B; }",
-                    "inputs": [
-                        "A",
-                        "B"
-                    ],
-                    "name": "AND",
-                    "outputs": [
-                        "Y"
-                    ],
-                    "x": 0,
-                    "y": 0
-                },
-                {
-                    "code": "bool OR(bool A, bool B){ return A | B; }",
-                    "inputs": [
-                        "A",
-                        "B"
-                    ],
-                    "name": "OR",
-                    "outputs": [
-                        "Y"
-                    ],
-                    "x": 50,
-                    "y": 50
-                },
-                {
-                    "code": "bool AND(bool A, bool B){ return A & B; }",
-                    "inputs": [
-                        "A",
-                        "B"
-                    ],
-                    "name": "AND",
-                    "outputs": [
-                        "Y"
-                    ],
-                    "x": 0,
-                    "y": 0
-                },
-                {
-                    "code": "bool OR(bool A, bool B){ return A | B; }",
-                    "inputs": [
-                        "A",
-                        "B"
-                    ],
-                    "name": "OR",
-                    "outputs": [
-                        "Y"
-                    ],
-                    "x": 50,
-                    "y": 50
-                }
-            ],
-            "composite": true,
-            "connections": [
-                {
-                    "input": "OR|A",
-                    "output": "AND|Y"
-                },
-                {
-                    "input": "OR|B",
-                    "output": "AND|Y"
-                }
-            ],
-            "height": 250,
-            "name": "comp-block",
-            "width": 250
         }
     ]
 }

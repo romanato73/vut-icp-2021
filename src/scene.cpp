@@ -3,6 +3,7 @@
 #include <Dialogs/createiodialog.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
+#include <Components/io.h>
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent), gridSize(20)
 {
@@ -19,16 +20,80 @@ void Scene::setCreateMode(QString value)
     createMode = value;
 }
 
-int Scene::roundToGrid(int number)
+void Scene::buildProgram()
 {
-    int remainder = abs(number) % getGridSize();
+    // Iterate through all blocks
+    for (auto block : blocks) {
+        // Unmap lines
+        for (auto line : lines) { line->mapped = false; }
 
-    if (remainder == 0) return number;
+        qDebug() << block->name;
 
-    if (number < 0) {
-        return - (abs(number) - remainder);
-    } else {
-        return number + getGridSize() - remainder;
+        // Iterate through inputs
+        for (int i = 0; i < block->inputs.size() ; i++) {
+            auto in = block->inPoints.at(i);
+            // Input coordinates
+            auto inCoords = QPointF(block->x() + in.x(), block->y() + in.y());
+//            qDebug() << "Input[" << block->inputs.at(i) << "]" << inCoords;
+
+            // Iterate throuh lines
+            for (auto line : lines) {
+//                qDebug() << line->pos();
+                auto lineCoordsStart = line->mapToScene(line->line().p1());
+                auto lineCoordsEnd = line->mapToScene(line->line().p2());
+
+                // Match coordinates
+                if (inCoords == lineCoordsStart) {
+                    line->mapped = true;
+//                    qDebug() << inCoords << " == " << lineCoordsStart;
+                    followLine(lineCoordsEnd);
+                } else if (inCoords == lineCoordsEnd) {
+                    line->mapped = true;
+//                    qDebug() << inCoords << " == " << lineCoordsEnd;
+                    followLine(lineCoordsStart);
+                }
+            }
+        }
+    }
+}
+
+void Scene::followLine(QPointF point)
+{
+//    qDebug() << "finding path " << point;
+
+    // First we need to find a block
+    for (auto block : blocks) {
+        // Iterate through outputs (we want only outputs connected to inputs)
+        for (int i = 0; i < block->outputs.size() ; i++) {
+            auto out = block->outPoints.at(i);
+            // Output coordinates
+            auto outCoords = QPointF(block->x() + out.x(), block->y() + out.y());
+//            qDebug() << "Output[" << block->outputs.at(i) << "]" << outCoords;
+
+            // If match found connect blocks
+            if (point == outCoords) {
+                qDebug() << "Connected to: " << block->name;
+                return;
+            }
+        }
+    }
+
+    // If no block found find line or end algorithm
+    for (auto line : lines) {
+        // Skip mapped lines
+        if (line->mapped) continue;
+
+        auto lineCoordsStart = line->mapToScene(line->line().p1());
+        auto lineCoordsEnd = line->mapToScene(line->line().p2());
+
+        // Match coordinates
+        if (point == lineCoordsStart) {
+            line->mapped = true;
+            followLine(lineCoordsEnd);
+        } else if (point == lineCoordsEnd) {
+            line->mapped = true;
+            followLine(lineCoordsStart);
+        }
     }
 }
 
@@ -53,7 +118,8 @@ void Scene::drawBackground(QPainter *painter, const QRectF &rect)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    qDebug() << "SceneMode: " << mode << "| CreateMode: " << createMode;
+//    qDebug() << "SceneMode: " << mode << "| CreateMode: " << createMode;
+    qDebug() << "MOUSE "  << mouseEvent->scenePos().x() << ":" << mouseEvent->scenePos().y();
 
     if (this->mode == "select") {
         // Enable element mooving
@@ -174,26 +240,21 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     QFont font;
                     font.setFamily("Open Sans");
                     font.setBold(true);
-                    font.setPointSize(12);
+                    font.setPointSize(12);                   
 
-                    QGraphicsTextItem *io = new QGraphicsTextItem;
-
-                    io->setFont(font);
+                    auto io = new IO();
 
                     auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
                     auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
 
-                    if (createMode == "input") {
-                        io->setPlainText("IN: " + dialog.name);
-                        x -= gridSize/2;
-                    } else {
-                        io->setPlainText("OUT: " + dialog.name);
-                        x += gridSize/2;
-                    }
-
+                    io->build(dialog.name, createMode);
+                    io->setFont(font);
+                    io->setDefaultTextColor(Qt::black);
                     io->setPos(QPointF(x, y));
 
                     addItem(io);
+
+                    qDebug() << "IO added";
                 }
             }
         } else if (createMode == "const") {
@@ -213,17 +274,23 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     } else if (this->mode == "delete") {
         for(auto* item : items(mouseEvent->scenePos())){
-            if(auto line = dynamic_cast<QGraphicsLineItem*>(item); line != nullptr) {
+            if(auto line = dynamic_cast<Line*>(item); line != nullptr) {
                 delete line;
+                lines.removeOne(line);
                 qDebug() << "Line deleted";
             } else if(auto text = dynamic_cast<QGraphicsTextItem*>(item); text != nullptr) {
                 delete text;
                 qDebug() << "Text deleted";
-            } else if(auto block = dynamic_cast<QGraphicsItem*>(item); block != nullptr) {
+            } else if(auto block = dynamic_cast<Block*>(item); block != nullptr) {
+                qDebug() << "Block " + block->name + " deleted";
                 delete block;
-                qDebug() << "Block deleted";
+                blocks.removeOne(block);
             } else {
-                qDebug() << "Unknown object (not deleted)";
+                auto element = dynamic_cast<QGraphicsItem*>(item);
+                if (element) {
+                    delete element;
+                    qDebug() << "Graphics item deleted";
+                }
             }
         }
     }
