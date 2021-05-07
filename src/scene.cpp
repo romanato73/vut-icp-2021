@@ -66,6 +66,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 blocks.append(block);
             }
+
+            /// algorithm1.c
 //            QVector<QPointF> pomArray;
 //            for (Block *a : blocks) {
 ////                qDebug() << a->inPoints;
@@ -81,6 +83,52 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 //                    }
 //                }
 //            }
+
+            /// algorithm2.c
+//            QVector<QPointF> pomArray;
+//            QVector<QPointF> finalInputs;
+
+//            for (Block *a : blocks) {
+//                for (QPointF p : a->inPoints){
+//                    compare(p);
+//                }
+//            }
+
+//        }
+//        void compare(QPointF point){
+//            // kontrolujem block outputs
+//            for (Block *a : blocks) {
+//                for (QPointF p : a->outPoints){
+//                    if(point == p)
+//                        return;
+//                }
+//            }// kontrolujem input, output
+//            for (IO *a : io) {
+//                if(point == a->pos)
+//                        return;
+//            }// kontrolujem const
+//            for (ConstV *a : constV) {
+//                if(point == a->pos)
+//                        return;
+//            }// kontrolujem line
+//            for (QGraphicsLineItem *l : lines){
+//                if(point == l->line().p1()){
+//                        pomArray.append( l->line().p2());
+//                        compare(l->line().p2());
+//                } else if(point == l->line().p2()){
+//                        pomArray.append( l->line().p1());
+//                        compare(l->line().p1());
+//                } else {
+//                    finalInputs.append();
+//                    finalBlockPointer.append(b);
+//                }
+//            }
+
+//        }
+        /// END
+
+
+
         } else if (createMode == "connection") {
             // Creates a new connection line
             if (mouseEvent->button() == Qt::LeftButton) {
