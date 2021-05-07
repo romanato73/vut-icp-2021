@@ -2,18 +2,25 @@
 #define IO_H
 
 #include <QGraphicsItem>
+#include <QPainter>
+#include <QPen>
+#include <QGraphicsTextItem>
 
-class IO : public QGraphicsItem
+class IO : public QGraphicsTextItem
 {
 public:
-    IO();
+    IO(QGraphicsItem  *parent = nullptr);
 
-    QString ioType = "const";
+    QString name;
+    QString ioType;
 
-    QString constType;
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    int x;
-    int y;
+private:
+    qreal penWidth = 4;
+    int gridSquare = 20;
+    int pointsSize = 8;
 };
 
 #endif // IO_H

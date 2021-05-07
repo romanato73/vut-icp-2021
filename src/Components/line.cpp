@@ -14,7 +14,7 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->setPen(QPen(Qt::green, 8));
     painter->drawPoint(line().p1());
     painter->drawPoint(line().p2());
-//    qDebug() << "line:paints line";
+    //    qDebug() << "line:paints line";
 }
 
 void Line::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)

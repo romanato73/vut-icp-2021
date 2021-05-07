@@ -75,8 +75,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     emit onBlockCreate(block->category);
                 }
 
-                auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
-                auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
+                auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize + 10;
+                auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize + 10;
 
                 block->setPos(QPointF(x, y));
                 addItem(block);
@@ -84,6 +84,69 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 blocks.append(block);
             }
+
+            /// algorithm1.c
+//            QVector<QPointF> pomArray;
+//            for (Block *a : blocks) {
+////                qDebug() << a->inPoints;
+//                for (QPointF p : a->outPoints){
+//                    for (QGraphicsLineItem *l : lines){
+//                        if(p == l->line().p1()){
+//                            pomArray.append( l->line().p2());
+//                        } else if(p == l->line().p2()){
+//                            pomArray.append( l->line().p1());
+//                        } else {
+
+//                        }
+//                    }
+//                }
+//            }
+
+            /// algorithm2.c
+//            QVector<QPointF> pomArray;
+//            QVector<QPointF> finalInputs;
+
+//            for (Block *a : blocks) {
+//                for (QPointF p : a->inPoints){
+//                    compare(p);
+//                }
+//            }
+
+//        }
+//        void compare(QPointF point){
+//            // kontrolujem block outputs
+//            for (Block *a : blocks) {
+//                for (QPointF p : a->outPoints){
+//                    if(point == p)
+//                        return;
+//                }
+//            }// kontrolujem input, output
+//            for (IO *a : io) {
+//                if(point == a->pos)
+//                        return;
+//            }// kontrolujem const
+//            for (ConstV *a : constV) {
+//                if(point == a->pos)
+//                        return;
+//            }// kontrolujem line
+//            for (QGraphicsLineItem *l : lines){
+//                if(point == l->line().p1()){
+//                        pomArray.append( l->line().p2());
+//                        compare(l->line().p2());
+//                } else if(point == l->line().p2()){
+//                        pomArray.append( l->line().p1());
+//                        compare(l->line().p1());
+//                } else {
+//                    finalInputs.append();
+//                    finalBlockPointer.append(b);
+//                }
+//            }
+
+//        }
+        /// END
+
+
+
         } else if (createMode == "connection") {
             // Creates a new connection line
             if (mouseEvent->button() == Qt::LeftButton) {
@@ -93,11 +156,12 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
 
                 line = new Line;
-                auto x = round(mouseEvent->scenePos().x() / 20) * 20;
-                auto y = round(mouseEvent->scenePos().y() / 20) * 20;
+                auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
+                auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
                 auto pos = QPointF(x, y);
 
                 line->setLine(QLineF(pos, pos));
+
                 addItem(line);
             }
         } else if (createMode == "input" || createMode == "output") {
@@ -116,16 +180,18 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     io->setFont(font);
 
-                    auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
-                    auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
-
-                    io->setPos(QPointF(x, y));
+                    auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
+                    auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
 
                     if (createMode == "input") {
                         io->setPlainText("IN: " + dialog.name);
+                        x -= gridSize/2;
                     } else {
                         io->setPlainText("OUT: " + dialog.name);
+                        x += gridSize/2;
                     }
+
+                    io->setPos(QPointF(x, y));
 
                     addItem(io);
                 }
@@ -172,8 +238,8 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QPointF point;
         auto tmpX = abs(p.x() - line->line().p1().x());
         auto tmpY = abs(p.y() - line->line().p1().y());
-        auto pp1 = round(p.x() / 20) * 20;
-        auto pp2 = round(p.y() / 20) * 20;
+        auto pp1 = round(p.x() / gridSize) * gridSize;
+        auto pp2 = round(p.y() / gridSize) * gridSize;
         if(tmpX >= tmpY){
             point = QPoint(pp1, line->line().p1().y());
         }else{
@@ -198,8 +264,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QPointF point;
         auto tmpX = abs(p.x() - line->line().p1().x());
         auto tmpY = abs(p.y() - line->line().p1().y());
-        auto pp1 = round(p.x() / 20) * 20;
-        auto pp2 = round(p.y() / 20) * 20;
+        auto pp1 = round(p.x() / gridSize) * gridSize;
+        auto pp2 = round(p.y() / gridSize) * gridSize;
         if(tmpX >= tmpY){
             point = QPoint(pp1, line->line().p1().y());
         }else{
@@ -207,9 +273,11 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         line->setLine(QLineF(line->line().p1(), point));
 
-        // Delete line if its point
+        // Delete line if its point else save points
         if (point == line->line().p1()) {
             delete line;
+        } else {
+            lines.append(line);
         }
         line = nullptr;
 //        qDebug() << "line:screen mouse release";
