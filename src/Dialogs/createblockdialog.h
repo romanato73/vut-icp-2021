@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include <Components/block.h>
+
 namespace Ui {
 class CreateBlockDialog;
 }
@@ -15,15 +17,7 @@ public:
     explicit CreateBlockDialog(QWidget *parent = nullptr);
     ~CreateBlockDialog();
 
-    QString blockName;
-
-    QString blockCategory;
-
-    QStringList blockInputs;
-
-    QStringList blockOutputs;
-
-    QString blockCode;
+    Block *block = new Block();
 
     /**
      * @brief loadCategories Loads the categories

@@ -8,8 +8,8 @@
 
 QString Storage::getFileContent(QString name)
 {
-    //QString path = QDir::currentPath() + "/../src/Storage/";
-    QString fileName = ":/storage/" + name;
+    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+    //QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
     QFile file(fileName);
 
@@ -27,9 +27,10 @@ QString Storage::getFileContent(QString name)
 
 void Storage::updateFileContent(QString name, QString content)
 {
-    QString path = QDir::currentPath() + "/../src/Storage/";
+    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+//    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
-    QFile file(path + name);
+    QFile file(fileName);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "Can not open file: " + file.fileName();
@@ -37,6 +38,8 @@ void Storage::updateFileContent(QString name, QString content)
     }
 
     file.write(content.toStdString().c_str());
+
+    file.close();
 }
 
 QJsonObject Storage::getCategories()
@@ -99,7 +102,59 @@ void Storage::removeCategory(QString name)
     updateFileContent("categories.json", jsonString);
 }
 
-void Storage::addBlock(QString category, Block block)
+void Storage::addBlock(Block *block)
 {
-    auto content = getFileContent("categories.json");
+    auto object = getCategories();
+
+    // Create new block
+    QJsonObject newBlock;
+
+    // Insert values
+    newBlock.insert("name", block->name);
+    newBlock.insert("inputs", QJsonArray::fromStringList(block->inputs));
+    newBlock.insert("outputs", QJsonArray::fromStringList(block->outputs));
+    newBlock.insert("code", block->code);
+
+    // Get all blocks from category
+    auto blocks = object.value(block->category).toArray();
+
+    // Append new block
+    blocks.append(newBlock);
+
+    // Remove category
+    object.remove(block->category);
+
+    // Insert category with new block
+    object.insert(block->category, blocks);
+
+    QJsonDocument doc(object);
+    /** @todo: Change to ::Compact for better size */
+    QString jsonString = doc.toJson(QJsonDocument::Indented);
+
+    updateFileContent("categories.json", jsonString);
+}
+
+Block *Storage::getBlock(QString category, QString name)
+{
+    auto block = new Block();
+
+    auto object = getCategories();
+
+    auto blocks = object.value(category).toArray();
+
+    for (auto obj : blocks) {
+        auto item = obj.toObject();
+
+        if (item["name"] == name) {
+            QStringList inputs;
+            QStringList outputs;
+
+            for (auto in : item["inputs"].toArray()) inputs.append(in.toString());
+            for (auto in : item["outputs"].toArray()) outputs.append(in.toString());
+
+            block->build(name, inputs, outputs, item["code"].toString());
+        }
+    }
+
+    return block;
 }

@@ -20,7 +20,7 @@ CreateBlockDialog::~CreateBlockDialog()
 
 void CreateBlockDialog::loadCategories(QStringList categories)
 {
-    for (auto category : categories) {
+    for (const QString &category : categories) {
         ui->blockCategory->addItem(category);
     }
 }
@@ -30,16 +30,16 @@ void CreateBlockDialog::on_createBlock_clicked()
     QMessageBox msg;
 
     // Sets the block data
-    blockName = ui->blockName->text();
-    blockCategory = ui->blockCategory->currentText();
-    blockCode = ui->code->toPlainText();
+    block->name = ui->blockName->text();
+    block->category = ui->blockCategory->currentText();
+    block->code = ui->code->toPlainText();
 
     // Split inputs and outputs into string list
-    blockInputs = ui->inputs->toPlainText().split('\n');
-    blockOutputs = ui->outputs->toPlainText().split('\n');
+    block->inputs = ui->inputs->toPlainText().split('\n');
+    block->outputs = ui->outputs->toPlainText().split('\n');
 
-    if (blockName.isEmpty() || blockCategory.isEmpty()) {
-        msg.critical(nullptr, "Error", "Block name and category can not be empty!");
+    if (block->name.isEmpty()) {
+        msg.critical(nullptr, "Error", "Block name can not be empty!");
     } else {
         /** @todo: Check if block does not already exists in category */
         accept();

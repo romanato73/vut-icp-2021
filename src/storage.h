@@ -48,7 +48,21 @@ public:
      * @param block     Block instance
      * @param category  Name of category
      */
-    void addBlock(QString category, Block block);
+    void addBlock(Block *block);
+
+    /**
+     * @brief getBlock  Gets the block from storage
+     * @param category  Block category
+     * @param name      Block name
+     * @return          Block instance
+     */
+    Block *getBlock(QString category, QString name);
+
+    /**
+     * @brief deleteBlock Deletes block from storage
+     * @param block       Block to be deleted
+     */
+    void deleteBlock(Block *block);
 
 private:
     /**

@@ -1,10 +1,23 @@
 <RCC>
-    <qresource prefix="/images">
-        <file>drop-arrow.png</file>
-    </qresource>
     <qresource prefix="/fonts">
         <file>FontAwesome5.otf</file>
         <file>OpenSans-Bold.ttf</file>
         <file>OpenSans-Regular.ttf</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>drop-arrow.png</file>
+        <file>edit.svg</file>
+        <file>edit_black.svg</file>
+        <file>font.svg</file>
+        <file>mouse-pointer.svg</file>
+        <file>mouse-pointer_black.svg</file>
+        <file>plus.svg</file>
+        <file>plus_black.svg</file>
+        <file>save.svg</file>
+        <file>slash.svg</file>
+        <file>square.svg</file>
+        <file>tools.svg</file>
+        <file>trash.svg</file>
+        <file>trash_black.svg</file>
     </qresource>
 </RCC>

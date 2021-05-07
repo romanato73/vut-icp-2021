@@ -1,8 +1,4 @@
 #include "scene.h"
-#include "Components/block.h"
-#include "Components/line.h"
-#include "storage.h"
-
 #include <Dialogs/createblockdialog.h>
 #include <Dialogs/createiodialog.h>
 #include <QGraphicsSceneMouseEvent>
@@ -21,6 +17,19 @@ void Scene::setMode(QString value)
 void Scene::setCreateMode(QString value)
 {
     createMode = value;
+}
+
+int Scene::roundToGrid(int number)
+{
+    int remainder = abs(number) % getGridSize();
+
+    if (remainder == 0) return number;
+
+    if (number < 0) {
+        return - (abs(number) - remainder);
+    } else {
+        return number + getGridSize() - remainder;
+    }
 }
 
 void Scene::drawBackground(QPainter *painter, const QRectF &rect)
@@ -46,16 +55,25 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     qDebug() << "SceneMode: " << mode << "| CreateMode: " << createMode;
 
-    if (this->mode == "create") {
+    if (this->mode == "select") {
+        // Enable element mooving
+        for(auto item : items()) {
+            item->setFlag(QGraphicsItem::ItemIsMovable, true);
+        }
+    } else if (this->mode == "create") {
         if (createMode == "block") {
             // Creates a new block
             CreateBlockDialog dialog;
-            dialog.loadCategories((new Storage)->getCategoriesList());
+            dialog.loadCategories(storage->getCategoriesList());
 
             if (dialog.exec() == QDialog::Accepted) {
-                auto block = new Block();
+                auto block = dialog.block;
 
-                block->build(dialog.blockName, dialog.blockInputs, dialog.blockOutputs, dialog.blockCode);
+                // Add into storage if category set
+                if (block->category != "") {
+                    storage->addBlock(block);
+                    emit onBlockCreate(block->category);
+                }
 
                 auto x = round(mouseEvent->scenePos().x() / 20) * 20 + 10;
                 auto y = round(mouseEvent->scenePos().y() / 20) * 20 + 10;
@@ -65,10 +83,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 qDebug() << "Block created";
 
                 blocks.append(block);
-            }
-
-            for (Block *a : blocks) {
-                qDebug() << a->points;
             }
         } else if (createMode == "connection") {
             // Creates a new connection line
@@ -120,6 +134,11 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             // Creates a new constant
         }
     } else if (this->mode == "edit") {
+        // Disable element mooving
+        for(auto item : items()) {
+            item->setFlag(QGraphicsItem::ItemIsMovable, false);
+        }
+
         // Editing blocks
         for (auto item : items(mouseEvent->scenePos())) {
             if (auto block = dynamic_cast<Block*>(item); block != nullptr) {

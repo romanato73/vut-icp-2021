@@ -63,7 +63,7 @@ int Block::numOfPorts()
 }
 
 void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+{    
     QRectF rec = boundRect();
     QBrush brush(Qt::white);
 
@@ -110,7 +110,6 @@ void Block::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     offset = pos() - computeTopLeftGridPoint(pos());
     QGraphicsItem::mousePressEvent(mouseEvent);
-    qDebug() << "inside";
 }
 
 QVariant Block::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)

@@ -7,6 +7,13 @@ class IO : public QGraphicsItem
 {
 public:
     IO();
+
+    QString ioType = "const";
+
+    QString constType;
+
+    int x;
+    int y;
 };
 
 #endif // IO_H

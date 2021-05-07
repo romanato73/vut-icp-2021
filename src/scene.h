@@ -13,7 +13,9 @@
 #include <QMouseEvent>
 #include <QtMath>
 
-#include <Components/block.h>
+#include "storage.h"
+#include "Components/block.h"
+#include "Components/line.h"
 
 class Scene : public QGraphicsScene
 {
@@ -26,6 +28,15 @@ public:
      * @return              Returns the grid size
      */
     int getGridSize() const {return this->gridSize;}
+
+    int x;
+
+    int y;
+
+    /**
+     * @brief storage Access to storage
+     */
+    Storage *storage = new Storage();
 
     /**
      * @brief mode Determines the current mode
@@ -73,6 +84,11 @@ public:
      * @param mode          The mode to be set
      */
     void setCreateMode(QString value);
+
+    int roundToGrid(int number);
+
+signals:
+    void onBlockCreate(QString category);
 
 protected:
     /**

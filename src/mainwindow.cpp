@@ -4,7 +4,6 @@
 #include "QGraphicsEllipseItem"
 #include "QGraphicsTextItem"
 #include "Dialogs/createcategorydialog.h"
-#include "Dialogs/createblockdialog.h"
 #include "Dialogs/editcategorydialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -29,8 +28,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::Initialize()
 {
+    ui->editor->setLayout(new QVBoxLayout);
+    ui->editor->layout()->setContentsMargins(0, 0, 0, 0);
+
+    ui->editor->layout()->addWidget(view);
+
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
     // Add graphics scene
-    ui->editor->setScene(scene);
+    view->setScene(scene);
+
+    // Add block created signal
+    connect(view->scene(), SIGNAL(onBlockCreate(QString)), this, SLOT(updateGUI(QString)));
 
     // Build create mode buttons
     buildCreateModeButtons();
@@ -44,6 +54,16 @@ void MainWindow::Initialize()
         // Build category
         createCategory(category, blocks);
     }
+}
+
+void MainWindow::updateGUI(QString category)
+{
+    auto blocks = (new Storage)->getCategories().value(category).toArray();
+
+    // Remove category
+    removeCategory(category);
+    // Build new category
+    createCategory(category, blocks);
 }
 
 void MainWindow::on_addCategory_clicked()
@@ -95,10 +115,7 @@ void MainWindow::categoryEditBtnClick()
         // Remove category
         removeCategory(category);
         // Build new category
-
         createCategory(dialog.categoryName, blocks);
-
-//        updateCategoryName(category, dialog.categoryName);
     }
 }
 
@@ -112,6 +129,27 @@ void MainWindow::categoryDeleteBtnClick()
     storage->removeCategory(category);
     // Remove category from UI
     removeCategory(category);
+}
+
+void MainWindow::categoryBlockClick()
+{
+    if (mode == "edit") {
+        // Edit block
+        qDebug() << "Editing block";
+    } else if (mode == "delete") {
+        // Delete block
+        qDebug() << "Deleting block";
+    } else {
+        // Place into scene
+        auto category = sender()->objectName().left(sender()->objectName().size() - 4);
+        auto btn = reinterpret_cast<QPushButton *>(sender());
+
+        if (btn) {
+            auto block = storage->getBlock(category, btn->text());
+            block->setPos(view->mapToScene(view->viewport()->rect().center()));
+            scene->addItem(block);
+        }
+    }
 }
 
 void MainWindow::setMode(const QString &value)
@@ -150,9 +188,7 @@ QStringList MainWindow::getCategories(bool base)
 
 void MainWindow::createCategory(QString name, QJsonArray blocks)
 {
-    QFont fa, text;
-    fa.setFamily("Font Awesome 5 Free Solid");
-    fa.setBold(true);
+    QFont text;
     text.setFamily("Open Sans");
     text.setPointSize(10);
     text.setBold(true);
@@ -179,8 +215,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
     // Set edit button
     auto editBtn = new QPushButton();
     editBtn->setObjectName(name + "CategoryEdit");
-    editBtn->setFont(fa);
-    editBtn->setText("edit");
+    editBtn->setIcon(QIcon(":/icons/edit_black.svg"));
     editBtn->setMinimumSize(20, 20);
     editBtn->setMaximumSize(20, 20);
     editBtn->setStyleSheet("background-color: none!important; border: none!important;");
@@ -191,8 +226,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
     // Set delete button
     auto deleteBtn = new QPushButton();
     deleteBtn->setObjectName(name + "CategoryDelete");
-    deleteBtn->setFont(fa);
-    deleteBtn->setText("trash");
+    deleteBtn->setIcon(QIcon(":/icons/trash_black.svg"));
     deleteBtn->setMinimumSize(20, 20);
     deleteBtn->setMaximumSize(20, 20);
     deleteBtn->setStyleSheet("background-color: none!important; border: none!important;");
@@ -202,19 +236,45 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
     // Create category items
     auto items = new QWidget();
     items->setObjectName(name + "CategoryItems");
-    items->setLayout(new QGridLayout);
-    category->layout()->addWidget(items);
+    items->setContentsMargins(0, 0, 0, 0);
 
-    ui->Categories->layout()->addWidget(category);
+    auto gridLayout = new QGridLayout;
+    gridLayout->setContentsMargins(0, 0, 0, 0);
+    gridLayout->setAlignment(Qt::AlignLeft);
+    items->setLayout(gridLayout);
 
     // Build category blocks
+    unsigned row = 0;
+    unsigned col = 0;
+
+    mapper = new QSignalMapper(this);
+
     for (auto block : blocks) {
         auto object = block.toObject();
 
         auto blockName = object.value("name").toString();
+        qDebug() << blockName;
 
-        createCategoryBlock(name, blockName);
+        auto btn = new QPushButton(blockName);
+        btn->setObjectName(name + "Item");
+        btn->setMinimumSize(60, 30);
+        btn->setMaximumSize(60, 30);
+
+        gridLayout->addWidget(btn, row, col);
+
+        if (col != 0 && col % 3 == 0) {
+            row++;
+            col = 0;
+        } else {
+            col++;
+        }
+
+        connect(btn, &QPushButton::clicked, this, &MainWindow::categoryBlockClick);
     }
+
+    category->layout()->addWidget(items);
+
+    ui->Categories->layout()->addWidget(category);
 }
 
 void MainWindow::removeCategory(QString name)
@@ -228,69 +288,42 @@ void MainWindow::removeCategory(QString name)
     }
 }
 
-void MainWindow::updateCategoryName(QString name, QString newName)
-{
-    auto nameCategory = name + "Category";
-
-    for (auto item : ui->Categories->children()) {
-        if (item->objectName() == nameCategory) {
-            // Update label
-            auto label = item->findChild<QLabel *>(nameCategory + "Title");
-            label->setObjectName(newName + "CategoryTitle");
-            label->setText(newName);
-
-            // Update items
-            auto items = item->findChild<QWidget *>(nameCategory + "Items");
-            items->setObjectName(newName + "CategoryItems");
-
-            // Update buttons
-            auto editBtn = item->findChild<QPushButton *>(nameCategory + "Edit");
-            editBtn->setObjectName(newName + "CategoryEdit");
-            auto deleteBtn = item->findChild<QPushButton *>(nameCategory + "Delete");
-            deleteBtn->setObjectName(newName + "CategoryDelete");
-
-            // Update item object
-            item->setObjectName(newName + "Category");
-            break;
-        }
-    }
-}
-
-void MainWindow::createCategoryBlock(QString category, QString name)
-{
-    auto categoryItems = ui->Categories->findChild<QWidget *>(category + "CategoryItems");
-
-    qDebug() << categoryItems->maximumSize();
-
-    auto btn = new QPushButton(name);
-    btn->setMinimumSize(80, 30);
-    btn->setMaximumSize(80, 30);
-
-    categoryItems->layout()->addWidget(btn);
-}
-
 void MainWindow::setButtonActive(QString mode)
 {
     QString activeStyle = "background-color: #6A6FFF;color: #ffffff;";
 
     // Remove active status from other buttons
     ui->selectMode->setStyleSheet("");
+    ui->selectMode->setChecked(false);
+
     ui->createMode->setStyleSheet("");
+    ui->createMode->setChecked(false);
+
     ui->editMode->setStyleSheet("");
+    ui->editMode->setChecked(false);
+
     ui->deleteMode->setStyleSheet("");
+    ui->deleteMode->setChecked(false);
 
     // Update active status
-    if (mode == "select") ui->selectMode->setStyleSheet(activeStyle);
-    else if (mode == "create") ui->createMode->setStyleSheet(activeStyle);
-    else if (mode == "edit") ui->editMode->setStyleSheet(activeStyle);
-    else if (mode == "delete") ui->deleteMode->setStyleSheet(activeStyle);
+    if (mode == "select") {
+        ui->selectMode->setStyleSheet(activeStyle);
+        ui->selectMode->setChecked(true);
+    } else if (mode == "create") {
+        ui->createMode->setStyleSheet(activeStyle);
+        ui->createMode->setChecked(true);
+    } else if (mode == "edit") {
+        ui->editMode->setStyleSheet(activeStyle);
+        ui->editMode->setChecked(true);
+    } else if (mode == "delete") {
+        ui->deleteMode->setStyleSheet(activeStyle);
+        ui->deleteMode->setChecked(true);
+    }
 }
 
 void MainWindow::buildCreateModeButtons()
 {
-    QFont fa, text;
-    fa.setFamily("Font Awesome 5 Free Solid");
-    fa.setBold(true);
+    QFont text;
     text.setFamily("Open Sans");
 
     if (ui->createModeButtons->layout() == nullptr) {
@@ -300,16 +333,16 @@ void MainWindow::buildCreateModeButtons()
     auto layout = ui->createModeButtons->layout();
 
     // Create buttons
-    auto block = new QPushButton("square");
+    auto block = new QPushButton();
     block->setObjectName("blockMode");
-    block->setFont(fa);
+    block->setIcon(QIcon(":icons/square.svg"));
     block->setMinimumSize(30, 30);
     block->setStyleSheet("border-color: #6A6FFF;");
     block->setVisible(false);
 
-    auto connection = new QPushButton("slash");
+    auto connection = new QPushButton();
     connection->setObjectName("connectionMode");
-    connection->setFont(fa);
+    connection->setIcon(QIcon(":icons/slash.svg"));
     connection->setMinimumSize(30, 30);
     connection->setVisible(false);
 
@@ -383,29 +416,82 @@ void MainWindow::switchCreateModeButtons()
     QString mode = modeBtn->objectName().left(modeBtn->objectName().length() - 4);
 
     scene->setCreateMode(mode);
-
-    qDebug() << "Switched";
 }
 
 void MainWindow::on_Square_clicked()
 {
     QGraphicsRectItem *rect = scene->addRect(0, 0, 40, 40, QPen(Qt::black, 5));
+    rect->setPos(view->mapToScene(view->viewport()->rect().center()));
     /** @todo implement resizing */
     rect->setFlags(QGraphicsItem::ItemIsMovable);
 }
 
-void MainWindow::on_Line_clicked()
-{
-    QGraphicsLineItem *line = scene->addLine(scene->width()/2, scene->height()/2, 20, 0, QPen(Qt::black, 6));
-    /** @todo implement resizing */
-    line->setFlags(QGraphicsItem::ItemIsMovable);
-}
-
 void MainWindow::on_Text_clicked()
 {    
+    QFont font;
+    font.setFamily("Open Sans");
+    font.setBold(true);
+    font.setPointSize(12);
     QGraphicsTextItem *text = scene->addText("Text");
-    text->setPos(scene->width()/2, scene->height()/2);
+    text->setFont(font);
+    text->setPos(view->mapToScene(view->viewport()->rect().center()));
     text->setFlags(QGraphicsItem::ItemIsMovable);
     text->setTextInteractionFlags(Qt::TextEditorInteraction);
 
+}
+
+void MainWindow::on_AND_clicked()
+{
+    auto block = new Block();
+    block->build("AND", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A & B }");
+
+    auto center = view->mapToScene(view->viewport()->rect().center());
+    auto x = round(center.x() / 20) * 20 + 10;
+    auto y = round(center.y() / 20) * 20 + 10;
+
+    block->setPos(QPointF(x, y));
+
+    scene->addItem(block);
+}
+
+void MainWindow::on_NOT_clicked()
+{
+    auto block = new Block();
+    block->build("NOT", {"A"}, {"Y"}, "int NOT(int A) { return ~A }");
+
+    auto center = view->mapToScene(view->viewport()->rect().center());
+    auto x = round(center.x() / 20) * 20 + 10;
+    auto y = round(center.y() / 20) * 20 + 10;
+
+    block->setPos(QPointF(x, y));
+
+    scene->addItem(block);
+}
+
+void MainWindow::on_OR_clicked()
+{
+    auto block = new Block();
+    block->build("OR", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A | B }");
+
+    auto center = view->mapToScene(view->viewport()->rect().center());
+    auto x = round(center.x() / 20) * 20 + 10;
+    auto y = round(center.y() / 20) * 20 + 10;
+
+    block->setPos(QPointF(x, y));
+
+    scene->addItem(block);
+}
+
+void MainWindow::on_XOR_clicked()
+{
+    auto block = new Block();
+    block->build("XOR", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A ^ B }");
+
+    auto center = view->mapToScene(view->viewport()->rect().center());
+    auto x = round(center.x() / 20) * 20 + 10;
+    auto y = round(center.y() / 20) * 20 + 10;
+
+    block->setPos(QPointF(x, y));
+
+    scene->addItem(block);
 }

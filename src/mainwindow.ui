@@ -35,6 +35,7 @@
  QScrollBar {
     background-color: #F8F8F8;
     width: 10px;
+	height: 10px;
 	border: none;
  }
 
@@ -175,7 +176,7 @@ QPushButton:hover {
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -188,7 +189,18 @@ QPushButton:hover {
 color: #ffffff;</string>
             </property>
             <property name="text">
-             <string>mouse-pointer</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/mouse-pointer_black.svg</normaloff>
+              <normalon>:/icons/mouse-pointer.svg</normalon>:/icons/mouse-pointer_black.svg</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -202,7 +214,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -211,7 +223,18 @@ color: #ffffff;</string>
              <string>Create mode</string>
             </property>
             <property name="text">
-             <string>plus</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/plus_black.svg</normaloff>
+              <normalon>:/icons/plus.svg</normalon>:/icons/plus_black.svg</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -225,7 +248,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -234,7 +257,15 @@ color: #ffffff;</string>
              <string>Edit mode</string>
             </property>
             <property name="text">
-             <string>edit</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/edit_black.svg</normaloff>
+              <normalon>:/icons/edit.svg</normalon>:/icons/edit_black.svg</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -248,7 +279,7 @@ color: #ffffff;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -257,7 +288,15 @@ color: #ffffff;</string>
              <string>Delete mode</string>
             </property>
             <property name="text">
-             <string>trash</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/trash_black.svg</normaloff>
+              <normalon>:/icons/trash.svg</normalon>:/icons/trash_black.svg</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -414,7 +453,7 @@ QPushButton:hover {
                 </property>
                 <property name="font">
                  <font>
-                  <family>Font Awesome 5 Free Solid</family>
+                  <family>Open Sans</family>
                   <weight>75</weight>
                   <bold>true</bold>
                  </font>
@@ -430,7 +469,11 @@ QPushButton:hover {
 border: none!important;</string>
                 </property>
                 <property name="text">
-                 <string>plus</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="Resources/Resources.qrc">
+                  <normaloff>:/icons/plus_black.svg</normaloff>:/icons/plus_black.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -503,7 +546,7 @@ border: none!important;</string>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
-                 <item row="0" column="2">
+                 <item row="0" column="1">
                   <widget class="QPushButton" name="Text">
                    <property name="minimumSize">
                     <size>
@@ -519,13 +562,17 @@ border: none!important;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Font Awesome 5 Free Solid</family>
+                     <family>Open Sans</family>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
                    <property name="text">
-                    <string>font</string>
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="Resources/Resources.qrc">
+                     <normaloff>:/icons/font.svg</normaloff>:/icons/font.svg</iconset>
                    </property>
                   </widget>
                  </item>
@@ -545,37 +592,15 @@ border: none!important;</string>
                    </property>
                    <property name="font">
                     <font>
-                     <family>Font Awesome 5 Free Solid</family>
+                     <family>Open Sans</family>
                     </font>
                    </property>
                    <property name="text">
-                    <string>square</string>
+                    <string/>
                    </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QPushButton" name="Line">
-                   <property name="minimumSize">
-                    <size>
-                     <width>30</width>
-                     <height>30</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <family>Font Awesome 5 Free Solid</family>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>slash</string>
+                   <property name="icon">
+                    <iconset resource="Resources/Resources.qrc">
+                     <normaloff>:/icons/square.svg</normaloff>:/icons/square.svg</iconset>
                    </property>
                   </widget>
                  </item>
@@ -642,7 +667,7 @@ border: none!important;</string>
               <item>
                <widget class="QWidget" name="LogicalCategoryItems" native="true">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -667,7 +692,7 @@ border: none!important;</string>
                   <widget class="QPushButton" name="NOT">
                    <property name="minimumSize">
                     <size>
-                     <width>30</width>
+                     <width>60</width>
                      <height>30</height>
                     </size>
                    </property>
@@ -691,7 +716,7 @@ border: none!important;</string>
                   <widget class="QPushButton" name="OR">
                    <property name="minimumSize">
                     <size>
-                     <width>30</width>
+                     <width>60</width>
                      <height>30</height>
                     </size>
                    </property>
@@ -721,7 +746,7 @@ border: none!important;</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>30</width>
+                     <width>60</width>
                      <height>30</height>
                     </size>
                    </property>
@@ -745,7 +770,7 @@ border: none!important;</string>
                   <widget class="QPushButton" name="XOR">
                    <property name="minimumSize">
                     <size>
-                     <width>30</width>
+                     <width>60</width>
                      <height>30</height>
                     </size>
                    </property>
@@ -809,7 +834,7 @@ border: none!important;</string>
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -828,7 +853,11 @@ QPushButton:hover {
 }</string>
             </property>
             <property name="text">
-             <string>save</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
             </property>
            </widget>
           </item>
@@ -848,7 +877,7 @@ QPushButton:hover {
             </property>
             <property name="font">
              <font>
-              <family>Font Awesome 5 Free Solid</family>
+              <family>Open Sans</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -867,7 +896,11 @@ QPushButton:hover {
 }</string>
             </property>
             <property name="text">
-             <string>tools</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/tools.svg</normaloff>:/icons/tools.svg</iconset>
             </property>
            </widget>
           </item>
@@ -901,38 +934,19 @@ QPushButton:hover {
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QGraphicsView" name="editor">
-      <property name="minimumSize">
-       <size>
-        <width>550</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Open Sans</family>
-       </font>
-      </property>
+     <widget class="QWidget" name="editor" native="true">
       <property name="styleSheet">
-       <string notr="true">border: none;</string>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="sizeAdjustPolicy">
-       <enum>QAbstractScrollArea::AdjustIgnored</enum>
-      </property>
-      <property name="dragMode">
-       <enum>QGraphicsView::NoDrag</enum>
+       <string notr="true">QGraphicsView {
+	border: none;
+}</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

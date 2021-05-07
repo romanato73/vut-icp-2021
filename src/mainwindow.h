@@ -3,6 +3,7 @@
 
 #include "storage.h"
 #include "scene.h"
+#include "view.h"
 
 #include <QDir>
 #include <QFile>
@@ -16,6 +17,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QSignalMapper>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,6 +35,14 @@ public:
      * @brief Initialize scene and buttons
      */
     void Initialize();
+
+public slots:
+    void updateGUI(QString category);
+
+    /**
+     * @brief addBlockToScene Handles the block and add it into scene
+     */
+    void categoryBlockClick();
 
 private slots:
     void on_addCategory_clicked();
@@ -57,9 +67,15 @@ private slots:
 
     void on_Square_clicked();
 
-    void on_Line_clicked();
-
     void on_Text_clicked();
+
+    void on_AND_clicked();
+
+    void on_NOT_clicked();
+
+    void on_OR_clicked();
+
+    void on_XOR_clicked();
 
 private:
     /**
@@ -73,9 +89,19 @@ private:
     Scene *scene = new Scene();
 
     /**
+     * @brief view Program view
+     */
+    View *view = new View();
+
+    /**
      * @brief storage Application storage
      */
     Storage *storage = new Storage();
+
+    /**
+     * @brief mapper Signal ampper
+     */
+    QSignalMapper *mapper;
 
     /**
      * @brief mode Sets the current application mode

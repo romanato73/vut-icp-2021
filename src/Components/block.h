@@ -19,6 +19,7 @@ public:
     Block(QGraphicsItem *parent = nullptr);
 
     QString name;
+    QString category;
     QStringList inputs;
     QStringList outputs;
     QString code;

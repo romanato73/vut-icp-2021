@@ -1,5 +1,5 @@
 src/editor.pro.user
 src/editor.pro.*
 debug
-
 macDebug/
+.DS_Store
