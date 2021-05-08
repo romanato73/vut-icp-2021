@@ -12,6 +12,9 @@
 
 #include <QMouseEvent>
 #include <QtMath>
+#include <unordered_map>
+
+#include <Components/io.h>
 
 #include <Components/block.h>
 #include <Components/line.h>
@@ -54,6 +57,10 @@ public:
      */
     QVector<Block *> blocks;
 
+    QVector<IO *> ios;
+
+    QString finding = "inputs";
+
     /**
      * @brief setMode Sets current mode
      * @param mode    The mode to be set
@@ -75,7 +82,7 @@ public:
      * @brief followLine Helper function for building program that follows lines from inputs
      * @param point      Point that is used to find another lines
      */
-    void followLine(QPointF point);
+    void followLine(Block *origin, int index, QPointF point);
 
 signals:
     /**

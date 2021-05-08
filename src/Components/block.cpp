@@ -38,6 +38,7 @@ QLine Block::boundBlockInLines(int i)
         inPoints[i] = QPointF( - width/2 - gridSquare, y);
     } else {
         inPoints.append(QPointF( - width/2 - gridSquare, y));
+        inNotConnected.append(i);
     }
     return QLine( - width/2 - gridSquare, y, - width/2, y);
 }
@@ -49,6 +50,7 @@ QLine Block::boundBlockOutLines(int i)
         outPoints[i] = QPointF(width/2 + gridSquare, y);
     } else {
         outPoints.append(QPointF(width/2 + gridSquare, y));
+        outNotConnected.append(i);
     }
     return QLine( width/2 + gridSquare, y, width/2, y);
 }

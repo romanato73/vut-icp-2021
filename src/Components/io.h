@@ -1,13 +1,14 @@
-#ifndef IO_H
-#define IO_H
+#ifndef IOH
+#define IOH
 
 #include <QGraphicsItem>
+#include <QObject>
 #include <QPainter>
-#include <QPen>
-#include <QGraphicsTextItem>
+#include <QFont>
+#include <QApplication>
 #include <QDebug>
 
-class IO : public QGraphicsTextItem
+class IO : public QGraphicsItem
 {
 public:
     IO(QGraphicsItem  *parent = nullptr);
@@ -22,25 +23,39 @@ public:
      */
     QString ioType;
 
+
+    QString ioInType;
+
     /**
      * @brief plainText Text to be added into scene
      */
     QString plainText;
+
+    int width = 0, height = 0;
+
+    QPoint coordinates;
 
     /**
      * @brief build Builds IO
      * @param name Name of the IO
      * @param type Type of the IO
      */
-    void build(QString name, QString type);
+    void build(QString name, QString inType, QString type);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 private:
-    qreal penWidth = 4;
-    int gridSquare = 20;
+    int gridSize = 20;
+
     int pointsSize = 8;
+
+    int spacer = 10;
+
+    QPointF offset;
+    QPointF computeTopLeftGridPoint(const QPointF &pointP);
 };
 
-#endif // IO_H
+#endif // IOH

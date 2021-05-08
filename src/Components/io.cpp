@@ -1,59 +1,89 @@
 #include "io.h"
 
-IO::IO(QGraphicsItem *parent) :
-    QGraphicsTextItem(parent)
+IO::IO(QGraphicsItem *parent)
 {
-
+    setFlags(ItemIsMovable | ItemSendsGeometryChanges);
 }
 
-void IO::build(QString name, QString type)
+void IO::build(QString name, QString inType, QString type)
 {
     this->name = name;
+    this->ioInType = inType;
     this->ioType = type;
 
-//    QFont font;
-//    font.setFamily("Open Sans");
-//    font.setPointSize(12);
-//    font.setBold(true);
+    QFont font;
+    font.setFamily("Open Sans");
+    font.setPointSize(12);
+    font.setBold(true);
 
-//    if (ioType == "input") this->plainText = "IN:" + name;
-//    else this->plainText = "OUT:" + name;
+    if (ioType == "input") plainText = ioInType + name;
+    else if (ioType == "output") plainText = "OUT:" + name;
 
-//    auto fm = QFontMetrics(font);
-//    this->width = fm.horizontalAdvance(this->plainText);
+    auto fm = QFontMetrics(font);
+    this->width = fm.horizontalAdvance(this->plainText);
 }
 
 QRectF IO::boundingRect() const
 {
-    return QRectF(-gridSquare, (-gridSquare)/2, 3 * gridSquare, gridSquare);
+    int lettersPerGrid = floor(width/gridSize);
+
+    if (ioType == "input") return QRectF(-(pointsSize/2 + gridSize * (lettersPerGrid + 1) + spacer),
+                                         -gridSize,
+                                         pointsSize + gridSize * (lettersPerGrid + 1) + spacer,
+                                         gridSize * 2);
+    else if (ioType == "output") return QRectF(-pointsSize/2,
+                                               -gridSize,
+                                               pointsSize + gridSize * (lettersPerGrid + 1) + spacer,
+                                               gridSize * 2);
+    else return QRectF(0, 0, 0, 0);
 }
 
 void IO::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 //    painter->setPen(Qt::black);
 //    painter->drawRect(boundingRect());
-//    QRectF rec = QRectF( - gridSquare,- gridSquare/2, 3 * gridSquare, gridSquare);
-//    painter->setPen(QPen(Qt::black, penWidth));
-//    painter->drawRect(rec);
-//    // input, output points
-    painter->setPen(QPen(Qt::green, pointsSize));
-    painter->drawPoint(0,0);
 
-//    painter->setPen(Qt::black);
-//    if (ioType == "input") painter->drawText(QPointF(-width - 10, 5), plainText);
-//    else painter->drawText(QPointF(width, 5), plainText);
+    coordinates = QPoint(0, 0);
 
-//    painter->drawPoints(inPoints.data(), inPoints.size());
-//    painter->drawPoints(outPoints.data(), outPoints.size());
-//    // name text and input, output text
-//    QFont font = QFont ("Courier");
-//    painter->setPen(QPen(Qt::green, 20));
-//    painter->drawText(-width/2,
-//                      -height/2-addHeight*(numOfPorts() - 1 + (numOfPorts() % 2))/2 - topText,
-//                      width, addHeight, Qt::AlignHCenter, name);
-//    font.setStyleHint (QFont::Monospace);
-//    painter->setPen("black");
-//    font.setBold(false);
-//    font.setPointSize (7);
-    //    painter->setFont(font);
+    if (ioType == "input") {
+        painter->setPen(QPen(Qt::green, pointsSize));
+        painter->drawPoint(coordinates);
+        painter->setPen(Qt::black);
+        painter->drawText(-boundingRect().width() + spacer, 5, plainText);
+    } else if (ioType == "output") {
+        painter->setPen(QPen(Qt::green, pointsSize));
+        painter->drawPoint(coordinates);
+        painter->setPen(Qt::black);
+        painter->drawText(spacer, 5, plainText);
+    }
+}
+
+void IO::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    offset = pos() - computeTopLeftGridPoint(pos());
+    QGraphicsItem::mousePressEvent(mouseEvent);
+}
+
+QVariant IO::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == ItemPositionChange && scene()) {
+        QPointF newPos = value.toPointF();
+        if(QApplication::mouseButtons() == Qt::LeftButton) {
+            QPointF closestPoint = computeTopLeftGridPoint(newPos);
+            return  closestPoint += offset;
+        } else {
+            qDebug() << newPos;
+            return newPos;
+        }
+    } else {
+        return QGraphicsItem::itemChange(change, value);
+    }
+}
+
+QPointF IO::computeTopLeftGridPoint(const QPointF &pointP)
+{
+    int gridSize = 20;
+    qreal xV = floor(pointP.x()/gridSize)*gridSize;
+    qreal yV = floor(pointP.y()/gridSize)*gridSize;
+    return QPointF(xV, yV);
 }

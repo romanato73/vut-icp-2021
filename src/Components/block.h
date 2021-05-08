@@ -1,6 +1,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include "io.h"
+
 #include <QString>
 #include <QStringList>
 #include <QPainter>
@@ -49,9 +51,26 @@ public:
     QVector<QPointF> inPoints{};
 
     /**
+     * @brief Not connected inputs
+     */
+    QVector<int> inNotConnected{};
+
+    /**
      * @brief Exact position of the output points
      */
     QVector<QPointF> outPoints{};
+
+    /**
+     * @brief Not connected outputs
+     */
+    QVector<int> outNotConnected{};
+
+    QVector<Block *> connectedBlocks;
+    QVector<IO *> connectedIOs;
+
+    QVector<QString> results;
+    QVector<QString> resultsTypes;
+
 
     /**
      * @brief build     Builds a block

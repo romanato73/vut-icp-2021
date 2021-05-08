@@ -21,6 +21,10 @@ void CreateIODialog::setType(QString type)
 
     this->setWindowTitle("Create " + type);
     ui->title->setText("Create " + type);
+
+    if (type != "input") {
+        ui->inTypes->setVisible(false);
+    }
 }
 
 void CreateIODialog::on_create_clicked()
@@ -31,7 +35,33 @@ void CreateIODialog::on_create_clicked()
 
     if (name.isEmpty()) {
         msg.warning(nullptr, "Warning", "Category name can not be empty!");
+    } else if (type == "const" && inType.isEmpty()) {
+        msg.warning(nullptr, "Warning", "Select const type");
     } else {
         accept();
     }
 }
+
+void CreateIODialog::on_InTypeInt_clicked()
+{
+    this->inType = "int";
+}
+
+
+void CreateIODialog::on_InTypeFloat_clicked()
+{
+    this->inType = "float";
+}
+
+
+void CreateIODialog::on_InTypeBool_clicked()
+{
+    this->inType = "bool";
+}
+
+
+void CreateIODialog::on_InTypeString_clicked()
+{
+    this->inType = "int";
+}
+

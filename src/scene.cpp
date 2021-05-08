@@ -22,15 +22,30 @@ void Scene::setCreateMode(QString value)
 
 void Scene::buildProgram()
 {
+    for (auto block : blocks) {
+        // Set not connected
+        std::iota(block->inNotConnected.begin(), block->inNotConnected.end(), 0);
+        std::iota(block->outNotConnected.begin(), block->outNotConnected.end(), 0);
+
+        // Set connections placeholders
+        block->connectedBlocks.resize(block->inPoints.size());
+        block->connectedIOs.resize(block->inPoints.size());
+
+        qDebug() << block->name + ": " << block->inNotConnected.size() << " " << block->outNotConnected.size();
+    }
+
     // Iterate through all blocks
     for (auto block : blocks) {
-        // Unmap lines
-        for (auto line : lines) { line->mapped = false; }
 
         qDebug() << block->name;
 
         // Iterate through inputs
         for (int i = 0; i < block->inputs.size() ; i++) {
+            // Unmap lines
+            for (auto line : lines) { line->mapped = false; }
+
+            finding = "inputs";
+
             auto in = block->inPoints.at(i);
             // Input coordinates
             auto inCoords = QPointF(block->x() + in.x(), block->y() + in.y());
@@ -46,20 +61,79 @@ void Scene::buildProgram()
                 if (inCoords == lineCoordsStart) {
                     line->mapped = true;
 //                    qDebug() << inCoords << " == " << lineCoordsStart;
-                    followLine(lineCoordsEnd);
+                    followLine(block, i, lineCoordsEnd);
                 } else if (inCoords == lineCoordsEnd) {
                     line->mapped = true;
 //                    qDebug() << inCoords << " == " << lineCoordsEnd;
-                    followLine(lineCoordsStart);
+                    followLine(block, i, lineCoordsStart);
+                }
+            }
+        }
+
+        for (int i = 0; i < block->outputs.size(); i++) {
+            finding = "outputs";
+
+            auto out = block->outPoints.at(i);
+
+            auto outCoords = QPointF(block->x() + out.x(), block->y() + out.y());
+
+            for (auto line : lines) {
+                auto lineCoordsStart = line->mapToScene(line->line().p1());
+                auto lineCoordsEnd = line->mapToScene(line->line().p2());
+
+                // Match coordinates
+                if (outCoords == lineCoordsStart) {
+                    line->mapped = true;
+//                    qDebug() << inCoords << " == " << lineCoordsStart;
+                    followLine(block, i, lineCoordsEnd);
+                } else if (outCoords == lineCoordsEnd) {
+                    line->mapped = true;
+//                    qDebug() << inCoords << " == " << lineCoordsEnd;
+                    followLine(block, i, lineCoordsStart);
                 }
             }
         }
     }
 }
 
-void Scene::followLine(QPointF point)
+void Scene::followLine(Block *origin, int index, QPointF point)
 {
 //    qDebug() << "finding path " << point;
+
+    if (finding == "outputs") {
+        // Find outputs
+        for (auto io : ios) {
+            if (io->ioType != "output") continue;
+
+            auto coordinates = io->mapToScene(io->coordinates);
+    //        qDebug() << "IO: " << io->coordinates << ": Point" << point;
+            if (coordinates == point) {
+                qDebug() << "Connected to " + io->name;
+                origin->outNotConnected[index] = -1;
+                return;
+            }
+        }
+
+        // If no element found find line or end algorithm
+        for (auto line : lines) {
+            // Skip mapped lines
+            if (line->mapped) continue;
+
+            auto lineCoordsStart = line->mapToScene(line->line().p1());
+            auto lineCoordsEnd = line->mapToScene(line->line().p2());
+
+            // Match coordinates
+            if (point == lineCoordsStart) {
+                line->mapped = true;
+                followLine(origin, index, lineCoordsEnd);
+            } else if (point == lineCoordsEnd) {
+                line->mapped = true;
+                followLine(origin, index, lineCoordsStart);
+            }
+        }
+
+        return;
+    }
 
     // First we need to find a block
     for (auto block : blocks) {
@@ -72,13 +146,31 @@ void Scene::followLine(QPointF point)
 
             // If match found connect blocks
             if (point == outCoords) {
+//                qDebug() << "Output[" << block->outputs.at(i) << "]" << outCoords;
                 qDebug() << "Connected to: " << block->name;
+                block->outNotConnected[i] = -1;
+                origin->inNotConnected[index] = -1;
+                origin->connectedBlocks[index] = block;
                 return;
             }
         }
     }
 
-    // If no block found find line or end algorithm
+    // Find inputs
+    for (auto io : ios) {
+        if (io->ioType == "output") continue;
+
+        auto coordinates = io->mapToScene(io->coordinates);
+//        qDebug() << "IO: " << io->coordinates << ": Point" << point;
+        if (coordinates == point) {
+            qDebug() << "Connected to " + io->name;
+            origin->inNotConnected[index] = -1;
+            origin->connectedIOs[index] = io;
+            return;
+        }
+    }
+
+    // If no element found find line or end algorithm
     for (auto line : lines) {
         // Skip mapped lines
         if (line->mapped) continue;
@@ -89,10 +181,10 @@ void Scene::followLine(QPointF point)
         // Match coordinates
         if (point == lineCoordsStart) {
             line->mapped = true;
-            followLine(lineCoordsEnd);
+            followLine(origin, index, lineCoordsEnd);
         } else if (point == lineCoordsEnd) {
             line->mapped = true;
-            followLine(lineCoordsStart);
+            followLine(origin, index, lineCoordsStart);
         }
     }
 }
@@ -150,69 +242,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 blocks.append(block);
             }
-
-            /// algorithm1.c
-//            QVector<QPointF> pomArray;
-//            for (Block *a : blocks) {
-////                qDebug() << a->inPoints;
-//                for (QPointF p : a->outPoints){
-//                    for (QGraphicsLineItem *l : lines){
-//                        if(p == l->line().p1()){
-//                            pomArray.append( l->line().p2());
-//                        } else if(p == l->line().p2()){
-//                            pomArray.append( l->line().p1());
-//                        } else {
-
-//                        }
-//                    }
-//                }
-//            }
-
-            /// algorithm2.c
-//            QVector<QPointF> pomArray;
-//            QVector<QPointF> finalInputs;
-
-//            for (Block *a : blocks) {
-//                for (QPointF p : a->inPoints){
-//                    compare(p);
-//                }
-//            }
-
-//        }
-//        void compare(QPointF point){
-//            // kontrolujem block outputs
-//            for (Block *a : blocks) {
-//                for (QPointF p : a->outPoints){
-//                    if(point == p)
-//                        return;
-//                }
-//            }// kontrolujem input, output
-//            for (IO *a : io) {
-//                if(point == a->pos)
-//                        return;
-//            }// kontrolujem const
-//            for (ConstV *a : constV) {
-//                if(point == a->pos)
-//                        return;
-//            }// kontrolujem line
-//            for (QGraphicsLineItem *l : lines){
-//                if(point == l->line().p1()){
-//                        pomArray.append( l->line().p2());
-//                        compare(l->line().p2());
-//                } else if(point == l->line().p2()){
-//                        pomArray.append( l->line().p1());
-//                        compare(l->line().p1());
-//                } else {
-//                    finalInputs.append();
-//                    finalBlockPointer.append(b);
-//                }
-//            }
-
-//        }
-        /// END
-
-
-
         } else if (createMode == "connection") {
             // Creates a new connection line
             if (mouseEvent->button() == Qt::LeftButton) {
@@ -240,25 +269,20 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     QFont font;
                     font.setFamily("Open Sans");
                     font.setBold(true);
-                    font.setPointSize(12);                   
+                    font.setPointSize(12);
 
                     auto io = new IO();
 
                     auto x = round(mouseEvent->scenePos().x() / gridSize) * gridSize;
                     auto y = round(mouseEvent->scenePos().y() / gridSize) * gridSize;
 
-                    io->build(dialog.name, createMode);
-                    io->setFont(font);
-                    io->setDefaultTextColor(Qt::black);
+                    io->build(dialog.name, dialog.inType, createMode);
                     io->setPos(QPointF(x, y));
 
                     addItem(io);
-
-                    qDebug() << "IO added";
+                    ios.append(io);
                 }
             }
-        } else if (createMode == "const") {
-            // Creates a new constant
         }
     } else if (this->mode == "edit") {
         // Disable element mooving
@@ -285,6 +309,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 qDebug() << "Block " + block->name + " deleted";
                 delete block;
                 blocks.removeOne(block);
+            } else if (auto io = dynamic_cast<IO *>(item); io != nullptr) {
+                qDebug() << "IO " + io->name + " deleted";
+                delete io;
+                ios.removeOne(io);
             } else {
                 auto element = dynamic_cast<QGraphicsItem*>(item);
                 if (element) {

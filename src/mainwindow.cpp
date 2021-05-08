@@ -153,6 +153,7 @@ void MainWindow::categoryBlockClick()
 
             block->setPos(x, y);
             scene->addItem(block);
+            scene->blocks.append(block);
         }
     }
 }
@@ -258,7 +259,6 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
         auto object = block.toObject();
 
         auto blockName = object.value("name").toString();
-        qDebug() << blockName;
 
         auto btn = new QPushButton(blockName);
         btn->setObjectName(name + "Item");
@@ -363,28 +363,20 @@ void MainWindow::buildCreateModeButtons()
     output->setMinimumSize(30, 30);
     output->setVisible(false);
 
-    auto constant = new QPushButton("CONST");
-    constant->setObjectName("constMode");
-    constant->setFont(text);
-    constant->setMinimumSize(30, 30);
-    constant->setVisible(false);
-
     // Add to layout
     layout->addWidget(block);
     layout->addWidget(connection);
     layout->addWidget(input);
     layout->addWidget(output);
-    layout->addWidget(constant);
 
     // Connect buttons to function
     connect(block, &QPushButton::clicked, this, &MainWindow::switchCreateModeButtons);
     connect(connection, &QPushButton::clicked, this, &MainWindow::switchCreateModeButtons);
     connect(input, &QPushButton::clicked, this, &MainWindow::switchCreateModeButtons);
     connect(output, &QPushButton::clicked, this, &MainWindow::switchCreateModeButtons);
-    connect(constant, &QPushButton::clicked, this, &MainWindow::switchCreateModeButtons);
 
     // Add into vector
-    createModeButtons.append({block, connection, input, output, constant});
+    createModeButtons.append({block, connection, input, output});
 
     // Set the default create mode
     scene->setCreateMode("block");
