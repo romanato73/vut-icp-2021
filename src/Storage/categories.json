@@ -10,6 +10,75 @@
             "outputs": [
                 "Y"
             ]
+        },
+        {
+            "code": "",
+            "inputs": [
+                "asdad",
+                "sdff",
+                "sdff",
+                "sdf"
+            ],
+            "name": "jj",
+            "outputs": [
+                "sfdfds",
+                "sdfs",
+                "dsf"
+            ]
+        },
+        {
+            "code": "",
+            "inputs": [
+                "sdfd"
+            ],
+            "name": "sdfd",
+            "outputs": [
+                "dfdf"
+            ]
+        },
+        {
+            "code": "",
+            "inputs": [
+                "aa",
+                "ss",
+                "dd",
+                "ff",
+                "gg"
+            ],
+            "name": "saddfsf",
+            "outputs": [
+                "sdd",
+                "df",
+                "fggd"
+            ]
+        },
+        {
+            "code": "",
+            "inputs": [
+                "ddd",
+                "ddd"
+            ],
+            "name": "dfj",
+            "outputs": [
+                "dd",
+                "gg",
+                "hh"
+            ]
+        },
+        {
+            "code": "",
+            "inputs": [
+                "dsfsf",
+                "dfsf",
+                "dsfd",
+                "sdf"
+            ],
+            "name": "kkjkj",
+            "outputs": [
+                "fg",
+                "gf",
+                "h"
+            ]
         }
     ]
 }

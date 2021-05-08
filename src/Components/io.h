@@ -7,6 +7,7 @@
 #include <QFont>
 #include <QApplication>
 #include <QDebug>
+#include <QtMath>
 
 class IO : public QGraphicsItem
 {

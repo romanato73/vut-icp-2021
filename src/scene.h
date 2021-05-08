@@ -61,6 +61,8 @@ public:
 
     QString finding = "inputs";
 
+    QVector<Block *> sortedBlocks;
+
     /**
      * @brief setMode Sets current mode
      * @param mode    The mode to be set
@@ -83,6 +85,13 @@ public:
      * @param point      Point that is used to find another lines
      */
     void followLine(Block *origin, int index, QPointF point);
+
+    /**
+     * @brief sortBlocks Helper function that sorts blocks for building program
+     * @param origin     Pointer to block that is currenly sorted
+     * @param previous   Pointer to block that is placed before currently sorted block
+     */
+    void sortBlocks(Block *origin, Block *previous);
 
 signals:
     /**

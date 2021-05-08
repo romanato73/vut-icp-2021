@@ -94,6 +94,11 @@ void Scene::buildProgram()
             }
         }
     }
+    // prints sorted blocks to qDebug()
+    qDebug() << "prints sorted blocks:";
+    for (auto sorted : sortedBlocks) {
+        qDebug() << sorted->name;
+    }
 }
 
 void Scene::followLine(Block *origin, int index, QPointF point)
@@ -151,6 +156,7 @@ void Scene::followLine(Block *origin, int index, QPointF point)
                 block->outNotConnected[i] = -1;
                 origin->inNotConnected[index] = -1;
                 origin->connectedBlocks[index] = block;
+                sortBlocks(origin, block);
                 return;
             }
         }
@@ -185,6 +191,36 @@ void Scene::followLine(Block *origin, int index, QPointF point)
         } else if (point == lineCoordsEnd) {
             line->mapped = true;
             followLine(origin, index, lineCoordsStart);
+        }
+    }
+}
+
+void Scene::sortBlocks(Block *origin, Block *previous)
+{
+    int originIndex = sortedBlocks.indexOf(origin);
+    int previousIndex = sortedBlocks.indexOf(previous);
+
+    if(originIndex == -1 && previousIndex == -1){
+
+            // appends origin and previous blocks
+        sortedBlocks.append(previous);
+        sortedBlocks.append(origin);
+
+    } else if(originIndex != -1 && previousIndex == -1){
+
+            // inserts previous block before origin block
+        sortedBlocks.insert(originIndex,previous);
+
+    } else if(originIndex == -1 && previousIndex != -1){
+
+            // appends origin block
+        sortedBlocks.append(origin);
+    } else {
+            // previous block is after origin block
+            // than puts him before origin block
+        if(previousIndex > originIndex){
+            sortedBlocks.removeAt(previousIndex);
+            sortedBlocks.insert(originIndex,previous);
         }
     }
 }

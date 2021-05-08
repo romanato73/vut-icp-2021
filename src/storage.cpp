@@ -8,8 +8,8 @@
 
 QString Storage::getFileContent(QString name)
 {
-    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
-    //QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
+    //QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
     QFile file(fileName);
 
@@ -27,8 +27,8 @@ QString Storage::getFileContent(QString name)
 
 void Storage::updateFileContent(QString name, QString content)
 {
-    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
-//    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
+//    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
     QFile file(fileName);
 
