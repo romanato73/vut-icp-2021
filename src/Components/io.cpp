@@ -16,7 +16,7 @@ void IO::build(QString name, QString inType, QString type)
     font.setPointSize(12);
     font.setBold(true);
 
-    if (ioType == "input") plainText = ioInType + name;
+    if (ioType == "input") plainText = ioInType + ": " + name;
     else if (ioType == "output") plainText = "OUT:" + name;
 
     auto fm = QFontMetrics(font);
