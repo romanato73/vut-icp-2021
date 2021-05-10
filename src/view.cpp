@@ -1,10 +1,5 @@
 #include "view.h"
 
-View::View()
-{
-
-}
-
 void View::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton) {

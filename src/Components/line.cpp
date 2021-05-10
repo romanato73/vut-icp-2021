@@ -14,7 +14,6 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->setPen(QPen(Qt::green, 8));
     painter->drawPoint(line().p1());
     painter->drawPoint(line().p2());
-    //    qDebug() << "line:paints line";
 }
 
 void Line::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -27,7 +26,6 @@ QVariant Line::itemChange(QGraphicsItem::GraphicsItemChange change, const QVaria
 {
     if (change == ItemPositionChange && scene()) {
         QPointF newPos = value.toPointF();
-//        if(QApplication::mouseButtons() == Qt::LeftButton && qobject_cast<Scene*> (scene())){
         if(QApplication::mouseButtons() == Qt::LeftButton) {
             QPointF closestPoint = computeTopLeftGridPoint(newPos);
             return  closestPoint+=offset;

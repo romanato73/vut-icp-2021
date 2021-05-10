@@ -1,3 +1,11 @@
+/**
+ * Editor and interpret of the hierarchically structured function blocks
+ * Faculty of Information Technology, Brno University of Technology
+ *
+ * @author Roman Országh <xorsza01@stud.fit.vutbr.cz>
+ * @author Albert Groma <xgroma00@stud.fit.vutbr.cz>
+ */
+
 #ifndef STORAGE_H
 #define STORAGE_H
 
@@ -6,7 +14,9 @@
 #include <QString>
 
 
-
+/**
+ * @brief The Storage class
+ */
 class Storage
 {
 public:
@@ -59,10 +69,23 @@ public:
     Block *getBlock(QString category, QString name);
 
     /**
-     * @brief deleteBlock Deletes block from storage
+     * @brief hasBlock Checks if storage has block
+     * @param block    Block we are searching for
+     * @return         True if block found otherwise false
+     */
+    bool hasBlock(Block *block);
+
+    /**
+     * @brief updateBlock Updates the block from storage
+     * @param block       The block instance
+     */
+    void updateBlock(Block *block, Block *newBlock);
+
+    /**
+     * @brief deleteBlock Removes block from storage
      * @param block       Block to be deleted
      */
-    void deleteBlock(Block *block);
+    void removeBlock(Block *block);
 
 private:
     /**

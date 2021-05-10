@@ -10,44 +10,48 @@ CONFIG += c++17
 
 SOURCES += \
     Components/io.cpp \
+    Dialogs/buildprogramdialog.cpp \
     Dialogs/createblockdialog.cpp \
     Dialogs/createcategorydialog.cpp \
     Dialogs/createiodialog.cpp \
+    Dialogs/editblockdialog.cpp \
     Dialogs/editcategorydialog.cpp \
     Components/block.cpp \
     Components/line.cpp \
-    Dialogs/newdialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    programgenerator.cpp \
     scene.cpp \
     storage.cpp \
     view.cpp
 
 HEADERS += \
     Components/io.h \
+    Dialogs/buildprogramdialog.h \
     Dialogs/createblockdialog.h \
     Dialogs/createcategorydialog.h \
     Dialogs/createiodialog.h \
+    Dialogs/editblockdialog.h \
     Dialogs/editcategorydialog.h \
     Components/block.h \
     Components/line.h \
-    Dialogs/newdialog.h \
     mainwindow.h \
+    programgenerator.h \
     scene.h \
     storage.h \
     view.h
 
 FORMS += \
+    Dialogs/buildprogramdialog.ui \
     Dialogs/createblockdialog.ui \
     Dialogs/createcategorydialog.ui \
     Dialogs/createiodialog.ui \
+    Dialogs/editblockdialog.ui \
     Dialogs/editcategorydialog.ui \
-    Dialogs/newdialog.ui \
     mainwindow.ui
 
 OTHER_FILES += \
-    Storage/categories.json \
-    Storage/blocks.json
+    Storage/categories.json
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

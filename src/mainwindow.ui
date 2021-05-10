@@ -801,7 +801,7 @@ border: none!important;</string>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QWidget" name="footerWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -809,59 +809,7 @@ border: none!important;</string>
           </sizepolicy>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="4">
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <family>Open Sans</family>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color:#000;</string>
-            </property>
-            <property name="text">
-             <string>Build program</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
-           <widget class="QPushButton" name="buildComposite">
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Open Sans</family>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	background-color: #6A6FFF;
-	border: none;
-	color: #fff;
-	width: 60px;
-	height: 60px;
-}
-
-QPushButton:hover {
-	background-color: #7a7fff;
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="Resources/Resources.qrc">
-              <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
            <widget class="QPushButton" name="buildProgram">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -905,27 +853,19 @@ QPushButton:hover {
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">color: #000;</string>
+             <string notr="true">color:#000;</string>
             </property>
             <property name="text">
-             <string>Save composite block</string>
+             <string>Build program</string>
             </property>
            </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>

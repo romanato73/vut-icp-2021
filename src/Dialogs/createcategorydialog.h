@@ -1,3 +1,11 @@
+/**
+ * Editor and interpret of the hierarchically structured function blocks
+ * Faculty of Information Technology, Brno University of Technology
+ *
+ * @author Roman Országh <xorsza01@stud.fit.vutbr.cz>
+ * @author Albert Groma <xgroma00@stud.fit.vutbr.cz>
+ */
+
 #ifndef CREATECATEGORYDIALOG_H
 #define CREATECATEGORYDIALOG_H
 
@@ -7,6 +15,9 @@ namespace Ui {
 class CreateCategoryDialog;
 }
 
+/**
+ * @brief The CreateCategoryDialog class
+ */
 class CreateCategoryDialog : public QDialog
 {
     Q_OBJECT
@@ -38,6 +49,9 @@ private slots:
     void on_categoryAdd_clicked();
 
 private:
+    /**
+     * @brief ui
+     */
     Ui::CreateCategoryDialog *ui;
 };
 

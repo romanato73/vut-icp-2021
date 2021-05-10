@@ -62,23 +62,26 @@ int Block::numOfPorts()
 
 void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // box
     QRectF rec = boundRect();
     QBrush brush(Qt::white);
     painter->fillRect(rec, brush);
     painter->setPen(QPen(Qt::black, penWidth));
     painter->drawRect(rec);
+
     // input, output lines
     for(int i = 0; i < inputs.count(); i++){
         painter->drawLine(boundBlockInLines(i));
     }
+
     for(int i = 0; i < outputs.count(); i++){
         painter->drawLine(boundBlockOutLines(i));
     }
+
     // input, output points
     painter->setPen(QPen(Qt::green, pointsSize));
     painter->drawPoints(inPoints.data(), inPoints.size());
     painter->drawPoints(outPoints.data(), outPoints.size());
+
     // name text and input, output text
     QFont font = QFont ("Courier");
     painter->setPen(QPen(Qt::green, 20));
@@ -94,6 +97,7 @@ void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     for(int i = 0; i < inputs.count(); i++){
         painter->drawText( -width/2 + gridSquare/2, inPoints.data()[i].y(), inputs[i]);
     }
+
     for(int i = 0; i < outputs.count(); i++){
         painter->drawText( gridSquare/2, outPoints.data()[i].y(), outputs[i]);
     }
@@ -109,7 +113,6 @@ QVariant Block::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 {
     if (change == ItemPositionChange && scene()) {
         QPointF newPos = value.toPointF();
-//        if(QApplication::mouseButtons() == Qt::LeftButton && qobject_cast<Scene *> (scene())){
         if(QApplication::mouseButtons() == Qt::LeftButton) {
             QPointF closestPoint = computeTopLeftGridPoint(newPos);
             return  closestPoint+=offset;
@@ -123,7 +126,6 @@ QVariant Block::itemChange(QGraphicsItem::GraphicsItemChange change, const QVari
 
 QPointF Block::computeTopLeftGridPoint(const QPointF &pointP)
 {
-//    Scene* customScene = qobject_cast<Scene*> (scene());
     int gridSize = 20;
     qreal xV = floor(pointP.x()/gridSize)*gridSize;
     qreal yV = floor(pointP.y()/gridSize)*gridSize;

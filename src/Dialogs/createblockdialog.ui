@@ -66,6 +66,7 @@ QComboBox::down-arrow {
 
 QComboBox QAbstractItemView {
 	border: 1px solid #DBDBDB;
+	background-color: #fff;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

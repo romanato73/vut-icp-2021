@@ -38,19 +38,12 @@ void CreateBlockDialog::on_createBlock_clicked()
     block->inputs = ui->inputs->toPlainText().split('\n');
     block->outputs = ui->outputs->toPlainText().split('\n');
 
-    if (block->name.isEmpty()) {
-        msg.critical(nullptr, "Error", "Block name can not be empty!");
+    // Checks the block name inputs outputs and code
+    if (block->name.isEmpty() || block->inputs.isEmpty() || block->outputs.isEmpty() || block->code.isEmpty()) {
+        msg.critical(nullptr, "Error", "Fill all fields!");
+    } else if (storage->hasBlock(block)) {
+        msg.critical(nullptr, "Error", "This category already contains block with this name.");
     } else {
-        /** @todo: Check if block does not already exists in category */
         accept();
     }
-
-//    if (this->categories.contains(this->categoryName + "Category")) {
-//        msg.critical(nullptr, "Error", "This category already exists.");
-//    } else if (this->categoryName.isEmpty()) {
-//        msg.warning(nullptr, "Warning", "Category name can not be empty!");
-//    } else {
-//        // Accepted
-//        accept();
-//    }
 }

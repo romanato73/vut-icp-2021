@@ -5,10 +5,10 @@ IO::IO(QGraphicsItem *parent)
     setFlags(ItemIsMovable | ItemSendsGeometryChanges);
 }
 
-void IO::build(QString name, QString inType, QString type)
+void IO::build(QString name, QString valType, QString type)
 {
     this->name = name;
-    this->ioInType = inType;
+    this->ioValType = valType;
     this->ioType = type;
 
     QFont font;
@@ -16,8 +16,8 @@ void IO::build(QString name, QString inType, QString type)
     font.setPointSize(12);
     font.setBold(true);
 
-    if (ioType == "input") plainText = ioInType + ": " + name;
-    else if (ioType == "output") plainText = "OUT:" + name;
+    if (ioType == "input") plainText = ioValType + ": " + name;
+    else if (ioType == "output") plainText = ioValType + ": " + name;
 
     auto fm = QFontMetrics(font);
     this->width = fm.horizontalAdvance(this->plainText);
@@ -40,9 +40,6 @@ QRectF IO::boundingRect() const
 
 void IO::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    painter->setPen(Qt::black);
-//    painter->drawRect(boundingRect());
-
     coordinates = QPoint(0, 0);
 
     if (ioType == "input") {
@@ -72,7 +69,6 @@ QVariant IO::itemChange(GraphicsItemChange change, const QVariant &value)
             QPointF closestPoint = computeTopLeftGridPoint(newPos);
             return  closestPoint += offset;
         } else {
-            qDebug() << newPos;
             return newPos;
         }
     } else {

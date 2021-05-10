@@ -1,3 +1,11 @@
+/**
+ * Editor and interpret of the hierarchically structured function blocks
+ * Faculty of Information Technology, Brno University of Technology
+ *
+ * @author Roman Országh <xorsza01@stud.fit.vutbr.cz>
+ * @author Albert Groma <xgroma00@stud.fit.vutbr.cz>
+ */
+
 #ifndef EDITCATEGORYDIALOG_H
 #define EDITCATEGORYDIALOG_H
 
@@ -8,6 +16,9 @@ namespace Ui {
 class EditCategoryDialog;
 }
 
+/**
+ * @brief The EditCategoryDialog class
+ */
 class EditCategoryDialog : public QDialog
 {
     Q_OBJECT
@@ -45,6 +56,9 @@ private slots:
     void on_categoryUpdate_clicked();
 
 private:
+    /**
+     * @brief ui
+     */
     Ui::EditCategoryDialog *ui;
 };
 

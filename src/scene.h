@@ -1,3 +1,11 @@
+/**
+ * Editor and interpret of the hierarchically structured function blocks
+ * Faculty of Information Technology, Brno University of Technology
+ *
+ * @author Roman Országh <xorsza01@stud.fit.vutbr.cz>
+ * @author Albert Groma <xgroma00@stud.fit.vutbr.cz>
+ */
+
 #ifndef SCENE_H
 #define SCENE_H
 
@@ -20,6 +28,9 @@
 #include <Components/line.h>
 #include "storage.h"
 
+/**
+ * @brief The Scene class
+ */
 class Scene : public QGraphicsScene
 {
     Q_OBJECT;
@@ -57,10 +68,19 @@ public:
      */
     QVector<Block *> blocks;
 
+    /**
+     * @brief ios List of inputs/outputs
+     */
     QVector<IO *> ios;
 
+    /**
+     * @brief Sets the current finding method (inputs/outputs)
+     */
     QString finding = "inputs";
 
+    /**
+     * @brief sortedBlocks Sorted blocks
+     */
     QVector<Block *> sortedBlocks;
 
     /**
@@ -110,8 +130,22 @@ protected:
      */
     void drawBackground(QPainter *painter, const QRectF &rect) override;
 
+    /**
+     * @brief mousePressEvent   Handles the mouse press
+     * @param mouseEvent        Mouse event
+     */
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+
+    /**
+     * @brief mouseMoveEvent    Handles the mouse movement
+     * @param mouseEvent        Mouse event
+     */
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
+
+    /**
+     * @brief mouseReleaseEvent Handles the mouse release
+     * @param mouseEvent        Mouse event
+     */
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
 
 private:

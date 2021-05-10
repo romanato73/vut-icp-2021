@@ -36,6 +36,7 @@ void EditCategoryDialog::on_categoryUpdate_clicked()
 
     this->categoryName = ui->categoryName->text();
 
+    // Checks the category and name
     if (this->categories.contains(this->categoryName + "Category")) {
         msg.critical(nullptr, "Error", "This category already exists.");
     } else if (this->categoryName.isEmpty()) {

@@ -8,6 +8,9 @@ CreateIODialog::CreateIODialog(QWidget *parent) :
     ui(new Ui::CreateIODialog)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    this->setModal(true);
 }
 
 CreateIODialog::~CreateIODialog()
@@ -23,7 +26,6 @@ void CreateIODialog::setType(QString type)
     ui->title->setText("Create " + type);
 
     if (type != "input") {
-        ui->inTypes->setVisible(false);
         ui->ioLabel->setText("Name");
     } else {
         ui->ioLabel->setText("Value");
@@ -38,8 +40,8 @@ void CreateIODialog::on_create_clicked()
 
     if (name.isEmpty()) {
         msg.warning(nullptr, "Warning", "Category name can not be empty!");
-    } else if (type == "input" && inType.isEmpty()) {
-        msg.warning(nullptr, "Warning", "Select input type");
+    } else if (ioType.isEmpty()) {
+        msg.warning(nullptr, "Warning", "Select io type");
     } else {
         accept();
     }
@@ -47,24 +49,24 @@ void CreateIODialog::on_create_clicked()
 
 void CreateIODialog::on_InTypeInt_clicked()
 {
-    this->inType = "int";
+    this->ioType = "int";
 }
 
 
 void CreateIODialog::on_InTypeFloat_clicked()
 {
-    this->inType = "float";
+    this->ioType = "float";
 }
 
 
 void CreateIODialog::on_InTypeBool_clicked()
 {
-    this->inType = "bool";
+    this->ioType = "bool";
 }
 
 
 void CreateIODialog::on_InTypeString_clicked()
 {
-    this->inType = "string";
+    this->ioType = "string";
 }
 

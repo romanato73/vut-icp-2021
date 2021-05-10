@@ -6,6 +6,8 @@
 #include "Dialogs/createcategorydialog.h"
 #include "Dialogs/editcategorydialog.h"
 
+#include <Dialogs/editblockdialog.h>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -28,11 +30,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::Initialize()
 {
+    // Generate View
     ui->editor->setLayout(new QVBoxLayout);
     ui->editor->layout()->setContentsMargins(0, 0, 0, 0);
-
     ui->editor->layout()->addWidget(view);
 
+    // Set view scroll bar policy
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -45,9 +48,10 @@ void MainWindow::Initialize()
     // Build create mode buttons
     buildCreateModeButtons();
 
-    // Build categories from storage
+    // Get categories from storage
     auto categories = storage->getCategories();
 
+    // Builds categories from storage
     for (const QString &category : categories.keys()) {
         auto blocks = categories.value(category).toArray();
 
@@ -100,7 +104,7 @@ void MainWindow::on_deleteMode_clicked()
     setMode("delete");
 }
 
-void MainWindow::categoryEditBtnClick()
+void MainWindow::on_categoryEditBtnClick()
 {
     auto btn = sender();
     QString category = btn->objectName().left(btn->objectName().length() - 12);
@@ -119,7 +123,7 @@ void MainWindow::categoryEditBtnClick()
     }
 }
 
-void MainWindow::categoryDeleteBtnClick()
+void MainWindow::on_categoryDeleteBtnClick()
 {
     auto btn = sender();
 
@@ -131,14 +135,31 @@ void MainWindow::categoryDeleteBtnClick()
     removeCategory(category);
 }
 
-void MainWindow::categoryBlockClick()
+void MainWindow::on_categoryBlockClick()
 {
     if (mode == "edit") {
         // Edit block
-        qDebug() << "Editing block";
+        auto category = sender()->objectName().left(sender()->objectName().size() - 4);
+        auto btn = reinterpret_cast<QPushButton *>(sender());
+
+        EditBlockDialog dialog;
+
+        auto originalBlock = storage->getBlock(category, btn->text());
+
+        dialog.initializeForm(storage->getBlock(category, btn->text()));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            storage->updateBlock(originalBlock, dialog.block);
+
+            updateGUI(category);
+        }
     } else if (mode == "delete") {
         // Delete block
-        qDebug() << "Deleting block";
+        auto category = sender()->objectName().left(sender()->objectName().size() - 4);
+        auto btn = reinterpret_cast<QPushButton *>(sender());
+
+        storage->removeBlock(storage->getBlock(category, btn->text()));
+        updateGUI(category);
     } else {
         // Place into scene
         auto category = sender()->objectName().left(sender()->objectName().size() - 4);
@@ -146,6 +167,7 @@ void MainWindow::categoryBlockClick()
 
         if (btn) {
             auto block = storage->getBlock(category, btn->text());
+            block->category = category;
 
             auto center = view->mapToScene(view->viewport()->rect().center());
             auto x = round(center.x() / 20) * 20 + 10;
@@ -227,7 +249,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
     editBtn->setStyleSheet("background-color: none!important; border: none!important;");
     header->layout()->addWidget(editBtn);
     // Connect button
-    connect(editBtn, &QPushButton::clicked, this, &MainWindow::categoryEditBtnClick);
+    connect(editBtn, &QPushButton::clicked, this, &MainWindow::on_categoryEditBtnClick);
 
     // Set delete button
     auto deleteBtn = new QPushButton();
@@ -237,7 +259,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
     deleteBtn->setMaximumSize(20, 20);
     deleteBtn->setStyleSheet("background-color: none!important; border: none!important;");
     header->layout()->addWidget(deleteBtn);
-    connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::categoryDeleteBtnClick);
+    connect(deleteBtn, &QPushButton::clicked, this, &MainWindow::on_categoryDeleteBtnClick);
 
     // Create category items
     auto items = new QWidget();
@@ -255,6 +277,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
 
     mapper = new QSignalMapper(this);
 
+    // Generate blocks
     for (auto block : blocks) {
         auto object = block.toObject();
 
@@ -274,7 +297,7 @@ void MainWindow::createCategory(QString name, QJsonArray blocks)
             col++;
         }
 
-        connect(btn, &QPushButton::clicked, this, &MainWindow::categoryBlockClick);
+        connect(btn, &QPushButton::clicked, this, &MainWindow::on_categoryBlockClick);
     }
 
     category->layout()->addWidget(items);
@@ -415,6 +438,18 @@ void MainWindow::switchCreateModeButtons()
     scene->setCreateMode(mode);
 }
 
+void MainWindow::buildDefaultBlock(Block *block)
+{
+    auto center = view->mapToScene(view->viewport()->rect().center());
+    auto x = round(center.x() / 20) * 20 + 10;
+    auto y = round(center.y() / 20) * 20 + 10;
+
+    block->setPos(QPointF(x, y));
+
+    scene->addItem(block);
+    scene->blocks.append(block);
+}
+
 void MainWindow::on_Square_clicked()
 {
     QGraphicsRectItem *rect = scene->addRect(0, 0, 40, 40, QPen(Qt::black, 5));
@@ -440,62 +475,42 @@ void MainWindow::on_Text_clicked()
 
 void MainWindow::on_AND_clicked()
 {
+    if (mode != "select" && mode != "create") return;
+
     auto block = new Block();
-    block->build("AND", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A & B }");
+    block->build("AND", {"bool:A", "bool:B"}, {"bool:Y"}, "Y = A & B;");
 
-    auto center = view->mapToScene(view->viewport()->rect().center());
-    auto x = round(center.x() / 20) * 20 + 10;
-    auto y = round(center.y() / 20) * 20 + 10;
-
-    block->setPos(QPointF(x, y));
-
-    scene->addItem(block);
-    scene->blocks.append(block);
+    buildDefaultBlock(block);
 }
 
 void MainWindow::on_NOT_clicked()
 {
+    if (mode != "select" && mode != "create") return;
+
     auto block = new Block();
-    block->build("NOT", {"A"}, {"Y"}, "int NOT(int A) { return ~A }");
+    block->build("NOT", {"bool:A"}, {"bool:Y"}, "Y = ~A;");
 
-    auto center = view->mapToScene(view->viewport()->rect().center());
-    auto x = round(center.x() / 20) * 20 + 10;
-    auto y = round(center.y() / 20) * 20 + 10;
-
-    block->setPos(QPointF(x, y));
-
-    scene->addItem(block);
-    scene->blocks.append(block);
+    buildDefaultBlock(block);
 }
 
 void MainWindow::on_OR_clicked()
 {
+    if (mode != "select" && mode != "create") return;
+
     auto block = new Block();
-    block->build("OR", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A | B }");
+    block->build("OR", {"bool:A", "bool:B"}, {"bool:Y"}, "Y = A | B;");
 
-    auto center = view->mapToScene(view->viewport()->rect().center());
-    auto x = round(center.x() / 20) * 20 + 10;
-    auto y = round(center.y() / 20) * 20 + 10;
-
-    block->setPos(QPointF(x, y));
-
-    scene->addItem(block);
-    scene->blocks.append(block);
+    buildDefaultBlock(block);
 }
 
 void MainWindow::on_XOR_clicked()
 {
+    if (mode != "select" && mode != "create") return;
+
     auto block = new Block();
-    block->build("XOR", {"A", "B"}, {"Y"}, "int ADD(int A, int B) { return A ^ B }");
+    block->build("XOR", {"bool:A", "bool:B"}, {"bool:Y"}, "Y = A ^ B;");
 
-    auto center = view->mapToScene(view->viewport()->rect().center());
-    auto x = round(center.x() / 20) * 20 + 10;
-    auto y = round(center.y() / 20) * 20 + 10;
-
-    block->setPos(QPointF(x, y));
-
-    scene->addItem(block);
-    scene->blocks.append(block);
+    buildDefaultBlock(block);
 }
 
 void MainWindow::on_buildProgram_clicked()

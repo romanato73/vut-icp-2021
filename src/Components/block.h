@@ -1,3 +1,11 @@
+/**
+ * Editor and interpret of the hierarchically structured function blocks
+ * Faculty of Information Technology, Brno University of Technology
+ *
+ * @author Roman Országh <xorsza01@stud.fit.vutbr.cz>
+ * @author Albert Groma <xgroma00@stud.fit.vutbr.cz>
+ */
+
 #ifndef BLOCK_H
 #define BLOCK_H
 
@@ -15,10 +23,22 @@
 #include <QtMath>
 
 
+/**
+ * @brief The Block class
+ */
 class Block : public QGraphicsItem
 {
 public:
+    /**
+     * @brief Block
+     * @param parent
+     */
     Block(QGraphicsItem *parent = nullptr);
+
+    /**
+     * @brief id ID of block when building a program
+     */
+    int id;
 
     /**
      * @brief name Name of the block
@@ -65,12 +85,25 @@ public:
      */
     QVector<int> outNotConnected{};
 
-    QVector<Block *> connectedBlocks;
-    QVector<IO *> connectedIOs;
+    /**
+     * @brief connectedBlocks Connected blocks to each input (index of vector is number of input)
+     */
+    QVector<Block *> connectedBlocks{};
 
-    QVector<QString> results;
-    QVector<QString> resultsTypes;
+    /**
+     * @brief connectedBlocksOut Connected blocks to each input and their output index
+     */
+    QVector<int> connectedBlocksOut{};
 
+    /**
+     * @brief connectedInputs Connected inputs to this block
+     */
+    QVector<IO *> connectedInputs{};
+
+    /**
+     * @brief connectedOutputs Connected outputs to this block
+     */
+    QVector<IO *> connectedOutputs{};
 
     /**
      * @brief build     Builds a block
@@ -81,15 +114,60 @@ public:
      */
     void build(QString name, QStringList inputs, QStringList outputs, QString code);
 
+    /**
+     * @brief boundingRect  Custom bounding rect function
+     * @return              Coordinates of the bounding rectangle
+     */
     QRectF boundingRect() const;
+
+    /**
+     * @brief boundRect Creates the bound rectangle
+     * @return          Coordinates of the bound rectangle
+     */
     QRectF boundRect();
-    QLine boundBlockInLines( int i);
-    QLine boundBlockOutLines( int i);
+
+    /**
+     * @brief boundBlockInLines Gneerates the input lines
+     * @param i                 Number of the input line
+     * @return                  The generated line
+     */
+    QLine boundBlockInLines(int i);
+
+    /**
+     * @brief boundBlockOutLines    Generates the output lines
+     * @param i                     Number of the output line
+     * @return                      The generated line
+     */
+    QLine boundBlockOutLines(int i);
+
+    /**
+     * @brief numOfPorts    The number of the ports
+     * @return              Number of ports of block
+     */
     int numOfPorts();
+
+    /**
+     * @brief paint     Paints the block
+     * @param painter
+     * @param option
+     * @param widget
+     */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:
+
+    /**
+     * @brief mousePressEvent Handles the mouse press
+     * @param mouseEvent      Mouse event
+     */
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+    /**
+     * @brief itemChange    Handles the item change event
+     * @param change
+     * @param value
+     * @return
+     */
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
@@ -98,200 +176,47 @@ private:
      */
     qreal penWidth = 4;
 
+    /**
+     * @brief width Initial width of the block
+     */
     int width = 100;
+
+    /**
+     * @brief height Initial height of the block
+     */
     int height = 40;
+
+    /**
+     * @brief addHeight Added height to the block
+     */
     int addHeight = 20;
 
+    /**
+     * @brief gridSquare Grid square size
+     */
     int gridSquare = 20;
+
+    /**
+     * @brief pointsSize Size of the point at IO
+     */
     int pointsSize = 8;
+
+    /**
+     * @brief topText Added padding from top of the text
+     */
     int topText = 15;
 
+    /**
+     * @brief offset Sets the offset
+     */
     QPointF offset;
+
+    /**
+     * @brief computeTopLeftGridPoint Computes the top left grid point
+     * @param pointP                  Given point
+     * @return                        Point that is calculated to the top left grid point
+     */
     QPointF computeTopLeftGridPoint(const QPointF &pointP);
 };
 
 #endif // BLOCK_H
-
-
-
-
-
-
-
-
-
-
-//#ifndef BLOCK_H
-//#define BLOCK_H
-
-//#include <QString>
-//#include <QStringList>
-//#include <QUuid>
-
-//#include <QPainter>
-//#include <QGraphicsItem>
-
-//class Block
-//{
-//public:
-//    /**
-//      * @todo: Problem if in composite block is same block more than 1 time
-//      */
-
-//    /**
-//     * @brief id Unique ID
-//     */
-//    QUuid id;
-
-//    /**
-//     * @brief name Block name
-//     */
-//    QString name;
-
-//    /**
-//     * @brief inputs List of inputs
-//     */
-//    QStringList inputs;
-
-//    /**
-//     * @brief outputs List of outputs
-//     */
-//    QStringList outputs;
-
-//    /**
-//     * @brief code Code in C/C++
-//     */
-//    QString code;
-
-//    /**
-//     * @brief composite Detects that this block is composite
-//     */
-//    bool composite = false;
-
-//    /**
-//      * These properties used only if block is a composite block.
-//      */
-
-//    /**
-//     * @brief x The x coordinate
-//     */
-//    int x;
-
-//    /**
-//     * @brief y The y coordinate
-//     */
-//    int y;
-
-//    /**
-//     * @brief width Width of composite block
-//     */
-//    int width;
-
-//    /**
-//     * @brief height Height of composite block
-//     */
-//    int height;
-
-//    /**
-//     * @brief blocks Child blocks
-//     */
-//    QList<Block> blocks;
-
-//    /**
-//     * @brief connections Connections with each blocks
-//     */
-//    QStringList connections;
-
-//    /**
-//     * @brief Block     Builds a block
-//     * @param name      Name of the block
-//     * @param inputs    Block inputs
-//     * @param outputs   Block outputs
-//     * @param code      Block code (C/C++ style)
-//     */
-//    Block(QString name, QStringList inputs, QStringList outputs, QString code);
-
-//    /**
-//     * @brief setName   Sets the name to the block
-//     * @param name      New name
-//     */
-//    void setName(QString name);
-
-//    /**
-//     * @brief setInputs Sets the inputs to the block
-//     * @param inputs    List of inputs
-//     */
-//    void setInputs(QStringList inputs);
-
-//    /**
-//     * @brief setOutputs    Sets the outputs to the block
-//     * @param outputs       List of outputs
-//     */
-//    void setOutputs(QStringList outputs);
-
-//    /**
-//     * @brief setCode   Sets the code to the block
-//     * @param code      Code of the block
-//     */
-//    void setCode(QString code);
-
-//    /**
-//     * @brief isComposite   Checks if its composite block or not
-//     * @return              True if its composite block otherwise false
-//     */
-//    bool isComposite();
-
-//    /**
-//     * @brief getBlocks Gets the block list (if composite)
-//     * @return          List of blocks
-//     */
-//    QList<Block> getBlocks();
-
-//    /**
-//     * @brief addBlock  Adds block into blocks (if composite)
-//     * @param block     Block added into blocks
-//     */
-//    void addBlock(Block block);
-
-//    /**
-//     * @brief getBlock  Gets block from blocks (if composite)
-//     * @param name      The name of the block
-//     * @return          Block instance
-//     */
-//    Block getBlock(QString name);
-
-//    /**
-//     * @brief removeBlock   Removes the block by name
-//     * @param name          Name of the block
-//     */
-//    void removeBlock(QString name);
-
-//    /**
-//     * @brief removeBlock   Removes the block by instance
-//     * @param block         Block instance
-//     */
-//    void removeBlock(Block block);
-
-//    /**
-//     * @brief createConnection  Creates connection between two blocks
-//     * @param block1            Block1 instance
-//     * @param point1            Input/Output of the block1
-//     * @param block2            Block2 instance
-//     * @param point2            Input/Output of the block2
-//     */
-//    void createConnection(Block block1, QString point1, Block block2, QString point2);
-
-//    /**
-//     * @brief destroyConnection  Destroys connection between two blocks
-//     * @param block1            Block1 instance
-//     * @param point1            Input/Output of the block1
-//     * @param block2            Block2 instance
-//     * @param point2            Input/Output of the block2
-//     */
-//    void destroyConnection(Block block1, QString point1, Block block2, QString point2);
-
-//private:
-
-//};
-
-//#endif // BLOCK_H

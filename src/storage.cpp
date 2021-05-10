@@ -8,8 +8,9 @@
 
 QString Storage::getFileContent(QString name)
 {
-    //QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
-    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
+    // MacOS Fix
+    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+//    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
     QFile file(fileName);
 
@@ -27,8 +28,9 @@ QString Storage::getFileContent(QString name)
 
 void Storage::updateFileContent(QString name, QString content)
 {
-//    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
-    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
+    // MacOS Fix
+    QString fileName = QDir::currentPath() + "/../../../../src/Storage/" + name;
+//    QString fileName = QDir::currentPath() + "/../src/Storage/" + name;
 
     QFile file(fileName);
 
@@ -136,7 +138,7 @@ void Storage::addBlock(Block *block)
 
 Block *Storage::getBlock(QString category, QString name)
 {
-    auto block = new Block();
+    Block *block = nullptr;
 
     auto object = getCategories();
 
@@ -152,9 +154,52 @@ Block *Storage::getBlock(QString category, QString name)
             for (auto in : item["inputs"].toArray()) inputs.append(in.toString());
             for (auto in : item["outputs"].toArray()) outputs.append(in.toString());
 
+            block = new Block();
+
             block->build(name, inputs, outputs, item["code"].toString());
+
+            block->category = category;
         }
     }
 
     return block;
+}
+
+bool Storage::hasBlock(Block *block)
+{
+    return Storage::getBlock(block->category, block->name) != nullptr;
+}
+
+void Storage::updateBlock(Block *block, Block *newBlock)
+{
+    this->removeBlock(block);
+    this->addBlock(newBlock);
+}
+
+void Storage::removeBlock(Block *block)
+{
+    auto object = getCategories();
+
+    auto blocks = object.value(block->category).toArray();
+
+    for (int i = 0; i < blocks.size(); i++) {
+        auto item = blocks.at(i).toObject();
+
+        if (item["name"] == block->name) {
+            blocks.removeAt(i);
+            break;
+        }
+    }
+
+    // Remove category
+    object.remove(block->category);
+
+    // Insert category with reoved block
+    object.insert(block->category, blocks);
+
+    QJsonDocument doc(object);
+    /** @todo: Change to ::Compact for better size */
+    QString jsonString = doc.toJson(QJsonDocument::Indented);
+
+    updateFileContent("categories.json", jsonString);
 }
