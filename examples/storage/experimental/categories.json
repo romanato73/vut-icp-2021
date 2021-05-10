@@ -1,0 +1,27 @@
+{
+    "Experiments": [
+        {
+            "code": "if (A == 1) {\n  B = \"A = 1\";\n  C = true;\n} else {\n  B = \"A != 1\";\n  C = false;\n}\nY = C;",
+            "inputs": [
+                "int:A",
+                "string:B",
+                "bool:C"
+            ],
+            "name": "exp_2",
+            "outputs": [
+                "bool:Y"
+            ]
+        },
+        {
+            "code": "C = A + B;",
+            "inputs": [
+                "string:A",
+                "string:B"
+            ],
+            "name": "exp_1",
+            "outputs": [
+                "string:C"
+            ]
+        }
+    ]
+}

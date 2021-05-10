@@ -1,0 +1,40 @@
+#include <iostream>
+
+void _ADD_0(int A, int B, int &Y)
+{
+Y = A + B;
+}
+
+void _SUB_1(int A, int B, int &Y)
+{
+Y = A - B;
+}
+
+void _DIV_2(int A, int B, int &Y)
+{
+if (B == 0) exit(-1);
+Y = A / B;
+}
+
+int main()
+{
+int in0_ADD_A = 2;
+int in0_ADD_B = 5;
+int out0_ADD_Y;
+int in1_SUB_A;
+int in1_SUB_B = 3;
+int out1_SUB_Y;
+int in2_DIV_A = 10;
+int in2_DIV_B;
+int out2_DIV_Y;
+_ADD_0(in0_ADD_A, in0_ADD_B, out0_ADD_Y);
+
+in1_SUB_A = out0_ADD_Y;
+_SUB_1(in1_SUB_A, in1_SUB_B, out1_SUB_Y);
+
+in2_DIV_B = out1_SUB_Y;
+_DIV_2(in2_DIV_A, in2_DIV_B, out2_DIV_Y);
+std::cout << out2_DIV_Y;
+
+return 0;
+}

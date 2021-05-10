@@ -1,0 +1,81 @@
+{
+    "Long": [
+        {
+            "code": "std::cout << \"Lot of inputs!\";",
+            "inputs": [
+                "bool:A",
+                "bool:B",
+                "bool:C",
+                "bool:D",
+                "bool:E",
+                "bool:F",
+                "bool:G",
+                "bool:H",
+                "bool:I",
+                "bool:J",
+                "bool:K",
+                "bool:L"
+            ],
+            "name": "Inputs",
+            "outputs": [
+                "bool:X",
+                "bool:Y",
+                "bool:Z"
+            ]
+        },
+        {
+            "code": "std::cout << \"Lot of outputs!\";",
+            "inputs": [
+                "bool:_A",
+                "bool:_B"
+            ],
+            "name": "Outputs",
+            "outputs": [
+                "bool:A",
+                "bool:B",
+                "bool:C",
+                "bool:D",
+                "bool:E",
+                "bool:F",
+                "bool:G",
+                "bool:H",
+                "bool:I",
+                "bool:J",
+                "bool:K",
+                "bool:L"
+            ]
+        },
+        {
+            "code": "std::cout << \"Lot of both!\";",
+            "inputs": [
+                "bool:A",
+                "bool:B",
+                "bool:C",
+                "bool:D",
+                "bool:E",
+                "bool:F",
+                "bool:G",
+                "bool:H",
+                "bool:I",
+                "bool:J",
+                "bool:K",
+                "bool:L"
+            ],
+            "name": "Both",
+            "outputs": [
+                "bool:_A",
+                "bool:_B",
+                "bool:_C",
+                "bool:_D",
+                "bool:_E",
+                "bool:_F",
+                "bool:_G",
+                "bool:_H",
+                "bool:_I",
+                "bool:_J",
+                "bool:_K",
+                "bool:_L"
+            ]
+        }
+    ]
+}

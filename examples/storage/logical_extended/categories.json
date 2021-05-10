@@ -1,0 +1,37 @@
+{
+    "Logical extended": [
+        {
+            "code": "Y = !(A & B);",
+            "inputs": [
+                "bool:A",
+                "bool:B"
+            ],
+            "name": "NAND",
+            "outputs": [
+                "bool:Y"
+            ]
+        },
+        {
+            "code": "Y = !(A | B);",
+            "inputs": [
+                "bool:A",
+                "bool:B"
+            ],
+            "name": "NOR",
+            "outputs": [
+                "bool:Y"
+            ]
+        },
+        {
+            "code": "Y = !(A ^ B);",
+            "inputs": [
+                "bool:A",
+                "bool:B"
+            ],
+            "name": "NXOR",
+            "outputs": [
+                "bool:Y"
+            ]
+        }
+    ]
+}
