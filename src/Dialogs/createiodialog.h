@@ -34,7 +34,7 @@ public:
     /**
      * @brief ioType Type of IO
      */
-    QString ioType;
+    QString ioType = "";
 
     /**
      * @brief setType Sets the dialog type (Input/Output)

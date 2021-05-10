@@ -38,11 +38,10 @@ void CreateIODialog::on_create_clicked()
     QMessageBox msg;
 
     name = ui->name->text();
-    ioType = "";
 
     if (name.isEmpty()) {
         msg.warning(nullptr, "Warning", "Category name can not be empty!");
-    } else if (name == "input" && ioType.isEmpty()) {
+    } else if (type == "input" && ioType.isEmpty()) {
         msg.warning(nullptr, "Warning", "Select io type");
     } else {
         accept();

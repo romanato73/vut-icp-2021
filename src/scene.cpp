@@ -25,6 +25,9 @@ void Scene::setCreateMode(QString value)
 
 void Scene::buildProgram()
 {
+    // Clear all sorted blocks
+    sortedBlocks.clear();
+
     for (auto block : blocks) {
         // Set not connected
         std::iota(block->inNotConnected.begin(), block->inNotConnected.end(), 0);
@@ -44,6 +47,9 @@ void Scene::buildProgram()
         std::fill(block->connectedOutputs.begin(), block->connectedOutputs.end(), nullptr);
     }
 
+    // If only one block add into sorted blocks
+    if (blocks.size() == 1) sortedBlocks.append(blocks.at(0));
+
     // Iterate through all blocks
     for (auto block : blocks) {
         // Iterate through inputs
@@ -62,7 +68,7 @@ void Scene::buildProgram()
 
             // Find inputs
             for (auto io : ios) {
-                if (io->ioType != "input") continue;
+                if (io->ioType == "output") continue;
 
                 auto coordinates = io->mapToScene(io->coordinates);
                 if (inCoords == coordinates) {
@@ -107,12 +113,12 @@ void Scene::buildProgram()
 
             // Find outputs
             for (auto io : ios) {
-                if (io->ioType != "output") continue;
+                if (io->ioType == "input") continue;
 
                 auto coordinates = io->mapToScene(io->coordinates);
                 if (outCoords == coordinates) {
-                    block->inNotConnected.insert(i, -1);
-                    block->connectedInputs.insert(i, io);
+                    block->outNotConnected.insert(i, -1);
+                    block->connectedOutputs.insert(i, io);
                     ioFound = true;
                     break;
                 }
@@ -148,7 +154,7 @@ void Scene::buildProgram()
 }
 
 void Scene::followLine(Block *origin, int index, QPointF point)
-{
+{   
     if (finding == "outputs") {
         // Find outputs
         for (auto io : ios) {
@@ -240,18 +246,13 @@ void Scene::sortBlocks(Block *origin, Block *previous)
     int previousIndex = sortedBlocks.indexOf(previous);
 
     if(originIndex == -1 && previousIndex == -1){
-
         // appends origin and previous blocks
         sortedBlocks.append(previous);
         sortedBlocks.append(origin);
-
     } else if(originIndex != -1 && previousIndex == -1){
-
         // inserts previous block before origin block
         sortedBlocks.insert(originIndex, previous);
-
     } else if(originIndex == -1 && previousIndex != -1){
-
         // appends origin block
         sortedBlocks.append(origin);
     } else {
