@@ -1,0 +1,52 @@
+#include <iostream>
+
+void _NAND_0(bool A, bool B, bool &Y)
+{
+Y = !(A & B);
+}
+
+void _NAND_1(bool A, bool B, bool &Y)
+{
+Y = !(A & B);
+}
+
+void _NAND_2(bool A, bool B, bool &Y)
+{
+Y = !(A & B);
+}
+
+void _NAND_3(bool A, bool B, bool &Y)
+{
+Y = !(A & B);
+}
+
+int main()
+{
+bool in0_NAND_A = true;
+bool in0_NAND_B = false;
+bool out0_NAND_Y;
+bool in1_NAND_A;
+bool in1_NAND_B = false;
+bool out1_NAND_Y;
+bool in2_NAND_A = true;
+bool in2_NAND_B;
+bool out2_NAND_Y;
+bool in3_NAND_A;
+bool in3_NAND_B;
+bool out3_NAND_Y;
+
+_NAND_0(in0_NAND_A, in0_NAND_B, out0_NAND_Y);
+
+in1_NAND_A = out0_NAND_Y;
+_NAND_1(in1_NAND_A, in1_NAND_B, out1_NAND_Y);
+
+in2_NAND_B = out0_NAND_Y;
+_NAND_2(in2_NAND_A, in2_NAND_B, out2_NAND_Y);
+
+in3_NAND_A = out2_NAND_Y;
+in3_NAND_B = out1_NAND_Y;
+_NAND_3(in3_NAND_A, in3_NAND_B, out3_NAND_Y);
+std::cout << out3_NAND_Y;
+
+return 0;
+}

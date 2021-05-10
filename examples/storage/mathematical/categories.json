@@ -1,0 +1,48 @@
+{
+    "Mathematical": [
+        {
+            "code": "Y = A + B;",
+            "inputs": [
+                "int:A",
+                "int:B"
+            ],
+            "name": "ADD",
+            "outputs": [
+                "int:Y"
+            ]
+        },
+        {
+            "code": "Y = A - B;",
+            "inputs": [
+                "int:A",
+                "int:B"
+            ],
+            "name": "SUB",
+            "outputs": [
+                "int:Y"
+            ]
+        },
+        {
+            "code": "if (B == 0) exit(-1);\nY = A / B;",
+            "inputs": [
+                "int:A",
+                "int:B"
+            ],
+            "name": "DIV",
+            "outputs": [
+                "int:Y"
+            ]
+        },
+        {
+            "code": "Y = A * B;",
+            "inputs": [
+                "int:A",
+                "int:B"
+            ],
+            "name": "MUL",
+            "outputs": [
+                "int:Y"
+            ]
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Roman Országh &lt;xorsza01&gt;</author>
  <class>EditBlockDialog</class>
  <widget class="QDialog" name="EditBlockDialog">
   <property name="geometry">

@@ -31,9 +31,17 @@ void Scene::buildProgram()
         std::iota(block->outNotConnected.begin(), block->outNotConnected.end(), 0);
 
         // Set connections placeholders
+        block->connectedBlocksOut.resize(block->inPoints.size());
+        std::fill(block->connectedBlocksOut.begin(), block->connectedBlocksOut.end(), -1);
+
         block->connectedBlocks.resize(block->inPoints.size());
+        std::fill(block->connectedBlocks.begin(), block->connectedBlocks.end(), nullptr);
+
         block->connectedInputs.resize(block->inPoints.size());
+        std::fill(block->connectedInputs.begin(), block->connectedInputs.end(), nullptr);
+
         block->connectedOutputs.resize(block->outPoints.size());
+        std::fill(block->connectedOutputs.begin(), block->connectedOutputs.end(), nullptr);
     }
 
     // Iterate through all blocks

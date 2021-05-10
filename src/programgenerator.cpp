@@ -19,6 +19,8 @@ void ProgramGenerator::setBlocks(QVector<Block *> blocks)
 
 void ProgramGenerator::generateProgram()
 {
+    content += "#include <iostream>\n\n";
+
     // Generate functions for each block
     for (auto block : blocks) {
         // Initialize id for block
@@ -82,7 +84,7 @@ QString ProgramGenerator::generateFunction(Block *block)
     header += "(" + params + ")";
 
     // Append into code
-    code += header + " {\n";
+    code += header + "\n{\n";
     code += block->code;
     code += footer;
 
@@ -91,9 +93,9 @@ QString ProgramGenerator::generateFunction(Block *block)
 
 QString ProgramGenerator::generateMain()
 {
-    QString header = "int main() {\n";
+    QString header = "int main()\n{\n";
     QString code = "";
-    QString footer = "\nreturn 0;\n}";
+    QString footer = "return 0;\n}";
 
     // Append header
     code += header;
@@ -129,10 +131,9 @@ QString ProgramGenerator::generateMain()
         }
     }
 
-    code += "\n";
-
     // Initialize inputs and call functions
     for (auto block : blocks) {
+        QStringList outputPrint{};
         QString params = "";
         // _BLOCK_X(ins, outs) (X -> index)
 
@@ -167,11 +168,22 @@ QString ProgramGenerator::generateMain()
             if (i < block->outputs.size() - 1) {
                 params += ", ";
             }
+
+            // Print to output if set
+            if (block->connectedOutputs.at(i) != nullptr) {
+                qDebug() << "here";
+                outputPrint.append("std::cout << out" + QString::number(block->id) + "_" + block->name + "_" + outputName + ";\n");
+            }
         }
 
         // Call function
-        code += "\n";
         code += "_" + block->name + "_" + QString::number(block->id) + "(" + params + ");\n";
+
+        for (auto print : outputPrint) {
+            code += print;
+        }
+
+        if (outputPrint.isEmpty()) code += "\n";
     }
 
     code += footer;

@@ -3,3 +3,5 @@ src/editor.pro.*
 debug
 macDebug/
 .DS_Store
+
+doc/
