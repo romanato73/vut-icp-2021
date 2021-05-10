@@ -20,5 +20,6 @@
         <file>trash.svg</file>
         <file>trash_black.svg</file>
         <file>logo.ico</file>
+        <file>broom.svg</file>
     </qresource>
 </RCC>

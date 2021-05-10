@@ -814,6 +814,21 @@ border: none!important;</string>
           </sizepolicy>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Open Sans</family>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:#000;</string>
+            </property>
+            <property name="text">
+             <string>Build program</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QPushButton" name="buildProgram">
             <property name="sizePolicy">
@@ -857,18 +872,43 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <family>Open Sans</family>
-             </font>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="clearScene">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: #c0392b;
+	border: none;
+	color: #fff;
+	width: 60px;
+	height: 60px;
+}
+
+QPushButton:hover {
+	background-color: #e74c3c;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources/Resources.qrc">
+              <normaloff>:/icons/broom.svg</normaloff>:/icons/broom.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_2">
             <property name="styleSheet">
              <string notr="true">color:#000;</string>
             </property>
             <property name="text">
-             <string>Build program</string>
+             <string>Clear scene</string>
             </property>
            </widget>
           </item>

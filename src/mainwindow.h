@@ -130,6 +130,11 @@ private slots:
      */
     void on_buildProgram_clicked();
 
+    /**
+     * @brief on_clearScene_clicked Clears the scene
+     */
+    void on_clearScene_clicked();
+
 private:
     /**
      * @brief ui The main UI
