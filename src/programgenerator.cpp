@@ -171,7 +171,6 @@ QString ProgramGenerator::generateMain()
 
             // Print to output if set
             if (block->connectedOutputs.at(i) != nullptr) {
-                qDebug() << "here";
                 outputPrint.append("std::cout << out" + QString::number(block->id) + "_" + block->name + "_" + outputName + ";\n");
             }
         }
