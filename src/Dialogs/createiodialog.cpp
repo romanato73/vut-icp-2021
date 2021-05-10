@@ -25,10 +25,11 @@ void CreateIODialog::setType(QString type)
     this->setWindowTitle("Create " + type);
     ui->title->setText("Create " + type);
 
-    if (type != "input") {
-        ui->ioLabel->setText("Name");
-    } else {
+    if (type == "input") {
         ui->ioLabel->setText("Value");
+    } else {
+        ui->inTypes->setVisible(false);
+        ui->ioLabel->setText("Name");
     }
 }
 
@@ -37,10 +38,11 @@ void CreateIODialog::on_create_clicked()
     QMessageBox msg;
 
     name = ui->name->text();
+    ioType = "";
 
     if (name.isEmpty()) {
         msg.warning(nullptr, "Warning", "Category name can not be empty!");
-    } else if (ioType.isEmpty()) {
+    } else if (name == "input" && ioType.isEmpty()) {
         msg.warning(nullptr, "Warning", "Select io type");
     } else {
         accept();

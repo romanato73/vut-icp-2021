@@ -118,6 +118,11 @@ QComboBox QAbstractItemView {
      <property name="placeholderText">
       <string>Choose category</string>
      </property>
+     <item>
+      <property name="text">
+       <string>No Category</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item>

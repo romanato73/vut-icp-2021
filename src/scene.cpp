@@ -48,16 +48,35 @@ void Scene::buildProgram()
     for (auto block : blocks) {
         // Iterate through inputs
         for (int i = 0; i < block->inputs.size() ; i++) {
+            bool ioFound = false;
+
             // Unmap lines
             for (auto line : lines) { line->mapped = false; }
 
+            // Set finding to inputs
             finding = "inputs";
 
             auto in = block->inPoints.at(i);
             // Input coordinates
             auto inCoords = QPointF(block->x() + in.x(), block->y() + in.y());
 
-            // Iterate throuh lines
+            // Find inputs
+            for (auto io : ios) {
+                if (io->ioType != "input") continue;
+
+                auto coordinates = io->mapToScene(io->coordinates);
+                if (inCoords == coordinates) {
+                    block->inNotConnected.insert(i, -1);
+                    block->connectedInputs.insert(i, io);
+                    ioFound = true;
+                    break;
+                }
+            }
+
+            // If input found continue to next input
+            if (ioFound) continue;
+
+            // Find line
             for (auto line : lines) {
                 auto lineCoordsStart = line->mapToScene(line->line().p1());
                 auto lineCoordsEnd = line->mapToScene(line->line().p2());
@@ -74,11 +93,33 @@ void Scene::buildProgram()
         }
 
         for (int i = 0; i < block->outputs.size(); i++) {
+            bool ioFound = false;
+
+            // Unmap lines
+            for (auto line : lines) { line->mapped = false; }
+
+            // Set finding to outputs
             finding = "outputs";
 
             auto out = block->outPoints.at(i);
-
+            // Output coordinates
             auto outCoords = QPointF(block->x() + out.x(), block->y() + out.y());
+
+            // Find outputs
+            for (auto io : ios) {
+                if (io->ioType != "output") continue;
+
+                auto coordinates = io->mapToScene(io->coordinates);
+                if (outCoords == coordinates) {
+                    block->inNotConnected.insert(i, -1);
+                    block->connectedInputs.insert(i, io);
+                    ioFound = true;
+                    break;
+                }
+            }
+
+            // If output found continue to next input
+            if (ioFound) continue;
 
             for (auto line : lines) {
                 auto lineCoordsStart = line->mapToScene(line->line().p1());

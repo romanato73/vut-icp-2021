@@ -55,6 +55,12 @@ private:
      * @brief ui
      */
     Ui::CreateBlockDialog *ui;
+
+    /**
+     * @brief isValidIO Checks if io is valid
+     * @return          True if valid otherwise false
+     */
+    bool isValidIO();
 };
 
 #endif // CREATEBLOCKDIALOG_H
