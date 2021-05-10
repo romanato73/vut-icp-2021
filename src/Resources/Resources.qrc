@@ -19,5 +19,6 @@
         <file>tools.svg</file>
         <file>trash.svg</file>
         <file>trash_black.svg</file>
+        <file>logo.ico</file>
     </qresource>
 </RCC>

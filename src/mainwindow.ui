@@ -28,6 +28,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="Resources/Resources.qrc">
+    <normaloff>:/icons/logo.ico</normaloff>:/icons/logo.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">QScrollArea {
 	border: none;
