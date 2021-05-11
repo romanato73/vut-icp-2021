@@ -21,7 +21,7 @@ void IO::build(QString name, QString valType, QString type)
     else if (ioType == "output") plainText = name;
 
     auto fm = QFontMetrics(font);
-    this->width = fm.horizontalAdvance(this->plainText);
+    this->width = fm.width(this->plainText);
 }
 
 QRectF IO::boundingRect() const

@@ -17,4 +17,4 @@ clean:
 	rm -rf $(GENERATED_FILES)
 
 pack: clean
-	zip $(ZIP_FILE_NAME) $(ZIP_FILES)
+	zip -r $(ZIP_FILE_NAME) $(ZIP_FILES)

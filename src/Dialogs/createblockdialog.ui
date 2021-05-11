@@ -84,9 +84,6 @@ QComboBox QAbstractItemView {
      <property name="text">
       <string>Create a block</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
     </widget>
    </item>
    <item>
@@ -114,9 +111,6 @@ QComboBox QAbstractItemView {
     <widget class="QComboBox" name="blockCategory">
      <property name="styleSheet">
       <string notr="true"/>
-     </property>
-     <property name="placeholderText">
-      <string>Choose category</string>
      </property>
      <item>
       <property name="text">
