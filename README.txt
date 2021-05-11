@@ -1,74 +1,91 @@
 BlockEdit:
-BlockEdit je editor a interpret hierarchicky štrukturovaných funkčných blokov.
-Ako úložisko sa využíva súbor JSON, ktorý je umiestnený v súbore: src/Storage/categories.json.
+BlockEdit is an editor and interpret of hierarchically structured function blocks.
+The storage is implemented using a JSON file, which is located in the path: src/Storage/categories.json.
+Editor can create customisable atomic blocks, which have their inputs, outputs and code.
+After connecting block with input/output or another function blocks, it is possible to
+generate the code, which represents the behaviour of blocks.
 
-Implementovaná funkcionalita:
-- Kategórie
-    - Knihovňa kategórií (v ľavom paneli)
-    - Vytváranie kategórií
-    - Úprava kategórií
-    - Mazanie kategórií
-- Atomické bloky
-    - Knihovňa atomických blokov (v ľavom paneli)
-    - Vytváranie atomických blokov (do kategórie alebo iba na scénu)
-    - Úprava atomických blokov (v kategórií a na scéne)
-    - Mazanie atomických blokov (v kategórií a na scéne)
-- Generovanie kódu
-    - Generovanie kódu z pospájaných blokov
-    - Pripájanie rôzne typy inputov
-    - Pripájanie outputov (výpis na výstup)
+Testing categories:
+- For testing categories there are 5 different storages inside examples/storage:
+    - experimental - experimental function blocks
+    - inputs_outputs - testing a lot of inputs/outputs
+    - logical_extended - extended logical blocks
+    - mathematical - base mathematical functions
+    - all - all above in one storage
+- Just copy one of the storage into: src/Storage/
 
-Obmedzenia funkcionalít: -
+Testing codes:
+- Inside examples/programs are generated codes with the image of their implementation on the scene
+
+Implemented functionallity:
+- Categories
+    - Categories library (in the left sidebar)
+    - Creating categories
+    - Editing categories
+    - Deleting categories
+- Atomic blocks
+    - Atomic blocks library (in the left sidebar)
+    - Creating atomic blocks (into category or just into scene)
+    - Editing atomic blocks (inside category or just inside scene)
+    - Deleting atomic blocks (in category or in scene)
+- Code generating
+    - Generates the code from the connected blocks
+    - Connecting different types of inputs
+    - Connecting outputs (makes the std::cout)
+
+Functionallity restrictions: -
 
 GUI
-- GUI obsahuje dva hlavné prvky:
-    - Bočný panel
-    - Hlavná scéna
-- Bočný panel obsahuje:
-    - prepínanie módov aplikácie
-    - pri móde "create" sa zobrazia možnosti pridávania blokov, prepojení, vstupov a výstupov
-    - kategórie
-    - generovanie programu zo scény
+- GUI contains two main parts:
+    - Sidebar
+    - The main scene
+- Sidebar contains:
+    - Mode switch buttons
+    - In "Create" mode it shows the subwidget under mode buttons which is used for switching
+      creation of blocks, connections, inputs and outputs
+    - Generating program from the scene
+    - The scene cleaner, which cleans the scene
 
-Módy aplikácie
-- Select (ukazateľ myši)
-    - V tomto móde sa dajú objekty na scéne pohybovať prípadne pridávať z bočného panela kategórií na scénu.
+Application modes
+- Select (mouse pointer)
+    - In this mode objects on the scene are movable or block from the category can be added into scene
 - Create (plus symbol)
-    - V tomto móde sa vytvárajú nové objekty (bloky, prepojenia, vstupy a výstupy)
-    - Pri vybraní tohto módu sa aktivuje pod-sekcia kde sa dajú jednotlivé objekty prepínať
-    - Po kliknutí na scénu sa na danom mieste vygeneruje daný objekt
-- Edit (symbol úpravy)
-    - V tomto móde sa upravujú bloky ako v kategórií tak aj v scéne
-    - V prípade kliknutia na blok v bočnom paneli otvorí sa dialóg, v ktorom je možné daný blok upraviť
-      (tieto zmeny sa uložia aj do úložiska)
-    - V prípade kliknutia na blok v scéne sa otvorí dialóg, v ktorom je možné daný blok upraviť
-      (tieto zmeny sa aplikujú len na konkrétny blok na scéne)
-- Delete (symbol koša)
-    - V tomto móde sa mažú jednotlivé objekty na scéne prípadne bloky z kategórií (v bočnom paneli)ň
-    - V prípade kliknutia na blok v kategórií (okrem základných) sa daný blok vymaže z kategórie (úložiska)
-    - V prípade kliknutia na objekt v scéne sa daný objekt vymaže iba zo scény
+    - In this mode the new objects are created (blocks, connections, inputs, outputs)
+    - In this mode application will show the subwidget where you can switch these objects
+    - After mouse press on the scene the object is created on the place where the mouse points
+- Edit (edit symbol)
+    - In this mode blocks can be edited in the category or in the scene
+    - In case the clicked block is in the sidebar the new dialog shows up with the editable options
+      (The block is also edited inside the storage)
+    - In case the clicked block is on the scene the new dialog shows up with the editable options
+      (The block is not edited in the storage only on the scene)
+- Delete (trash symbol)
+    - In this mode blocks are deleted on the scene or in the category (in the sidebar)
+    - In case the clicked block is in the sidebar (except the default) it is deleted completely
+      from the storage
+    - In case the clicked block is on the scene only the actual block on the scene is deleted
 
-Vytváranie kategórií
-- Kategória sa vytvorí kliknutím na symbol plus vpravo od "Categories".
-- Po kliknutí sa zobrazí dialóg, v ktorom sa zadá názov kategórie
+Category creation
+- Category is created by clicking on the plus symbol next to "Categories"
+- After clicking the plus button new dialog shows up where the category name is set.
 
-Vytváranie blokov
-- Bloky sa dajú vytvárať do kategórie alebo iba na scénu
-- V móde Create po kliknutí na scénu sa otvorí dialóg, v ktorom je možné vytvoriť blok,
-  (pokiaľ sa nevyberie kategória pridá sa iba na scénu)
-- Vstupy:
-    - Vstupy sa zapisujú následovným formátom: "TYP:NÁZOV"
-    - Jednotlivé vstupy sa oddelujú novým riadkom
-    - Možné typy: INT,FLOAT,STRING,BOOL
-- Výstupy:
-    - Výstupy sa zapisujú rovnakým spôsobom
-- Kód:
-    - Kód sa zapisuje iba ako telo funkcie
-    - Každá funkcia je typu void, preto je nutné zapisovať výstup do premennej výstupu
-    - Príklad kódu konkatenácie dvoch reťazcov (vstupy:string:A,string:B|výstupy:string:C):
+Block creation
+- Blocks can be added into category or only into scene
+- In "Create" mode after clicking on the scene dialog shows up, where the block is initialized
+- If no category is set the block is placed only into the scene
+- Inputs:
+    - Inputs are written with the following format: "TYPE:NAME"
+    - Each input is separated with new line
+    - Allowed types are: int,float,string,bool
+- Outputs:
+    - Same as inputs
+- Code:
+    - Code is written as the function body
+    - Each function is of the type void, so each output must be assigned into the output variable
+    - The example code of two string concatenation (inputs: string:A,string:B | outputs: string:C):
     C = A + B;
 
-Generovanie kódu
-- Kód sa generuje kliknutím na ikonku vedľa "Build program"
-- Otvorí sa nový dialóg, v ktorom sa zadá názov súboru a vyberie sa cesta, kde sa súbor uloží
-- Po kliknutí na "Build a program" sa daný súbor vygeneruje na vybrané miesto
+Code generation
+- Code is generated after clicking on the button next to "Build program"
+- The new dialog shows up, where the file name and path are selected, in this path the file is stored (as .txt file)
+- After clicking on "Build a program" the program is generated into selected file

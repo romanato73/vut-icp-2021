@@ -518,3 +518,9 @@ void MainWindow::on_buildProgram_clicked()
     scene->buildProgram();
 }
 
+
+void MainWindow::on_clearScene_clicked()
+{
+    for (auto item : view->scene()->items()) delete item;
+}
+
