@@ -62,6 +62,8 @@ int Block::numOfPorts()
 
 void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if(option){}
+    if(widget){}
     QRectF rec = boundRect();
     QBrush brush(Qt::white);
     painter->fillRect(rec, brush);

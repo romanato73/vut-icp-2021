@@ -2,6 +2,7 @@
 
 IO::IO(QGraphicsItem *parent)
 {
+    if(parent){}
     setFlags(ItemIsMovable | ItemSendsGeometryChanges);
 }
 
@@ -40,6 +41,8 @@ QRectF IO::boundingRect() const
 
 void IO::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if(option){}
+    if(widget){}
     coordinates = QPoint(0, 0);
 
     if (ioType == "input") {

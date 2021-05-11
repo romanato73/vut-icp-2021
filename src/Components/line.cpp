@@ -9,6 +9,8 @@ Line::Line(QGraphicsItem *parent) :
 
 void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if(option){}
+    if(widget){}
     painter->setPen(pen());
     painter->drawLine(line());
     painter->setPen(QPen(Qt::green, 8));
